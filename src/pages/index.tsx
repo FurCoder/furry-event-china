@@ -117,7 +117,6 @@ export async function getStaticProps() {
 }
 
 function EventCard({ event }: { event: Event }) {
-  console.log(event);
   return (
     <Link href={`/${event.organization?.slug}/${event.slug}`}>
       <div

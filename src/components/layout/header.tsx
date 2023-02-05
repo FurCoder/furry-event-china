@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 
 export default function Header() {
   const { pathname, query,route } = useRouter();
-  console.log(route, query);
   return (
     <header className="mb-6 rounded-b-xl bg-white flex justify-between items-center1">
       <div className="m-6 text-4xl text-geraldine font-bold">
