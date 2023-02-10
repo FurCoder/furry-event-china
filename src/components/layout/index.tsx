@@ -5,7 +5,7 @@ import Footer from "@/components/layout/footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container mx-auto">
+    <div className="max-w-screen-xl mx-auto">
       <Head>
         <meta name="description" content="小动物们的展子日历" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

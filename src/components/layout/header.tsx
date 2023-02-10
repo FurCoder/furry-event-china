@@ -8,7 +8,7 @@ export default function Header() {
       <div className="m-6 text-4xl text-geraldine font-bold">
         <span className="block">FEC 🐺🐱🐯</span>
         <span className="text-base mt-0 block">
-          毛茸茸展会目录 2023.1.25更新
+          毛茸茸展会目录
         </span>
       </div>
       <nav className="mr-6">

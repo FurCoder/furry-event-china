@@ -181,7 +181,7 @@ function DurationSection({
               共有 {groupByDateEvent[month].length} 个展会
             </span>
           </h3>
-          <div className="grid gap-12 grid-cols-3">
+          <div className="grid gap-12 grid-cols-4">
             {groupByDateEvent[month].map((event) => (
               <EventCard key={event.name} event={event} />
             ))}
