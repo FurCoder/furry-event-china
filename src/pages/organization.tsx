@@ -13,7 +13,7 @@ export default function OrganizationPage({
   return (
     <div className="bg-white p-6 rounded-xl">
       <section>
-        <h1 className="text-bold text-gray-800 text-xl">活跃展商</h1>
+        <h1 className="font-bold text-gray-600 text-2xl">活跃展商</h1>
         <div className="mt-4 grid md:grid-cols-3 gap-10">
           {groupByStatusOrganizations["active"].map((o) => (
             <OrganizationItem key={o.id} organization={o} />
