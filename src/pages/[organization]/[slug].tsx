@@ -4,30 +4,62 @@ import { useRouter } from "next/router";
 import { IoLocation } from "react-icons/io5";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { TbArrowsRightLeft } from "react-icons/tb";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import clsx from "clsx";
 
 const xata = new XataClient();
 
 export default function EventDetail({ event }: { event: Event }) {
+  const [isWiderImage, setIsWiderImage] = useState(true);
+
+  const calcImageRatio = useCallback(() => {
+    if (!event.coverUrl?.length) return;
+    const img = new Image();
+    img.src = event.coverUrl?.[0];
+    img.onload = function (this) {
+      setIsWiderImage(img.width >= img.height);
+    };
+  }, [event.coverUrl]);
+
+  useEffect(() => {
+    // calcImageRatio();
+  }, [calcImageRatio]);
+
   return (
     <div
-      className="flex border bg-white rounded-xl min-h-[500px] overflow-hidden"
-      style={{
-        backgroundImage: `url(${event.coverUrl})`,
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
+      className={clsx(
+        "flex border bg-white rounded-xl min-h-[500px] overflow-hidden",
+        isWiderImage && "flex-col",
+        !isWiderImage &&'lg:flex-row flex-col'
+      )}
+      // style={{
+      //   backgroundImage: `url(${event.coverUrl})`,
+      //   backgroundPosition: "center",
+      //   backgroundRepeat: "no-repeat",
+      //   backgroundSize: "cover",
+      // }}
     >
       <div
-        className="event-detail__left w-7/12"
-        // style={{
-        //   backgroundImage: `url(${event.coverUrl})`,
-        //   backgroundPosition: "center",
-        //   backgroundRepeat: "no-repeat",
-        //   backgroundSize: "cover",
-        // }}
+        className={clsx(
+          "event-detail__left",
+          isWiderImage && "w-full h-[400px]",
+          !isWiderImage && "lg:w-7/12 w-full h-[400px] lg:h-auto"
+        )}
+        style={{
+          backgroundImage: `url(${event.coverUrl})`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+        }}
       ></div>
-      <div className="p-6 bg-white event-detail__right w-5/12 flex flex-col">
+      <div
+        className={clsx(
+          "p-6 event-detail__right w-full sm1:w-5/12 flex",
+          isWiderImage &&
+            "w-full flex-col sm:flex-row",
+          !isWiderImage && "lg:w-5/12 flex-col sm:flex-row lg:flex-col"
+        )}
+      >
         <div className="flex-grow">
           <h1 className="font-bold text-2xl text-gray-700">{event.name}</h1>
           <p className="flex items-center text-gray-500 mt-4">
