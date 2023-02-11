@@ -11,7 +11,7 @@ export default function Header() {
           毛茸茸展会目录
         </span>
       </div>
-      <nav className="mr-6">
+      <nav className="mr-6 hidden md:block">
         <ol className="flex h-full">
           {[
             { name: "首页", link: "/" },
