@@ -8,11 +8,12 @@
     "start": "next start",
     "lint": "next lint",
     "generate-schama": "xata codegen",
-    "deploy:firebase": "firebase deploy",
-    "clean":"rm -rf .next && rm -rf out"
+    "deploy:firebase": "next build && next export && firebase deploy",
+    "clean": "rm -rf .next && rm -rf out"
   },
   "dependencies": {
     "@next/font": "13.1.5",
+    "@sentry/nextjs": "^7.37.1",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
