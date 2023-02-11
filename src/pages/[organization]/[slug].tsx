@@ -1,5 +1,5 @@
 import { XataClient, Event } from "@/xata/xata";
-import { GetStaticProps } from "next";
+import { GetStaticProps, GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
 import { IoLocation } from "react-icons/io5";
 import { BsCalendar2DateFill } from "react-icons/bs";
@@ -8,7 +8,6 @@ import { TbArrowsRightLeft } from "react-icons/tb";
 const xata = new XataClient();
 
 export default function EventDetail({ event }: { event: Event }) {
-
   return (
     <div
       className="flex border bg-white rounded-xl min-h-[500px] overflow-hidden"
@@ -73,11 +72,11 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: GetStaticPropsContext) {
   const event = await xata.db.event
     .filter({
-      slug: context.params.slug,
-      "organization.slug": context.params.organization,
+      slug: context.params?.slug as string,
+      "organization.slug": context.params?.organization as string,
     })
     .select(["*", "organization.slug"])
     .getFirst();

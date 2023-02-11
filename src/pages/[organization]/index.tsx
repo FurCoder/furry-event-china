@@ -3,6 +3,7 @@ import Image from "next/image";
 import { GrStatusGoodSmall } from "react-icons/gr";
 import { FiMail } from "react-icons/fi";
 import { FaBirthdayCake } from "react-icons/fa";
+import { GetStaticPropsContext } from "next/types";
 
 const xata = new XataClient();
 export default function OrganizationDetail(props: {
@@ -71,10 +72,10 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: GetStaticPropsContext) {
   const organization = await xata.db.organization
     .filter({
-      slug: context.params.organization,
+      slug: context.params?.organization as string,
     })
     .select(["*"])
     .getFirst();

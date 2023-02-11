@@ -1,0 +1,29 @@
+@keyframes moveImage {
+  from {
+    background-position-x: 50%;
+    background-position-y: 50%;
+  }
+
+  50% {
+    background-position-x: 100%;
+    background-position-x: 100%;
+  }
+
+  75% {
+    background-position-x: 50%;
+    background-position-y: 50%;
+  }
+
+  to {
+    background-position-x: 0%;
+    background-position-x: 0%;
+  }
+}
+
+.event-card:hover {
+  animation-duration: 6s;
+  animation-name: moveImage;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: frames(10);
+}
