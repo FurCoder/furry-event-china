@@ -66,10 +66,6 @@ export default function Home(props: { events: Event[] }) {
 
   return (
     <>
-      <Head>
-        <title>FEC·2023</title>
-      </Head>
-
       <div>
         {props.events.length === 0 && (
           <div className="bg-white border rounded-xl p-6 text-center h-96 flex justify-center flex-col">
