@@ -9,7 +9,8 @@
     "lint": "next lint",
     "generate-schama": "xata codegen",
     "deploy:firebase": "next build && next export && firebase deploy",
-    "clean": "rm -rf .next && rm -rf out"
+    "clean": "rm -rf .next && rm -rf out",
+    "build:static": "next build && next export"
   },
   "dependencies": {
     "@next/font": "13.1.5",
