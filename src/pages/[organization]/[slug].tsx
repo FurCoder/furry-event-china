@@ -30,7 +30,7 @@ export default function EventDetail({ event }: { event: Event }) {
       className={clsx(
         "flex border bg-white rounded-xl min-h-[500px] overflow-hidden",
         isWiderImage && "flex-col",
-        !isWiderImage &&'lg:flex-row flex-col'
+        !isWiderImage && "lg:flex-row flex-col"
       )}
       // style={{
       //   backgroundImage: `url(${event.coverUrl})`,
@@ -55,8 +55,7 @@ export default function EventDetail({ event }: { event: Event }) {
       <div
         className={clsx(
           "p-6 event-detail__right w-full sm1:w-5/12 flex",
-          isWiderImage &&
-            "w-full flex-col sm:flex-row",
+          isWiderImage && "w-full flex-col sm:flex-row",
           !isWiderImage && "lg:w-5/12 flex-col sm:flex-row lg:flex-col"
         )}
       >

@@ -28,8 +28,18 @@ function OrganizationItem({ organization }: { organization: Organization }) {
   return (
     <Link href={organization.slug || ""}>
       <div className="rounded-xl border p-6 cursor-pointer h-full flex flex-row items-center md:flex-col">
-        <div className="relative w-2/4 md:h-3/4 max-h-12"><Image className="object-contain h-full max-h-12" src={organization.logoUrl || ""} alt={`${organization.name}'s logo`} width={300} height={50} /></div>
-        <h2 className="w-2/4 tracking-wide text-gray-600 md:text-center text-lg border-l md:border-l-0 ml-4 md:ml-0 pl-4 md:pl-0 md:mt-4 font-bold">{organization.name}</h2>
+        <div className="relative w-2/4 md:h-3/4 max-h-12">
+          <Image
+            className="object-contain h-full max-h-12"
+            src={organization.logoUrl || ""}
+            alt={`${organization.name}'s logo`}
+            width={300}
+            height={50}
+          />
+        </div>
+        <h2 className="w-2/4 tracking-wide text-gray-600 md:text-center text-lg border-l md:border-l-0 ml-4 md:ml-0 pl-4 md:pl-0 md:mt-4 font-bold">
+          {organization.name}
+        </h2>
       </div>
     </Link>
   );

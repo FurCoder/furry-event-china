@@ -20,7 +20,7 @@ export default function OrganizationDetail(props: {
   const formatedCreationTime = useMemo(() => {
     if (organization.creationTime) {
       const date = new Date(organization.creationTime);
-      console.log(organization.creationTime);
+
       return {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
@@ -34,11 +34,8 @@ export default function OrganizationDetail(props: {
   return (
     <div>
       <div className="border bg-white rounded-xl p-6">
-        <div className="flex">
-          <div
-            className="border rounded flex justify-center p-2"
-            style={{ height: 200, width: 200 }}
-          >
+        <div className="flex flex-col md:flex-row">
+          <div className="border rounded flex justify-center p-2 w-full md:w-80 md:h-80 h-48">
             {organization.logoUrl && (
               <Image
                 className="object-contain"
@@ -49,7 +46,7 @@ export default function OrganizationDetail(props: {
               />
             )}
           </div>
-          <div className="ml-4">
+          <div className="mt-4 md:mt-0 md:ml-4">
             <h1 className="text-2xl font-bold mb-2">{organization.name}</h1>
 
             <div className="flex items-center text-gray-500 mb-2">
@@ -80,7 +77,7 @@ export default function OrganizationDetail(props: {
 
             <div
               className={clsx(
-                "flex items-center flex-wrap first:mr-0",
+                "flex items-center flex-wrap first:mr-0 gap-4",
                 styles.links
               )}
             >
