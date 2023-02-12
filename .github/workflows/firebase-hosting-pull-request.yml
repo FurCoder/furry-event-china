@@ -8,6 +8,10 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     environment: Develop
+    env:
+      XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
+      XATA_FALLBACK_BRANCH: ${{ vars.XATA_FALLBACK_BRANCH }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
