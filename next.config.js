@@ -18,6 +18,7 @@ const nextConfig = {
       ],
     ],
   },
+  trailingSlash: true,
   sentry: {
     disableServerWebpackPlugin: true,
     disableClientWebpackPlugin: true,
