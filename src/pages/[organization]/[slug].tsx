@@ -115,6 +115,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return {
     props: {
       event,
+      headMetas: {
+        title: `${event?.name} FEC·兽展日历`,
+        des: `${event?.address}`,
+        link: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
+        cover: event?.coverUrl?.[0],
+      },
     },
   };
 }

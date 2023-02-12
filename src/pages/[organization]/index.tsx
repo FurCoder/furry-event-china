@@ -59,12 +59,7 @@ export default function OrganizationDetail(props: {
               </span>
             </div>
 
-            <div
-              className={clsx(
-                "mb-2 flex items-center text-gray-500",
-                styles["intro-bar"]
-              )}
-            >
+            <div className={clsx("mb-2 text-gray-500", styles["intro-bar"])}>
               <span>已累计举办 {events.length} 场展会</span>
               {formatedCreationTime && (
                 <span className="lex items-center">
@@ -180,6 +175,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     props: {
       organization,
       events,
+      headMetas: {
+        title: `${organization?.name} FEC·兽展日历`,
+        des: `${organization?.description}`,
+        link: `https://www.furryeventchina.com/${organization?.slug}`,
+        cover: organization?.logoUrl,
+      },
     },
   };
 }

@@ -12,8 +12,6 @@ export default function Years({ events }: { events: Event[] }) {
     [events]
   );
 
-  console.log(events, groupByYearEvents);
-
   return (
     <div className="">
       {Object.keys(groupByYearEvents)
@@ -51,10 +49,18 @@ export default function Years({ events }: { events: Event[] }) {
 export async function getStaticProps() {
   const xata = new XataClient();
 
-  const events = await xata.db.event.select(['*','organization.name','organization.slug']).getAll();
+  const events = await xata.db.event
+    .select(["*", "organization.name", "organization.slug"])
+    .getAll();
+  const cities = Object.keys(groupBy(events, (event) => event.city));
   return {
     props: {
       events,
+      headMetas: {
+        title: "年度时间轴 FEC·兽展日历",
+        des: `共有 ${cities} 个城市举办过 ${events.length} 场 Furry 相关的展会活动，你去过多少？`,
+        link: "https://www.furryeventchina.com/years",
+      },
     },
   };
 }

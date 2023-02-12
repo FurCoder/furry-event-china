@@ -95,9 +95,16 @@ export async function getStaticProps() {
   const events = await xata.db.event
     .select(["*", "organization.slug", "organization.name"])
     .getAll();
+
+  const cities = Object.keys(groupBy(events, (event) => event.city));
   return {
     props: {
       events,
+      headMetas: {
+        title: "城市列表 FEC·兽展日历",
+        des: `共有 ${cities} 个城市举办过 ${events.length} 场 Furry 相关的展会活动！快来看看这些城市有没有你所在的地方吧。`,
+        link: "https://www.furryeventchina.com/city",
+      },
     },
   };
 }

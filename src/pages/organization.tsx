@@ -42,6 +42,11 @@ export async function getStaticProps() {
   return {
     props: {
       organizations,
+      headMetas: {
+        title: "展商列表 FEC·兽展日历",
+        des: `共有 ${organizations.length} 个展商举办过 Furry 相关的活动，你最爱的展商是？`,
+        link: "https://www.furryeventchina.com/organization",
+      },
     },
   };
 }
