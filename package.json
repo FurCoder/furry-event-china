@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "generate-schama": "xata codegen",
@@ -25,6 +26,7 @@
     "eslint-config-next": "13.1.5",
     "lodash-es": "^4.17.21",
     "next": "13.1.5",
+    "next-sitemap": "^3.1.52",
     "next-superjson-plugin": "^0.5.4",
     "postcss": "^8.4.21",
     "postcss-flexbugs-fixes": "^5.0.2",
