@@ -68,6 +68,7 @@ export default function Header() {
               <Link
                 className="flex justify-center px-6 py-2 h-full w-full flex-col max-sm:py-4"
                 href={nav.link}
+                onClick={() => handleMenuClick(false)}
               >
                 {nav.name}
               </Link>

@@ -13,8 +13,7 @@ export default function Document() {
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
-          rel="preload"
-          as="style"
+          rel="stylesheet"
         />
       </Head>
 
