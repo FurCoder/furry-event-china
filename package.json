@@ -5,19 +5,41 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-schama": "xata codegen",
+    "deploy:firebase": "next build && next export && firebase deploy",
+    "clean": "rm -rf .next && rm -rf out",
+    "build:static": "next build && next export"
   },
   "dependencies": {
     "@next/font": "13.1.5",
+    "@sentry/nextjs": "^7.37.1",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
+    "@xata.io/client": "^0.21.6",
+    "autoprefixer": "^10.4.13",
+    "clsx": "^1.2.1",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
+    "lodash-es": "^4.17.21",
     "next": "13.1.5",
+    "next-sitemap": "^3.1.52",
+    "next-superjson-plugin": "^0.5.4",
+    "postcss": "^8.4.21",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-nested": "^6.0.0",
+    "postcss-preset-env": "^8.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "superjson": "^1.12.2",
+    "tailwindcss": "^3.2.4",
     "typescript": "4.9.4"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "react-icons": "^4.7.1"
   }
 }

@@ -34,3 +34,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#firebase
+.firebaserc
+.firebase
+
+
+.env
+
+# Sentry
+.sentryclirc
+
+# Sentry
+next.config.original.js
+
+#next-sitemap
+robots.txt
+sitemap.xml
+sitemap-*.xml

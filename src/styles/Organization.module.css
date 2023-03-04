@@ -1,0 +1,9 @@
+.intro-bar :not(:last-child)::after {
+  content: "/";
+  margin: 0px 0.4em;
+  @apply text-gray-300;
+}
+
+.links :not(:last-child){
+    @apply mr-2;
+}
