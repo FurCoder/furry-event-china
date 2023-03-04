@@ -22,7 +22,7 @@ export default function EventDetail({ event }: { event: Event }) {
   }, [event.coverUrl]);
 
   useEffect(() => {
-    // calcImageRatio();
+    calcImageRatio();
   }, [calcImageRatio]);
 
   return (
@@ -55,8 +55,8 @@ export default function EventDetail({ event }: { event: Event }) {
       <div
         className={clsx(
           "p-6 event-detail__right w-full sm1:w-5/12 flex",
-          isWiderImage && "w-full flex-col sm:flex-row",
-          !isWiderImage && "lg:w-5/12 flex-col sm:flex-row lg:flex-col"
+          isWiderImage && "w-full flex-col sm:flex-row sm:items-end",
+          !isWiderImage && "lg:w-5/12 flex-col sm:flex-row sm:max-lg:items-end lg:flex-col"
         )}
       >
         <div className="flex-grow">
