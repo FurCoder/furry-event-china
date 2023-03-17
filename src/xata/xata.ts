@@ -19,6 +19,9 @@ const tables = [
       { name: "contactMail", type: "email" },
       { name: "status", type: "text", notNull: true, defaultValue: "" },
       { name: "slug", type: "string", unique: true },
+      { name: "twitter", type: "string" },
+      { name: "weibo", type: "string" },
+      { name: "qqGroup", type: "string" },
     ],
   },
   {

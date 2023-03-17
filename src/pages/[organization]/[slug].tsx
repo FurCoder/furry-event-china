@@ -46,7 +46,7 @@ export default function EventDetail({ event }: { event: Event }) {
           !isWiderImage && "lg:w-7/12 w-full h-[400px] lg:h-auto"
         )}
         style={{
-          backgroundImage: `url(${event.coverUrl})`,
+          backgroundImage: `url(${event.logoUrl || event.coverUrl})`,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -56,7 +56,8 @@ export default function EventDetail({ event }: { event: Event }) {
         className={clsx(
           "p-6 event-detail__right w-full sm1:w-5/12 flex",
           isWiderImage && "w-full flex-col sm:flex-row sm:items-end",
-          !isWiderImage && "lg:w-5/12 flex-col sm:flex-row sm:max-lg:items-end lg:flex-col"
+          !isWiderImage &&
+            "lg:w-5/12 flex-col sm:flex-row sm:max-lg:items-end lg:flex-col"
         )}
       >
         <div className="flex-grow">
@@ -109,14 +110,14 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       slug: context.params?.slug as string,
       "organization.slug": context.params?.organization as string,
     })
-    .select(["*", "organization.slug"])
+    .select(["*", "organization.slug", "organization.name"])
     .getFirst();
   return {
     props: {
       event,
       headMetas: {
         title: `${event?.name} FEC·兽展日历`,
-        des: `${event?.address}`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${event?.name} 的详细信息：这是由${event?.organization?.name}举办的兽展，将于${event?.startDate}至${event?.endDate}在${event?.city}${event?.address}举办，喜欢的朋友记得关注开始售票时间～`,
         link: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
         cover: event?.coverUrl?.[0],
       },

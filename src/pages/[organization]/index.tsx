@@ -168,13 +168,22 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     eventPromise,
   ]);
 
+  const date = events[0].startDate && new Date(events[0].startDate);
+  const dateObj = date && {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+  };
+  const dateString = date
+    ? `${dateObj?.year}年${dateObj?.month}月${dateObj?.day}日`
+    : "未知时间线";
   return {
     props: {
       organization,
       events,
       headMetas: {
         title: `${organization?.name} FEC·兽展日历`,
-        des: `${organization?.description}`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${organization?.name} 的有关信息，这家展商已累计举办 ${events.length} 场兽展，最近的一次在${dateString}，他们是这样介绍自己的“${organization?.description}”`,
         link: `https://www.furryeventchina.com/${organization?.slug}`,
         cover: organization?.logoUrl,
       },

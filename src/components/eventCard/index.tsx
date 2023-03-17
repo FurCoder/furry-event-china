@@ -10,7 +10,7 @@ export default function EventCard({ event }: { event: Event }) {
         <div
           className={`flex flex-col justify-end h-full rounded-xl ${styles["event-card"]}`}
           style={{
-            backgroundImage: `url(${event.coverUrl})`,
+            backgroundImage: `url(${event.logoUrl || event.coverUrl?.[0]})`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
