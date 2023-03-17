@@ -16,6 +16,8 @@ export default function Footer() {
     },
   ];
 
+  const dateString=new Date(LASTCOMMITDATETIME).toLocaleDateString()
+
   return (
     <footer className="flex flex-col md:flex-row md:justify-between items-center mt-20 bg-white rounded-t-xl p-6 text-sm">
       <div>
@@ -38,7 +40,7 @@ export default function Footer() {
           <FaKissWinkHeart className="inline-block text-xl text-red-400 mx-1" />
           和<span className="mx-1 text-xl">🍜</span>
           制作而成
-          <span className="ml-2">build.1</span>
+          <span className="ml-2">build.{VERSION} {dateString}</span>
         </div>
       </div>
     </footer>

@@ -54,7 +54,7 @@ export async function getStaticProps() {
       organizations,
       headMetas: {
         title: "展商列表 FEC·兽展日历",
-        des: `共有 ${organizations.length} 个展商举办过 Furry 相关的活动，你最爱的展商是？`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆的 ${organizations.length} 个和“furry”，“兽展”，“兽人控”等主题相关的展商，我们真挚感谢这些为兽人文化发展做出贡献的团体，今天的繁荣离不开你们的支持！`,
         link: "https://www.furryeventchina.com/organization",
       },
     },

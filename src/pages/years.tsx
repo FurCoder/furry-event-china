@@ -58,7 +58,7 @@ export async function getStaticProps() {
       events,
       headMetas: {
         title: "年度时间轴 FEC·兽展日历",
-        des: `共有 ${cities} 个城市举办过 ${events.length} 场 Furry 相关的展会活动，你去过多少？`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆的 ${cities} 个城市举办过的 ${events.length} 场 Furry 相关的展会活动，你去过多少次呢？愿你能在这里找到最美好的回忆！`,
         link: "https://www.furryeventchina.com/years",
       },
     },
