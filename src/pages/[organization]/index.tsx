@@ -31,12 +31,23 @@ export default function OrganizationDetail(props: {
     }
   }, [organization.creationTime]);
 
+  const statusLabel = useMemo(() => {
+    switch (organization.status) {
+      case "active":
+        return "活跃";
+      case "deactive":
+        return "停止活动";
+      default:
+        return "未知状态";
+    }
+  }, [organization.status]);
+
   return (
     <div>
       <div className="border bg-white rounded-xl p-6">
         <div className="flex flex-col md:flex-row">
-          <div className="border rounded flex justify-center p-2 w-full md:w-80 md:h-80 h-48">
-            {organization.logoUrl && (
+          {organization.logoUrl && (
+            <div className="border rounded flex justify-center p-2 w-full md:w-80 md:h-80 h-48">
               <Image
                 className="object-contain"
                 alt={`${organization.name}'s logo`}
@@ -44,15 +55,21 @@ export default function OrganizationDetail(props: {
                 height={200}
                 src={organization.logoUrl}
               />
-            )}
-          </div>
+            </div>
+          )}
           <div className="mt-4 md:mt-0 md:ml-4">
             <h1 className="text-2xl font-bold mb-2">{organization.name}</h1>
 
             <div className="flex items-center text-gray-500 mb-2">
               <span className="flex items-center">
-                <GrStatusGoodSmall className="mr-1 text-green-400" />
-                {organization.status === "active" ? "活跃" : "不再活跃"}
+                <GrStatusGoodSmall
+                  className={clsx(
+                    "mr-1",
+                    organization.status === "active" && "text-green-400",
+                    organization.status === "deactive" && "text-red-400"
+                  )}
+                />
+                {statusLabel}
               </span>
             </div>
 
@@ -95,7 +112,7 @@ export default function OrganizationDetail(props: {
               去微博
             </button>
             <button className="bg-blue-300 rounded-xl px-4 py-1 text-white">
-              去微信公众号
+              去B站
             </button>
             <button className="bg-blue-300 rounded-xl px-4 py-1 text-white">
               去QQ群
