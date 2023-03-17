@@ -62,7 +62,9 @@ export default function City(props: { events: Event[] }) {
                         <div
                           className="rounded-xl duration-500 transition group-hover:border-gray-400 w-full h-full absolute brightness-75 hover:brightness-100"
                           style={{
-                            backgroundImage: `url(${event.coverUrl})`,
+                            backgroundImage: `url(${
+                              event.logoUrl || event.coverUrl
+                            })`,
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "cover",
