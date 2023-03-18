@@ -14,6 +14,10 @@ export default function Footer() {
       link: "https://furcoder.org/?utm_source=fec",
       label: "FurCoder.org",
     },
+    {
+      link: "https://m.nyanket.com/?utm_source=fec",
+      label: "Nyanket 喵通贩",
+    },
   ];
 
   const dateString=new Date(LASTCOMMITDATETIME).toLocaleDateString()

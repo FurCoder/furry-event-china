@@ -61,12 +61,11 @@ export default function EventDetail({ event }: { event: Event }) {
         )}
       >
         <div className="flex-grow">
-          <h1 className="font-bold text-2xl text-gray-700">{event.name}</h1>
+          <h1 className="font-bold text-2xl text-gray-700">{event.organization?.name}·{event.name}</h1>
           <p className="flex items-center text-gray-500 mt-4">
             <IoLocation className="text-gray-500 inline-block mr-2" />
             {`${event.city} · ${event.address}`}
           </p>
-          <p>{event.organization?.name}</p>
           <p className="flex items-center text-gray-500">
             <BsCalendar2DateFill className="text-gray-500 inline-block mr-2" />
             {event.startDate
