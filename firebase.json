@@ -1,10 +1,16 @@
 {
   "hosting": {
     "public": "out",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/sitemap",
+        "destination": "/sitemap.xml"
+      },
+      {
+        "source": "/sitemap-0",
+        "destination": "/sitemap-0.xml"
+      }
     ]
   }
 }
