@@ -13,7 +13,7 @@ export default function Layout({
   return (
     <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen">
       <Head>
-        <title>{headMetas?.title || "FEC·兽展日历"} </title>
+        <title>{headMetas?.title || "FEC·兽展日历"}</title>
         <meta
           name="description"
           content={headMetas?.des || "欢迎来到FEC·兽展日历！FEC·兽展日历致力于为您提供最新最全的位于中国大陆境内的兽展相关资讯整合，来这里寻找感兴趣的展会，叫上朋友一起来玩吧！"}
