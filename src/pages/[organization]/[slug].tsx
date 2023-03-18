@@ -6,6 +6,7 @@ import { BsCalendar2DateFill } from "react-icons/bs";
 import { TbArrowsRightLeft } from "react-icons/tb";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
+import { format } from "date-fns";
 
 const xata = new XataClient();
 
@@ -61,7 +62,9 @@ export default function EventDetail({ event }: { event: Event }) {
         )}
       >
         <div className="flex-grow">
-          <h1 className="font-bold text-2xl text-gray-700">{event.organization?.name}·{event.name}</h1>
+          <h1 className="font-bold text-2xl text-gray-700">
+            {event.organization?.name}·{event.name}
+          </h1>
           <p className="flex items-center text-gray-500 mt-4">
             <IoLocation className="text-gray-500 inline-block mr-2" />
             {`${event.city} · ${event.address}`}
@@ -116,7 +119,16 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       event,
       headMetas: {
         title: `${event?.name} FEC·兽展日历`,
-        des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${event?.name} 的详细信息：这是由${event?.organization?.name}举办的兽展，将于${event?.startDate}至${event?.endDate}在${event?.city}${event?.address}举办，喜欢的朋友记得关注开始售票时间～`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${
+          event?.name
+        }”的详细信息：这是由“${
+          event?.organization?.name
+        }”举办的兽展，将于${format(
+          event?.startDate!,
+          "yyyy年MM月dd日"
+        )}至${format(event?.endDate!, "yyyy年MM月dd日")}在“${event?.city}${
+          event?.address
+        }”举办，喜欢的朋友记得关注开始售票时间～`,
         link: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
         cover: event?.coverUrl?.[0],
       },
