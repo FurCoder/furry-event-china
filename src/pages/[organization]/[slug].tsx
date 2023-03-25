@@ -14,13 +14,13 @@ export default function EventDetail({ event }: { event: Event }) {
   const [isWiderImage, setIsWiderImage] = useState(true);
 
   const calcImageRatio = useCallback(() => {
-    if (!event.coverUrl?.length) return;
+    if (!event.logoUrl) return;
     const img = new Image();
-    img.src = event.coverUrl?.[0];
+    img.src = event.logoUrl;
     img.onload = function (this) {
       setIsWiderImage(img.width >= img.height);
     };
-  }, [event.coverUrl]);
+  }, [event.logoUrl]);
 
   useEffect(() => {
     calcImageRatio();
@@ -43,16 +43,40 @@ export default function EventDetail({ event }: { event: Event }) {
       <div
         className={clsx(
           "event-detail__left",
-          isWiderImage && "w-full h-[400px]",
-          !isWiderImage && "lg:w-7/12 w-full h-[400px] lg:h-auto"
+          isWiderImage && "w-full h-[500px]",
+          !isWiderImage && "lg:w-7/12 w-full h-[500px]"
         )}
-        style={{
-          backgroundImage: `url(${event.logoUrl || event.coverUrl})`,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      ></div>
+        {...(isWiderImage
+          ? {
+              style: {
+                backgroundImage: `url(${event.logoUrl || event.coverUrl})`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              },
+            }
+          : {
+              style: {
+                backgroundImage: `url(${event.logoUrl || event.coverUrl})`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              },
+            })}
+      >
+        {!isWiderImage && event.logoUrl && (
+          <div
+            className={clsx("text-center h-full")}
+            style={{ backdropFilter: "blur(8px)" }}
+          >
+            <img
+              className="inline-block"
+              alt="event cover"
+              src={event.logoUrl}
+            />
+          </div>
+        )}
+      </div>
       <div
         className={clsx(
           "p-6 event-detail__right w-full sm1:w-5/12 flex",
