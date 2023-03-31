@@ -1,27 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FurryEventChina.com
 
-## Getting Started
+![](https://img.shields.io/badge/Next.js-black.svg?style=flat-square&logo=next.js)
+![](https://img.shields.io/badge/React-blue.svg?style=flat-square&logo=react)
+![](https://img.shields.io/badge/Sentry-purple.svg?style=flat-square&logo=sentry)
+![](https://img.shields.io/badge/Umami-orange.svg?style=flat-square&logo=umami)
+![](https://img.shields.io/badge/Google%20Analytics%205-blue.svg?style=flat-square&logo=google-analytics)
+![](https://img.shields.io/badge/Xata-blue.svg?style=flat-square&logo=xata)
+![](https://img.shields.io/badge/Firebase-yellow.svg?style=flat-square&logo=firebase)
+![](https://img.shields.io/badge/Cloudflare%20R2-blue.svg?style=flat-square&logo=cloudflare)
+![](https://img.shields.io/badge/Cloudflare%20Worker-blue.svg?style=flat-square&logo=cloudflare)
+![](https://img.shields.io/badge/CloudFront-orange.svg?style=flat-square&logo=amazon-aws)
 
-First, run the development server:
+[中文版本](./README.zh.md)
+
+[FEC 兽展日历](https://www.furryeventchina.com) is a website that collects and displays exhibition events related to furries in mainland China. and this is source code repo of it.
+
+## Start develop
 
 ```bash
-npm run dev
-# or
+yarn install
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
+## Contribute
+If you would like to contribute to this project, there are many tasks waiting to be claimed on our board. Choose one that you are satisfied with and then open a PR!
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
@@ -31,8 +35,14 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Simply create a PR and push the commit to the remote repository, Github action will automatically compile and deploy the code to Firebase. After merging into the main branch, it will also be automatically compiled and deployed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+If you have any questions or suggestions, please directly open a issue.
