@@ -31,18 +31,24 @@ export default function Document() {
         )}
         {isEnableTrack && (
           <Script
-            strategy="lazyOnload"
+            strategy="afterInteractive"
             src="https://www.googletagmanager.com/gtag/js?id=G-RBND7XQ43D"
           />
         )}
         {isEnableTrack && (
-          <Script id="ga" strategy="lazyOnload">
-            {`
+          <Script
+            id="ga"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-RBND7XQ43D');
-          `}
+          `,
+            }}
+          >
+            {}
           </Script>
         )}
       </body>
