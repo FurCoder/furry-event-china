@@ -2,6 +2,8 @@ import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 
 export default function Document() {
+  console.log("The Enable Track env is", process.env.ENABLE_TRACK);
+
   return (
     <Html lang="zh-Hans">
       <Head>
