@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       colors: {
         geraldine: "#FF7D7D",
+        "qq-brand": "#ea1c26",
       },
     },
   },

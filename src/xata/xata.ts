@@ -22,6 +22,7 @@ const tables = [
       { name: "twitter", type: "string" },
       { name: "weibo", type: "string" },
       { name: "qqGroup", type: "string" },
+      { name: "bilibili", type: "string" },
     ],
   },
   {
@@ -37,6 +38,7 @@ const tables = [
       { name: "coverUrl", type: "multiple" },
       { name: "organization", type: "link", link: { table: "organization" } },
       { name: "slug", type: "string", notNull: true, defaultValue: "" },
+      { name: "detail", type: "text" },
     ],
   },
 ] as const;
