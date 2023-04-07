@@ -16,7 +16,7 @@ export default function EventCard({ event }: { event: Event }) {
             backgroundSize: "cover",
           }}
         >
-          <div className="p-6 bg-gray-400/25 group-hover:bg-gray-400/50 transition duration-300 rounded-b-xl">
+          <div className="p-6 bg-gray-400/40 group-hover:bg-gray-400/50 transition duration-300 rounded-b-xl">
             <h1 className="text-white font-bold text-2xl">
               {event.organization?.name}·{event.name}
             </h1>

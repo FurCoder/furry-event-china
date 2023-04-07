@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import styles from "@/styles/Organization.module.css";
 import clsx from "clsx";
 import EventCard from "@/components/eventCard";
+import { getOranizationStatusConfig } from "@/utils/organization";
 
 const xata = new XataClient();
 export default function OrganizationDetail(props: {
@@ -42,6 +43,8 @@ export default function OrganizationDetail(props: {
     }
   }, [organization.status]);
 
+  const statusConfig = getOranizationStatusConfig(organization.status);
+
   return (
     <div>
       <div className="border bg-white rounded-xl p-6">
@@ -63,13 +66,9 @@ export default function OrganizationDetail(props: {
             <div className="flex items-center text-gray-500 mb-2">
               <span className="flex items-center">
                 <GrStatusGoodSmall
-                  className={clsx(
-                    "mr-1",
-                    organization.status === "active" && "text-green-400",
-                    organization.status === "deactive" && "text-red-400"
-                  )}
+                  className={clsx("mr-1", statusConfig.color)}
                 />
-                {statusLabel}
+                {statusConfig.label}
               </span>
             </div>
 
