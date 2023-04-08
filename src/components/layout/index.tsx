@@ -11,7 +11,7 @@ export default function Layout({
 }: {
   children: React.ReactNode;
   headMetas?: { title?: string; des?: string; url?: string; cover?: string };
-  structuredData?: { [x: string]: unknown };
+  structuredData?: { [key: string]: { [key: string]: string } };
 }) {
   return (
     <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen">
@@ -50,11 +50,44 @@ export default function Layout({
           }
           key="image"
         />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="furryeventchina.com" />
+        <meta
+          property="twitter:url"
+          content={headMetas?.url || "https://www.furryeventchina.com"}
+        />
+        <meta
+          name="twitter:title"
+          content={headMetas?.title || "FEC·兽展日历"}
+        />
+        <meta
+          name="twitter:description"
+          content={
+            headMetas?.des ||
+            "欢迎来到FEC·兽展日历！FEC·兽展日历致力于为您提供最新最全的位于中国大陆境内的兽展相关资讯整合，来这里寻找感兴趣的展会，叫上朋友一起来玩吧！"
+          }
+        />
+        <meta
+          name="twitter:image"
+          content={
+            headMetas?.cover || "https://cdn.furryeventchina.com/banner.png"
+          }
+        />
         <link rel="icon" href="/favicon.ico" />
-        {structuredData && (
+        {structuredData?.event && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData.event),
+            }}
+          />
+        )}
+        {structuredData?.breadcrumb && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData.breadcrumb),
+            }}
           />
         )}
       </Head>

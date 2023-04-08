@@ -149,7 +149,9 @@ export default function OrganizationDetail(props: {
 
         <div className="border-t my-8" />
         <h2 className="text-xl text-slate-600 mb-4">展会简介</h2>
-        <p className="text-slate-700 whitespace-pre-line">{organization.description}</p>
+        <p className="text-slate-700 whitespace-pre-line">
+          {organization.description}
+        </p>
       </div>
 
       {events.length && (
@@ -213,6 +215,25 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${organization?.name} 的有关信息，这家展商已累计举办 ${events.length} 场兽展，最近的一次在${dateString}，他们是这样介绍自己的“${organization?.description}”`,
         url: `https://www.furryeventchina.com/${organization?.slug}`,
         cover: organization?.logoUrl,
+      },
+      structuredData: {
+        breadcrumb: {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "展商",
+              item: "https://www.furryeventchina.com/organization/",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: organization?.name,
+            },
+          ],
+        },
       },
     },
   };
