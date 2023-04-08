@@ -326,7 +326,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           address: {
             "@type": "PostalAddress",
             streetAddress: event?.address,
-            // addressLocality: "Snickertown",
+            addressLocality: event?.city,
             // postalCode: "19019",
             // addressRegion: event?.city,
             addressCountry: "CN",
