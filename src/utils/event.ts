@@ -1,5 +1,5 @@
-import { groupBy } from "lodash-es";
 import { Event } from "@/xata/xata";
+import groupBy from "lodash-es/groupBy";
 
 export function sortByStartDateDesc(data: Event[]) {
   const groupByStartDate = groupBy(data, (e) =>

@@ -1,15 +1,15 @@
-import { Organization, XataClient, Event } from "@/xata/xata";
+import EventCard from "@/components/eventCard";
+import OrganizationStatus from "@/components/organizationStatus";
+import styles from "@/styles/Organization.module.css";
+import { Event, Organization, XataClient } from "@/xata/xata";
+import clsx from "clsx";
 import Image from "next/image";
-import { GrStatusGoodSmall } from "react-icons/gr";
-import { HiOutlineMail } from "react-icons/hi";
-import { FaBirthdayCake } from "react-icons/fa";
-import { MdOutlineContentCopy } from "react-icons/md";
 import { GetStaticPropsContext } from "next/types";
 import { useMemo } from "react";
-import styles from "@/styles/Organization.module.css";
-import clsx from "clsx";
-import EventCard from "@/components/eventCard";
-import { getOranizationStatusConfig } from "@/utils/organization";
+import toast, { Toaster } from "react-hot-toast";
+import { FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { SiBilibili } from "react-icons/si";
 
 const xata = new XataClient();
 export default function OrganizationDetail(props: {
@@ -32,21 +32,9 @@ export default function OrganizationDetail(props: {
     }
   }, [organization.creationTime]);
 
-  const statusLabel = useMemo(() => {
-    switch (organization.status) {
-      case "active":
-        return "活跃";
-      case "deactive":
-        return "停止活动";
-      default:
-        return "未知状态";
-    }
-  }, [organization.status]);
-
-  const statusConfig = getOranizationStatusConfig(organization.status);
-
   return (
     <div>
+      <Toaster />
       <div className="border bg-white rounded-xl p-6">
         <div className="flex flex-col md:flex-row">
           {organization.logoUrl && (
@@ -63,13 +51,8 @@ export default function OrganizationDetail(props: {
           <div className="mt-4 md:mt-0 md:ml-4">
             <h1 className="text-2xl font-bold mb-2">{organization.name}</h1>
 
-            <div className="flex items-center text-gray-500 mb-2">
-              <span className="flex items-center">
-                <GrStatusGoodSmall
-                  className={clsx("mr-1", statusConfig.color)}
-                />
-                {statusConfig.label}
-              </span>
+            <div className="flex items-center mb-2 text-gray-500">
+              <OrganizationStatus status={organization.status} />
             </div>
 
             <div className={clsx("mb-2 text-gray-500", styles["intro-bar"])}>
@@ -80,16 +63,6 @@ export default function OrganizationDetail(props: {
                 </span>
               )}
             </div>
-
-            {/* <div className="flex items-center text-gray-500 mt-2">
-            <a
-              href={`mailto:${organization.contactMail}`}
-              className="mr-2 text-gray-500 flex items-center inline-block"
-            >
-              <HiOutlineMail className="mr-1 text-xl" />
-              <span className="uppercase">{organization.contactMail}</span>
-            </a>
-          </div> */}
 
             <div
               className={clsx(
@@ -107,25 +80,62 @@ export default function OrganizationDetail(props: {
                   去官网
                 </a>
               )}
-              {/* <button className="bg-blue-300 rounded-xl px-4 py-1 text-white">
-              去微博
-            </button>
-            <button className="bg-blue-300 rounded-xl px-4 py-1 text-white">
-              去B站
-            </button>
-            <button className="bg-blue-300 rounded-xl px-4 py-1 text-white">
-              去QQ群
-            </button> */}
+              {organization?.qqGroup && (
+                <button
+                  onClick={() => {
+                    navigator.clipboard
+                      .writeText(organization?.qqGroup || "")
+                      .then(() => toast.success("🥳 复制成功，快去QQ加群吧"));
+                  }}
+                  className="flex items-center justify-center bg-red-300 rounded-xl px-4 py-1 text-white text-center"
+                >
+                  <FaQq className="mr-2" /> 复制QQ群号:
+                  {organization?.qqGroup}
+                </button>
+              )}
+              {organization?.bilibili && (
+                <a
+                  href={organization?.bilibili}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center bg-sky-400 rounded-xl px-4 py-1 text-white text-center"
+                >
+                  <SiBilibili className="mr-2" />
+                  去Bilibili
+                </a>
+              )}
+              {organization?.weibo && (
+                <a
+                  href={organization?.weibo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center bg-red-500 rounded-xl px-4 py-1 text-white text-center"
+                >
+                  <FaWeibo className="mr-2" />
+                  去微博
+                </a>
+              )}
+              {organization?.twitter && (
+                <a
+                  href={organization?.twitter}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center bg-blue-500 rounded-xl px-4 py-1 text-white text-center"
+                >
+                  <FaTwitter className="mr-2" />
+                  去Twitter
+                </a>
+              )}
               {organization.contactMail && (
                 <div className="flex items-center bg-green-600 rounded-xl px-4 py-1 text-white">
-                  <a className="" href={`mailto:${organization.contactMail}`}>
-                    {/* <button className=""> */}
+                  <a href={`mailto:${organization.contactMail}`}>
                     发邮件给 {organization.contactMail}
-                    {/* </button> */}
                   </a>
                   <div
                     onClick={() => {
-                      navigator.clipboard.writeText(organization.contactMail!);
+                      navigator.clipboard
+                        .writeText(organization.contactMail!)
+                        .then(() => toast.success("🥳 复制成功，快去发邮件吧"));
                     }}
                     className="border-l pl-2 cursor-pointer"
                   >
@@ -138,12 +148,13 @@ export default function OrganizationDetail(props: {
         </div>
 
         <div className="border-t my-8" />
-
-        <p className="text-slate-700">{organization.description}</p>
+        <h2 className="text-xl text-slate-600 mb-4">展会简介</h2>
+        <p className="text-slate-700 whitespace-pre-line">{organization.description}</p>
       </div>
 
       {events.length && (
-        <section className="mt-8 grid gird-cols-1 gap-8">
+        <section className="mt-8 grid gird-cols-1 gap-8 p-6 bg-white rounded-xl">
+          <h2 className="text-xl text-slate-600 -mb-4">历届展会</h2>
           {events.map((e) => (
             <EventCard key={e.id} event={e} />
           ))}
@@ -200,7 +211,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       headMetas: {
         title: `${organization?.name} FEC·兽展日历`,
         des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${organization?.name} 的有关信息，这家展商已累计举办 ${events.length} 场兽展，最近的一次在${dateString}，他们是这样介绍自己的“${organization?.description}”`,
-        link: `https://www.furryeventchina.com/${organization?.slug}`,
+        url: `https://www.furryeventchina.com/${organization?.slug}`,
         cover: organization?.logoUrl,
       },
     },

@@ -1,11 +1,8 @@
-import { XataClient } from "@/xata/xata";
-import { GetStaticPropsContext } from "next/types";
-import { useMemo } from "react";
-import { Event } from "@/xata/xata";
-import { groupBy } from "lodash-es";
-import Link from "next/link";
-import Image from "next/image";
 import { sortByStartDateDesc } from "@/utils/event";
+import { Event, XataClient } from "@/xata/xata";
+import groupBy from "lodash-es/groupBy";
+import Link from "next/link";
+import { useMemo } from "react";
 
 export default function City(props: { events: Event[] }) {
   const { events } = props;

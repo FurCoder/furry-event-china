@@ -1,12 +1,7 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import Link from "next/link";
-import { useMemo } from "react";
-import { groupBy } from "lodash-es";
-import { XataClient, Event } from "@/xata/xata";
 import EventCard from "@/components/eventCard";
+import { Event, XataClient } from "@/xata/xata";
+import groupBy from "lodash-es/groupBy";
+import { useMemo } from "react";
 
 export default function Home(props: { events: Event[] }) {
   const groupByCustomDurationEvent = useMemo(() => {
@@ -112,7 +107,6 @@ export async function getStaticProps() {
     },
   };
 }
-
 
 enum DurationType {
   Passed = "passed", //already done.

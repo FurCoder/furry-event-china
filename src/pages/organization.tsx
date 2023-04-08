@@ -1,8 +1,8 @@
 import { Organization, XataClient } from "@/xata/xata";
-import Link from "next/link";
-import { groupBy } from "lodash-es";
-import Image from "next/image";
 import clsx from "clsx";
+import groupBy from "lodash-es/groupBy";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function OrganizationPage({
   organizations,
