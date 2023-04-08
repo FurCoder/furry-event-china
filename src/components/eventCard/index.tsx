@@ -17,10 +17,10 @@ export default function EventCard({ event }: { event: Event }) {
           }}
         >
           <div className="p-6 bg-gray-400/40 group-hover:bg-gray-400/50 transition duration-300 rounded-b-xl">
-            <h1 className="text-white font-bold text-2xl">
+            <h4 className="text-white font-bold text-2xl">
               {event.organization?.name}·{event.name}
-            </h1>
-            <h2 className="text-white font-bold text-xl">{event.city}市</h2>
+            </h4>
+            <h5 className="text-white font-bold text-xl">{event.city}市</h5>
             <div className="text-white text-base">
               {event.startDate && event.endDate
                 ? `${new Date(event.startDate).toLocaleDateString()} -
@@ -28,7 +28,7 @@ export default function EventCard({ event }: { event: Event }) {
                 : null}
               <span></span>
               <br />
-              <span>{event.address}</span>
+              <span aria-label="活动地址">{event.address}</span>
             </div>
           </div>
         </div>

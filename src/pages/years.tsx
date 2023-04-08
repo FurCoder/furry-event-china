@@ -1,6 +1,6 @@
 import EventCard from "@/components/eventCard";
 import { Event, XataClient } from "@/xata/xata";
-import { groupBy } from "lodash-es";
+import groupBy from "lodash-es/groupBy";
 import { useMemo } from "react";
 
 export default function Years({ events }: { events: Event[] }) {

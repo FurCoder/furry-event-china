@@ -1,18 +1,18 @@
-import { getOranizationStatusConfig } from "@/utils/organization";
+import OrganizationStatus from "@/components/organizationStatus";
 import { Event, XataClient } from "@/xata/xata";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { GetStaticPropsContext } from "next";
 import NextImage from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { BsCalendar2DateFill } from "react-icons/bs";
-import { FaQq, FaTwitter } from "react-icons/fa";
-import { GrStatusGoodSmall } from "react-icons/gr";
+import { FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
 import { HiOutlineHome, HiOutlineMail } from "react-icons/hi";
 import { IoLocation } from "react-icons/io5";
 import { SiBilibili } from "react-icons/si";
 import { TbArrowsRightLeft } from "react-icons/tb";
+import Link from "next/link";
 
 const xata = new XataClient();
 
@@ -31,10 +31,6 @@ export default function EventDetail({ event }: { event: Event }) {
   useEffect(() => {
     calcImageRatio();
   }, [calcImageRatio]);
-
-  const statusConfig = useMemo(() => {
-    return getOranizationStatusConfig(event.organization?.status || "");
-  }, [event]);
 
   return (
     <>
@@ -145,7 +141,10 @@ export default function EventDetail({ event }: { event: Event }) {
 
       <div className="flex my-4 lg:items-start flex-col-reverse md:flex-row">
         {event.detail && (
-          <div id="event-detail__left" className="bg-white rounded-xl flex-grow p-6 md:mr-4">
+          <div
+            id="event-detail__left"
+            className="bg-white rounded-xl flex-grow p-6 md:mr-4"
+          >
             <p
               className="text-gray-600 whitespace-pre-line"
               dangerouslySetInnerHTML={{ __html: event.detail }}
@@ -174,15 +173,18 @@ export default function EventDetail({ event }: { event: Event }) {
                 </div>
               )}
               <div className="ml-4">
-                <h2 className="font-bold text-2xl text-gray-700">
+                <Link
+                  className="text-2xl font-bold text-gray-700 hover:underline"
+                  target="_blank"
+                  href={`/${event.organization?.slug}`}
+                >
                   {event.organization?.name}
-                </h2>
+                </Link>
                 <div className="flex items-center text-gray-500 mb-2">
                   <span className="flex items-center">
-                    <GrStatusGoodSmall
-                      className={`mr-1 ${statusConfig.color}`}
+                    <OrganizationStatus
+                      status={event.organization?.status || ""}
                     />
-                    {statusConfig.label}
                   </span>
                 </div>
               </div>
@@ -190,7 +192,7 @@ export default function EventDetail({ event }: { event: Event }) {
 
             <p
               className={clsx(
-                "flex items-center text-gray-500 grid gap-4 mt-4 ",
+                "flex items-center text-gray-500 grid gap-4 mt-4",
                 !event.detail && "lg:grid-cols-2"
               )}
             >
@@ -227,6 +229,17 @@ export default function EventDetail({ event }: { event: Event }) {
                 >
                   <SiBilibili className="mr-2" />
                   去Bilibili
+                </a>
+              )}
+              {event.organization?.weibo && (
+                <a
+                  href={event.organization?.weibo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center bg-red-500 rounded-xl px-4 py-1 text-white w-full text-center"
+                >
+                  <FaWeibo className="mr-2" />
+                  去微博
                 </a>
               )}
               {event.organization?.twitter && (
@@ -296,8 +309,48 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         )}至${format(event?.endDate!, "yyyy年MM月dd日")}在“${event?.city}${
           event?.address
         }”举办，喜欢的朋友记得关注开始售票时间～`,
-        link: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
-        cover: event?.coverUrl?.[0],
+        url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
+        cover: event?.logoUrl || event?.coverUrl?.[0],
+      },
+      structuredData: {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        name: event?.name,
+        startDate: event?.startDate,
+        endDate: event?.endDate,
+        // eventStatus: "https://schema.org/EventCancelled",
+        // eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        location: {
+          "@type": "Place",
+          name: event?.address,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: event?.address,
+            // addressLocality: "Snickertown",
+            // postalCode: "19019",
+            // addressRegion: event?.city,
+            addressCountry: "CN",
+          },
+        },
+        image: [event?.logoUrl || event?.coverUrl?.[0]],
+        description: event?.detail,
+        // offers: {
+        //   "@type": "Offer",
+        //   url: "https://www.example.com/event_offer/12345_201803180430",
+        //   price: "30",
+        //   priceCurrency: "USD",
+        //   availability: "https://schema.org/InStock",
+        //   validFrom: "2024-05-21T12:00",
+        // },
+        // performer: {
+        //   "@type": "PerformingGroup",
+        //   name: "Kira and Morrison",
+        // },
+        organizer: {
+          "@type": "Organization",
+          name: event?.organization?.name,
+          url: `https://www.furryeventchina.com/${context.params?.organization}`,
+        },
       },
     },
   };
