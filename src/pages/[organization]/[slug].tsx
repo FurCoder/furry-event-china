@@ -141,14 +141,25 @@ export default function EventDetail({ event }: { event: Event }) {
 
       <div className="flex my-4 lg:items-start flex-col-reverse md:flex-row">
         {event.detail && (
-          <div
-            id="event-detail__left"
-            className="bg-white rounded-xl flex-grow p-6 md:mr-4"
-          >
-            <p
-              className="text-gray-600 whitespace-pre-line"
-              dangerouslySetInnerHTML={{ __html: event.detail }}
-            />
+          <div id="event-detail__left">
+            <div className="bg-white rounded-xl flex-grow p-6 md:mr-4 mb-4">
+              <p
+                className="text-gray-600 whitespace-pre-line"
+                dangerouslySetInnerHTML={{ __html: event.detail }}
+              />
+            </div>
+
+            {event.coverUrl?.length && (
+              <div className="bg-white rounded-xl flex-grow p-6 md:mr-4">
+                {event.coverUrl.map((cover, index) => (
+                  <img
+                    key={cover}
+                    alt={`${event.name}'s poster-${index}`}
+                    src={cover}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
 
