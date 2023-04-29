@@ -13,6 +13,7 @@ export default function Document() {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap" as="style"/>
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
           rel="stylesheet"
