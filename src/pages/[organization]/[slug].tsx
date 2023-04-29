@@ -114,13 +114,13 @@ export default function EventDetail({ event }: { event: Event }) {
               <BsCalendar2DateFill className="text-gray-500 inline-block mr-2" />
               <time aria-label="活动开始时间">
                 {event.startDate
-                  ? new Date(event.startDate).toLocaleString()
+                  ? new Date(event.startDate).toLocaleDateString()
                   : null}
               </time>
               <TbArrowsRightLeft className="mx-2  text-sm" />
               <time aria-label="活动结束时间">
                 {event.endDate
-                  ? new Date(event.endDate).toLocaleString()
+                  ? new Date(event.endDate).toLocaleDateString()
                   : null}
               </time>
             </p>
