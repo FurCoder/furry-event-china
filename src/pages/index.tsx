@@ -40,7 +40,7 @@ export default function Home(props: { events: Event[] }) {
         return durationObject.passed.push(event);
       }
 
-      if (startMonth === currentMonth) {
+      if (startMonth <= currentMonth) {
         //Now events
         if (now > startTime && now < endTime) {
           return durationObject.now.push(event);
