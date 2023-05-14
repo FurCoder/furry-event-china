@@ -149,7 +149,7 @@ export default function EventDetail({ event }: { event: Event }) {
               />
             </div>
 
-            {event.coverUrl?.length && (
+            {!!event.coverUrl?.length && (
               <div className="bg-white rounded-xl flex-grow p-6 md:mr-4">
                 {event.coverUrl.map((cover, index) => (
                   <img
