@@ -44,7 +44,7 @@ export default function Footer() {
           <FaKissWinkHeart className="inline-block text-xl text-red-400 mx-1" />
           和<span className="mx-1 text-xl">🍜</span>
           制作而成
-          <span className="ml-2">build.{VERSION} {dateString}</span>
+          <span className="ml-2" suppressHydrationWarning>build.{VERSION} {dateString}</span>
         </div>
       </div>
     </footer>

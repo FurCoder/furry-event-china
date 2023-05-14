@@ -112,13 +112,13 @@ export default function EventDetail({ event }: { event: Event }) {
               className="flex items-center text-gray-500"
             >
               <BsCalendar2DateFill className="text-gray-500 inline-block mr-2" />
-              <time aria-label="活动开始时间">
+              <time aria-label="活动开始时间" suppressHydrationWarning>
                 {event.startDate
                   ? new Date(event.startDate).toLocaleDateString()
                   : null}
               </time>
               <TbArrowsRightLeft className="mx-2  text-sm" />
-              <time aria-label="活动结束时间">
+              <time aria-label="活动结束时间" suppressHydrationWarning>
                 {event.endDate
                   ? new Date(event.endDate).toLocaleDateString()
                   : null}
@@ -149,7 +149,7 @@ export default function EventDetail({ event }: { event: Event }) {
               />
             </div>
 
-            {event.coverUrl?.length && (
+            {!!event.coverUrl?.length && (
               <div className="bg-white rounded-xl flex-grow p-6 md:mr-4">
                 {event.coverUrl.map((cover, index) => (
                   <img

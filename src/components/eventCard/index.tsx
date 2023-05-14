@@ -28,7 +28,7 @@ export default function EventCard({ event }: { event: Event }) {
             <h5 className="text-white font-bold text-xl"></h5>
             <div className="text-white text-base">
               {event.startDate && event.endDate && (
-                <div className="flex items-center">
+                <div className="flex items-center" suppressHydrationWarning>
                   <BsCalendar2DateFill className="text-white mr-1" />
                   {event.startDate && event.endDate
                     ? `${new Date(event.startDate).toLocaleDateString()} -

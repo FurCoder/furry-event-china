@@ -154,7 +154,7 @@ export default function OrganizationDetail(props: {
         </p>
       </div>
 
-      {events.length && (
+      {!!events.length && (
         <section className="mt-8 grid gird-cols-1 gap-8 p-6 bg-white rounded-xl">
           <h2 className="text-xl text-slate-600 -mb-4">历届展会</h2>
           {events.map((e) => (
@@ -197,7 +197,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     eventPromise,
   ]);
 
-  const date = events[0].startDate && new Date(events[0].startDate);
+  const date = events?.[0]?.startDate && new Date(events[0].startDate);
   const dateObj = date && {
     year: date.getFullYear(),
     month: date.getMonth() + 1,
