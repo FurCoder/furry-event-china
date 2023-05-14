@@ -11,6 +11,7 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 const nextConfig = {
   reactStrictMode: true,
   images: { unoptimized: true },
+  optimizeFonts: false,
   experimental: {
     swcPlugins: [
       [
