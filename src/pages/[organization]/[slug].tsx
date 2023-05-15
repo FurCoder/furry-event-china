@@ -288,7 +288,7 @@ export default function EventDetail({ event }: { event: Event }) {
 export async function getStaticPaths() {
   const events = await xata.db.event
     .select(["*", "organization.slug"])
-    .getMany();
+    .getAll();
   return {
     paths: events.map((event) => ({
       params: { organization: event.organization?.slug, slug: event.slug },
