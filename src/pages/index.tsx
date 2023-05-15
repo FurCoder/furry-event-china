@@ -100,7 +100,7 @@ export async function getStaticProps() {
       endDate: { $le: new Date(new Date().getFullYear(), 11, 31) },
     })
     .select(["*", "organization.*"])
-    .getMany();
+    .getAll();
   return {
     props: {
       events,

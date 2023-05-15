@@ -23,6 +23,7 @@ const tables = [
       { name: "weibo", type: "string" },
       { name: "qqGroup", type: "string" },
       { name: "bilibili", type: "string" },
+      { name: "wikifur", type: "string" },
     ],
   },
   {

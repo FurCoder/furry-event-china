@@ -167,7 +167,7 @@ export default function OrganizationDetail(props: {
 }
 
 export async function getStaticPaths() {
-  const organizations = await xata.db.organization.select(["*"]).getMany();
+  const organizations = await xata.db.organization.select(["*"]).getAll();
   return {
     paths: organizations.map((organization) => ({
       params: { organization: organization.slug },
