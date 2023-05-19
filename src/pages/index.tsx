@@ -127,6 +127,11 @@ function DurationSection({
     );
   }, [events]);
 
+  const months =
+    durationType === DurationType.Passed
+      ? Object.keys(groupByDateEvent).reverse()
+      : Object.keys(groupByDateEvent);
+
   return (
     <section className="my-8 border rounded-xl p-6 bg-white">
       <h2 className="text-2xl text-red-400 font-bold mb-6">
@@ -135,7 +140,7 @@ function DurationSection({
         {durationType === DurationType.Soon && "马上就来"}
         {durationType === DurationType.Next && "今年还有"}
       </h2>
-      {Object.keys(groupByDateEvent).map((month) => (
+      {months.map((month) => (
         <div key={month} className="border rounded-xl bg-gray-100 p-6 my-4">
           <h3 className="text-xl text-red-400 font-bold mb-6">
             {month}
