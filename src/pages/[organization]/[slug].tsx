@@ -12,6 +12,7 @@ import { HiOutlineHome, HiOutlineMail } from "react-icons/hi";
 import { IoLocation } from "react-icons/io5";
 import { SiBilibili } from "react-icons/si";
 import { TbArrowsRightLeft } from "react-icons/tb";
+import { FaPaw } from "react-icons/fa";
 import Link from "next/link";
 
 const xata = new XataClient();
@@ -141,7 +142,7 @@ export default function EventDetail({ event }: { event: Event }) {
 
       <div className="flex my-4 lg:items-start flex-col-reverse md:flex-row">
         {event.detail && (
-          <div id="event-detail__left">
+          <div id="event-detail__left" className="md:w-8/12">
             <div className="bg-white rounded-xl flex-grow p-6 md:mr-4 mb-4">
               <p
                 className="text-gray-600 whitespace-pre-line"
@@ -167,7 +168,8 @@ export default function EventDetail({ event }: { event: Event }) {
           id="event-detail__right"
           className={clsx(
             "bg-white rounded-xl mb-4 lg:mb-0",
-            !event.detail && "w-full"
+            !event.detail && "w-full",
+            event.detail && "md:w-4/12"
           )}
         >
           <div className="p-4">
@@ -208,80 +210,107 @@ export default function EventDetail({ event }: { event: Event }) {
               )}
             >
               {event.organization?.website && (
-                <a
+                <OrganizationLinkButton
                   href={event.organization?.website}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-center bg-blue-300 rounded-xl px-4 py-1 text-white w-full text-center"
+                  bgColorClass="bg-blue-300"
                 >
                   <HiOutlineHome className="mr-2" />
                   去官网
-                </a>
+                </OrganizationLinkButton>
               )}
               {event.organization?.qqGroup && (
-                <button
+                <OrganizationLinkButton
+                  bgColorClass="bg-red-300"
                   onClick={() => {
                     navigator.clipboard
                       .writeText(event.organization?.qqGroup || "")
                       .then(() => toast.success("🥳 复制成功，快去QQ加群吧"));
                   }}
-                  className="flex items-center justify-center bg-red-300 rounded-xl px-4 py-1 text-white w-full text-center"
                 >
                   <FaQq className="mr-2" /> 复制QQ群号:
                   {event.organization?.qqGroup}
-                </button>
+                </OrganizationLinkButton>
               )}
               {event.organization?.bilibili && (
-                <a
+                <OrganizationLinkButton
+                  bgColorClass="bg-sky-400"
                   href={event.organization?.bilibili}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-center bg-sky-400 rounded-xl px-4 py-1 text-white w-full text-center"
                 >
                   <SiBilibili className="mr-2" />
                   去Bilibili
-                </a>
+                </OrganizationLinkButton>
               )}
               {event.organization?.weibo && (
-                <a
+                <OrganizationLinkButton
+                  bgColorClass="bg-red-500"
                   href={event.organization?.weibo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-center bg-red-500 rounded-xl px-4 py-1 text-white w-full text-center"
                 >
                   <FaWeibo className="mr-2" />
                   去微博
-                </a>
+                </OrganizationLinkButton>
               )}
               {event.organization?.twitter && (
-                <a
+                <OrganizationLinkButton
+                  bgColorClass="bg-blue-500"
                   href={event.organization?.twitter}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-center bg-blue-500 rounded-xl px-4 py-1 text-white w-full text-center"
                 >
                   <FaTwitter className="mr-2" />
                   去Twitter
-                </a>
+                </OrganizationLinkButton>
               )}
               {event.organization?.contactMail && (
-                <button
+                <OrganizationLinkButton
+                  bgColorClass="bg-emerald-500"
                   onClick={() => {
                     navigator.clipboard
                       .writeText(event.organization?.contactMail || "")
                       .then(() => toast.success("🥳 复制成功，快去发邮件吧"));
                   }}
-                  className="flex items-center justify-center bg-emerald-500 rounded-xl px-4 py-1 text-white w-full text-center"
                 >
-                  <HiOutlineMail className="mr-2" />
+                  <HiOutlineMail className="mr-2 flex-shrink-0" />
                   复制邮件地址: {event.organization?.contactMail}
-                </button>
+                </OrganizationLinkButton>
+              )}
+
+              {event.organization?.wikifur && (
+                <OrganizationLinkButton
+                  bgColorClass="bg-blue-800"
+                  href={event.organization?.wikifur}
+                >
+                  <FaPaw className="mr-2 flex-shrink-0" />去 Wikifur 了解更多
+                </OrganizationLinkButton>
               )}
             </p>
           </div>
         </div>
       </div>
     </>
+  );
+}
+
+function OrganizationLinkButton({
+  children,
+  href,
+  onClick,
+  bgColorClass,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  href?: string;
+  bgColorClass?: string;
+}) {
+  const className = clsx(
+    "flex items-center justify-center rounded-xl px-4 py-2 text-white w-full text-center",
+    bgColorClass
+  );
+  return href ? (
+    <a href={href} target="_blank" rel="noreferrer" className={className}>
+      {children}
+    </a>
+  ) : (
+    <button className={className} onClick={onClick}>
+      {children}
+    </button>
   );
 }
 
