@@ -94,7 +94,6 @@ export function FriendSiteBlock() {
             <h4 className="transition duration-300 text-center text-gray-600 group-hover:text-red-300 underline decoration-transparent group-hover:decoration-current decoration-wavy underline-offset-4">
               {link.label}
             </h4>
-            <span className="rounded-full w-0 h-0 bg-red-300 bottom-0 right-0 absolute group-hover:w-48 h-48" />
           </Link>
         ))}
       </div>
