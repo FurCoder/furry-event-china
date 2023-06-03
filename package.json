@@ -14,7 +14,6 @@
     "build:static": "yarn build && next export"
   },
   "dependencies": {
-    "@next/font": "13.4.2",
     "@sentry/nextjs": "^7.52.1",
     "@types/node": "20.1.4",
     "@types/react": "18.2.0",

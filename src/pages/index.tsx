@@ -1,4 +1,5 @@
 import EventCard from "@/components/eventCard";
+import { FriendSiteBlock } from "@/components/layout/footer";
 import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import { useMemo } from "react";
@@ -81,6 +82,8 @@ export default function Home(props: { events: Event[] }) {
             />
           ) : null
         )}
+
+        <FriendSiteBlock />
       </div>
 
       {/* <main className="container grid gap-12 grid-cols-3">
