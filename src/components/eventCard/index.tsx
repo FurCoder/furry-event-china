@@ -1,28 +1,42 @@
 import { Event } from "@/xata/xata";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import styles from "@/components/eventCard/index.module.css";
 import { IoLocation } from "react-icons/io5";
 import { BsCalendar2DateFill } from "react-icons/bs";
+import Image from "next/image";
+import clsx from "clsx";
 
 export default function EventCard({ event }: { event: Event }) {
+  const [isWiderImage, setIsWiderImage] = useState(true);
+
+  const finalEventCoverImage = event.logoUrl || event.coverUrl?.[0];
+
   return (
     <Link href={`/${event.organization?.slug}/${event.slug}`}>
       <div className="bg-white rounded-xl h-96 relative group">
         <div
           id="event-card-context"
-          className={`flex flex-col justify-end h-full rounded-xl ${styles["event-card"]}`}
-          style={{
-            backgroundImage: `url(${event.logoUrl || event.coverUrl?.[0]})`,
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
+          className={clsx(
+            "flex flex-col justify-end h-full rounded-xl relative overflow-hidden",
+            isWiderImage && styles["event-card"]
+          )}
         >
+          {finalEventCoverImage && (
+            <Image
+              onLoadingComplete={(img) => {
+                img.naturalWidth < img.naturalHeight && setIsWiderImage(false);
+              }}
+              fill
+              src={finalEventCoverImage}
+              alt={`Event cover of ${event.name}`}
+              className={clsx("object-cover")}
+            />
+          )}
           <span className="absolute right-4 top-4 text-white rounded-full px-2 bg-red-400 text-sm">
             {event.city}市
           </span>
-          <div className=" p-4 bg-gray-400/70 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl">
+          <div className=" p-4 bg-gray-400/70 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10">
             <h4 className="text-white font-bold text-2xl">{event.name}</h4>
             <h5 className="text-white text-lg">{event.organization?.name}</h5>
             <h5 className="text-white font-bold text-xl"></h5>

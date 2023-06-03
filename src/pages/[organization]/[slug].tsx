@@ -416,6 +416,20 @@ export async function getStaticProps(context: GetStaticPropsContext) {
             url: `https://www.furryeventchina.com/${context.params?.organization}`,
           },
         },
+        imageObject: [
+          ...(event?.logoUrl ? [event.logoUrl] : []),
+          ...(event?.coverUrl || []),
+        ].map((image) => ({
+          "@context": "https://schema.org/",
+          "@type": "ImageObject",
+          contentUrl: image,
+          creditText: event?.organization?.name,
+          creator: {
+            "@type": "Organization",
+            name: event?.organization?.name,
+          },
+          copyrightNotice: event?.organization?.name,
+        })),
       },
     },
   };

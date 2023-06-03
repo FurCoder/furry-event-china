@@ -12,8 +12,17 @@ export default function Years({ events }: { events: Event[] }) {
     [events]
   );
 
+  const years = Object.keys(groupByYearEvents);
+
   return (
     <div className="">
+      <div className="mb-4 border rounded-xl p-6 bg-white">
+        <p className="text-gray-600">
+          FurryEventChina.com{" "}
+          {years.filter((year) => year !== "no-date").length}
+          年共收录到 {events.length} 个活动，历年活动数据如下：
+        </p>
+      </div>
       {Object.keys(groupByYearEvents)
         .sort((a, b) => {
           if (a !== "no-date" && b !== "no-date") {
@@ -35,6 +44,7 @@ export default function Years({ events }: { events: Event[] }) {
             <h1 className="font-bold text-gray-400 text-3xl mb-4">
               {yearLabel === "no-date" ? "暂未定档" : yearLabel}
             </h1>
+            <p className="text-gray-600 mb-4">{yearLabel}年共有 {groupByYearEvents[yearLabel].length} 场活动：</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {groupByYearEvents[yearLabel].map((event) => (
                 <EventCard key={event.id} event={event} />
