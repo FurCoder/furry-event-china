@@ -13,7 +13,11 @@ export default function Document() {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap" as="style"/>
+        <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
+          as="style"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
           rel="stylesheet"
@@ -32,24 +36,18 @@ export default function Document() {
         )}
         {isEnableTrack && (
           <Script
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             src="https://www.googletagmanager.com/gtag/js?id=G-RBND7XQ43D"
           />
         )}
         {isEnableTrack && (
-          <Script
-            id="ga"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
+          <Script id="google-analytics" strategy="lazyOnload">
+            {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-RBND7XQ43D');
-          `,
-            }}
-          >
-            {}
+        `}
           </Script>
         )}
         {isEnableTrack && (
