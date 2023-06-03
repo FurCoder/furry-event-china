@@ -7,7 +7,7 @@ export default function Document() {
   return (
     <Html lang="zh-Hans">
       <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
@@ -16,7 +16,7 @@ export default function Document() {
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
           rel="stylesheet"
-        />
+        /> */}
       </Head>
 
       <body>
