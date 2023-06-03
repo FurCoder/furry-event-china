@@ -7,8 +7,6 @@ import { useMemo } from "react";
 export default function City(props: { events: Event[] }) {
   const { events } = props;
 
-  [{ location: "shanghai", eventsGroup: [{ year: "2023", events: [] }] }];
-
   const groupByCityEvents = useMemo(() => {
     return groupBy(events, (event) => event.city);
   }, [events]);
@@ -24,21 +22,63 @@ export default function City(props: { events: Event[] }) {
     }));
     return output;
   }, [cities, groupByCityEvents]);
+
+  const groupByCityEventsSortByTotalCount = useMemo(() => {
+    return cities.sort((prev, current) => {
+      return groupByCityEvents[prev].length -
+        groupByCityEvents[current].length >
+        0
+        ? -1
+        : 1;
+    });
+  }, [cities, groupByCityEvents]);
+
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 bg-white border p-6 rounded-xl">
+      <div className="bg-white border p-6 rounded-xl">
+        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {cities.map((city) => (
+            <li key={city} className="group">
+              <a href={`#${city}`}>
+                <h2 className="text-lg font-bold text-gray-600 group-hover:text-red-400 transition duration-300">
+                  {city}市
+                  <span className="text-sm font-normal ml-1">
+                    {groupByCityEvents[city].length}个
+                  </span>
+                </h2>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <p className="text-gray-600 mt-4">
+          FurrrEventChina.com 共在 {cities.length} 个城市收录到 {events.length}{" "}
+          个活动，其中，举办活动次数最多的城市是{" "}
+          <span className="font-bold">
+            {groupByCityEventsSortByTotalCount[0]}市
+          </span>
+          ！紧随其后的是
+          <span className="font-bold">
+            {groupByCityEventsSortByTotalCount[1]}市
+          </span>，而举办活动次数排名第三的城市是 <span className="font-bold">
+            {groupByCityEventsSortByTotalCount[2]}市 🎉。
+          </span>
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-8 bg-white border p-6 rounded-xl mt-6">
         {groupByCityAndYearEvents.map((city) => (
-          <div key={city.location}>
-            <h1 className="text-2xl font-bold text-gray-600">
+          <div id={city.location} key={city.location}>
+            <h2 className="text-2xl font-bold text-gray-600">
               {city.location}市
-            </h1>
+            </h2>
             <div className="grid grid-cols-1 gap-4 mt-4">
               {city.eventsGroup.map((yearGroup) => (
                 <div key={`${city}${yearGroup.year}`}>
-                  <h2 className="text-gray-500">
+                  <h3 className="text-gray-500">
                     {yearGroup.year === "no-date" ? "暂未定档" : yearGroup.year}
-                  </h2>
-                  <div className="grid grid-cols-1 gap-4 mt-4">
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                     {yearGroup.events.map((event) => (
                       <Link
                         key={event.id}
@@ -79,10 +119,6 @@ export default function City(props: { events: Event[] }) {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-8 bg-white p-6 rounded-xl text-center font-bold text-gray-600 text-xl">
-        🐦 鸽子在码头施工中,这里应该有一个地图
       </div>
     </>
   );
