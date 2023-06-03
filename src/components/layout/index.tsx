@@ -90,6 +90,14 @@ export default function Layout({
             }}
           />
         )}
+        {structuredData?.imageObject && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData.imageObject),
+            }}
+          />
+        )}
       </Head>
       <Header />
       <div className="flex-grow mx-1 lg:mx-0">{children}</div>
