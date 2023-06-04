@@ -29,7 +29,7 @@ export default function Document() {
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
                 media="print"
-                onload="this.media = 'all';"
+                onload="this.media = 'all'"
               />
               <style>`,
           }}
