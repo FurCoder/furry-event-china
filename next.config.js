@@ -9,6 +9,7 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
   reactStrictMode: true,
   images: { unoptimized: true },
   optimizeFonts: false,
@@ -25,7 +26,8 @@ const nextConfig = {
   trailingSlash: true,
   sentry: {
     disableServerWebpackPlugin: true,
-    disableClientWebpackPlugin: true,
+    hideSourcemaps: true,
+    // disableClientWebpackPlugin: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.plugins.push(
@@ -42,10 +44,21 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
 
-module.exports = withSentryConfig(
-  module.exports,
-  { silent: true },
-  { hideSourcemaps: true }
-);
+  org: "jipai",
+  project: "furryeventchina",
+
+  silent: true, // Suppresses all logs
+  hideSourcemaps: true,
+
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+};
+
+module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
