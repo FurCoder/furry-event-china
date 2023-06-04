@@ -9,9 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate-schama": "xata codegen",
-    "deploy:firebase": "next build && next export && firebase deploy",
-    "clean": "rm -rf .next && rm -rf out",
-    "build:static": "yarn build && next export"
+    "deploy:firebase": "next build && firebase deploy",
+    "clean": "rm -rf .next && rm -rf out"
   },
   "dependencies": {
     "@sentry/nextjs": "^7.54.0",
