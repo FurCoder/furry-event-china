@@ -7,15 +7,37 @@ export default function Document() {
   return (
     <Html lang="zh-Hans">
       <Head>
-        {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+          crossOrigin="anonymous"
+        />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
         <link
+          rel="preload"
+          as="style"
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `</style>
+              <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
+                media="print"
+                onload="this.media = 'all';"
+              />
+              <style>`,
+          }}
+        />
+        {/* <link
           rel="stylesheet"
+          media="print"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
         /> */}
       </Head>
 
