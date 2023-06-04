@@ -100,8 +100,9 @@ export default function EventDetail({ event }: { event: Event }) {
               aria-label="活动名称"
               className="font-bold text-2xl text-gray-700"
             >
-              {event.organization?.name}·{event.name}
+              {event.name}
             </h1>
+            <h2 className="text-gray-600 text-sm">由 {event.organization?.name} 主办</h2>
             <p
               aria-label="活动举办地点"
               className="flex items-center text-gray-500 mt-4"
