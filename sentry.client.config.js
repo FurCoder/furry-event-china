@@ -2,7 +2,7 @@
 // The config you add here will be used whenever a page is visited.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from "@sentry/nextjs";
+import Sentry, { Replay } from "@sentry/nextjs";
 
 const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
 
@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "production") {
       SENTRY_DSN ||
       "https://1ed2ba43a45f4dee8874d80de24b3e73@o4504660600684544.ingest.sentry.io/4504660602978304",
     // Replay may only be enabled for the client-side
-    integrations: [new Sentry.Replay()],
+    integrations: [],
 
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
