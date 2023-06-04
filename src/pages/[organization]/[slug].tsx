@@ -42,12 +42,6 @@ export default function EventDetail({ event }: { event: Event }) {
           isWiderImage && "flex-col",
           !isWiderImage && "lg:flex-row flex-col"
         )}
-        // style={{
-        //   backgroundImage: `url(${event.coverUrl})`,
-        //   backgroundPosition: "center",
-        //   backgroundRepeat: "no-repeat",
-        //   backgroundSize: "cover",
-        // }}
       >
         <div
           className={clsx(
@@ -56,14 +50,7 @@ export default function EventDetail({ event }: { event: Event }) {
             !isWiderImage && "lg:w-7/12 w-full h-[500px]"
           )}
           {...(isWiderImage
-            ? {
-                style: {
-                  backgroundImage: `url(${event.logoUrl || event.coverUrl})`,
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                },
-              }
+            ? {}
             : {
                 style: {
                   backgroundImage: `url(${event.logoUrl || event.coverUrl})`,
@@ -73,15 +60,29 @@ export default function EventDetail({ event }: { event: Event }) {
                 },
               })}
         >
+          {isWiderImage && event.logoUrl && (
+            <div className="relative w-full h-[500px]">
+              <NextImage
+                priority
+                fill
+                src={event.logoUrl}
+                className="object-cover"
+                alt={`The event cover of ${event.name}`}
+              />
+            </div>
+          )}
           {!isWiderImage && event.logoUrl && (
             <div
               className={clsx("text-center h-full")}
               style={{ backdropFilter: "blur(8px)" }}
             >
-              <img
-                className="inline-block h-[500px]"
-                alt="event cover"
+              <NextImage
+                priority
+                width={350}
+                height={500}
                 src={event.logoUrl}
+                alt={`The event cover of ${event.name}`}
+                className="mx-auto h-full object-contain"
               />
             </div>
           )}
@@ -153,11 +154,16 @@ export default function EventDetail({ event }: { event: Event }) {
             {!!event.coverUrl?.length && (
               <div className="bg-white rounded-xl flex-grow p-6 md:mr-4">
                 {event.coverUrl.map((cover, index) => (
-                  <img
-                    key={cover}
-                    alt={`${event.name}'s poster-${index}`}
-                    src={cover}
-                  />
+                  <div className="relative" key={cover}>
+                    <NextImage
+                      alt={`${event.name}'s poster-${index}`}
+                      src={cover}
+                      width={600}
+                      height={1000}
+                      className="w-full"
+                      priority
+                    />
+                  </div>
                 ))}
               </div>
             )}

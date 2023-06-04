@@ -43,7 +43,7 @@ function OrganizationItem({ organization }: { organization: Organization }) {
               className="object-contain h-full max-h-12"
               src={organization.logoUrl}
               alt={`${organization.name}'s logo`}
-              width={300}
+              width={124}
               height={50}
             />
           </div>
