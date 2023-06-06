@@ -4,6 +4,9 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 const { withSentryConfig } = require("@sentry/nextjs");
 const { GitRevisionPlugin } = require("git-revision-webpack-plugin");
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.NODE_ENV === "production",
+});
 
 const gitRevisionPlugin = new GitRevisionPlugin();
 
@@ -25,9 +28,9 @@ const nextConfig = {
   },
   trailingSlash: true,
   sentry: {
+    disableClientWebpackPlugin: true,
     disableServerWebpackPlugin: true,
     hideSourcemaps: true,
-    // disableClientWebpackPlugin: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.plugins.push(
@@ -38,6 +41,7 @@ const nextConfig = {
         LASTCOMMITDATETIME: JSON.stringify(
           gitRevisionPlugin.lastcommitdatetime()
         ),
+        __SENTRY_DEBUG__: false,
       })
     );
     return config;
@@ -61,4 +65,7 @@ const sentryWebpackPluginOptions = {
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
 
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+module.exports = withSentryConfig(
+  withBundleAnalyzer(nextConfig),
+  sentryWebpackPluginOptions
+);
