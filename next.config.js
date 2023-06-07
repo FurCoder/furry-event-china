@@ -12,9 +12,19 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  // output: "export",
   reactStrictMode: true,
-  images: { unoptimized: true },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.furryeventchina.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
+  // images: { unoptimized: true },
   optimizeFonts: false,
   experimental: {
     swcPlugins: [

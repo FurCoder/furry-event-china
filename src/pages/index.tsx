@@ -2,6 +2,7 @@ import EventCard from "@/components/eventCard";
 import { FriendSiteBlock } from "@/components/layout/footer";
 import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
+import { GetServerSideProps } from "next/types";
 import { useMemo } from "react";
 
 export default function Home(props: { events: Event[] }) {
@@ -95,7 +96,26 @@ export default function Home(props: { events: Event[] }) {
   );
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//   const xata = new XataClient();
+//   const events = await xata.db.event
+//     .filter({
+//       startDate: { $ge: new Date(new Date().getFullYear(), 0, 1) },
+//       endDate: { $le: new Date(new Date().getFullYear(), 11, 31) },
+//     })
+//     .select(["*", "organization.*"])
+//     .getAll();
+//   return {
+//     props: {
+//       events,
+//     },
+//   };
+// }
+
+export const getServerSideProps: GetServerSideProps<{
+  events: Event[];
+}> = async (context) => {
+  // console.log('context',context)
   const xata = new XataClient();
   const events = await xata.db.event
     .filter({
@@ -109,7 +129,7 @@ export async function getStaticProps() {
       events,
     },
   };
-}
+};
 
 enum DurationType {
   Passed = "passed", //already done.
