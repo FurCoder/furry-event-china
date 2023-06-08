@@ -112,7 +112,7 @@ export default function Home(props: { events: Event[] }) {
 //   };
 // }
 
-export const runtime = 'nodejs';
+export const runtime = 'experimental-edge';
 export const getServerSideProps: GetServerSideProps<{
   events: Event[];
 }> = async (context) => {
