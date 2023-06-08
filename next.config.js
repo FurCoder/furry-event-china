@@ -41,6 +41,7 @@ const nextConfig = {
     disableClientWebpackPlugin: true,
     disableServerWebpackPlugin: true,
     hideSourcemaps: true,
+    autoInstrumentServerFunctions: false,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.plugins.push(
