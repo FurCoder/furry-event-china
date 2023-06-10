@@ -2,6 +2,13 @@
   "hosting": {
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      {
+        "source": "/fuzzyoasisparty/2023/",
+        "destination": "/fuzzyoasisparty/2023-guangzhou-furcon/",
+        "type": 301
+      }
+    ],
     "headers": [
       {
         "source": "_next/static/**/*.@(css|js)",
