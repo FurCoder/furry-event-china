@@ -150,7 +150,7 @@ export default function OrganizationDetail(props: {
         <div className="border-t my-8" />
         <h2 className="text-xl text-slate-600 mb-4">展会简介</h2>
         <p className="text-slate-700 whitespace-pre-line">
-          {organization.description}
+          {organization.description||'这个主办方很懒，什么介绍也没写过。'}
         </p>
       </div>
 
