@@ -1,7 +1,7 @@
 import { ImageLoaderProps } from "next/image";
 
 const isEnableCN = process.env.ENABLE_CN_DOMAIN === "true";
-const CNURL = process.env.CN_URL;
+const CNURL = process.env.CNURL;
 
 const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
   const withoutDefaultHostSrc = src.replace(
