@@ -9,6 +9,7 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    environment: Prod
     env:
       XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
       XATA_FALLBACK_BRANCH: ${{ vars.XATA_FALLBACK_BRANCH }}
