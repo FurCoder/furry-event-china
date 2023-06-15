@@ -4,7 +4,6 @@ const isEnableCN = process.env.ENABLE_CN_DOMAIN === "true";
 const CNURL = process.env.CN_URL;
 
 const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
-  console.log("loader");
   const withoutDefaultHostSrc = src.replace(
     "https://cdn.furryeventchina.com/",
     ""
