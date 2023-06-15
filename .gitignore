@@ -52,3 +52,6 @@ next.config.original.js
 robots.txt
 sitemap.xml
 sitemap-*.xml
+
+#nextjs
+/analyze

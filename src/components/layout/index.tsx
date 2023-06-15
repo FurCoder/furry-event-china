@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import Script from "next/script";
+import { useRouter } from "next/router";
 
 export default function Layout({
   children,
@@ -13,6 +13,9 @@ export default function Layout({
   headMetas?: { title?: string; des?: string; url?: string; cover?: string };
   structuredData?: { [key: string]: { [key: string]: string } };
 }) {
+  const router = useRouter();
+  const asPath = router.asPath;
+
   return (
     <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen">
       <Head>
@@ -74,6 +77,10 @@ export default function Layout({
           }
         />
         <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="canonical"
+          href={`https://www.furryeventchina.com${asPath}`}
+        />
         {structuredData?.event && (
           <script
             type="application/ld+json"

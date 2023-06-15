@@ -14,7 +14,7 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 const nextConfig = {
   output: "export",
   reactStrictMode: true,
-  images: { unoptimized: true },
+  images: { unoptimized: false },
   optimizeFonts: false,
   experimental: {
     swcPlugins: [
