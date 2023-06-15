@@ -1,6 +1,7 @@
 import EventCard from "@/components/eventCard";
 import OrganizationStatus from "@/components/organizationStatus";
 import styles from "@/styles/Organization.module.css";
+import imageLoader from "@/utils/imageLoader";
 import { Event, Organization, XataClient } from "@/xata/xata";
 import clsx from "clsx";
 import Image from "next/image";
@@ -40,6 +41,7 @@ export default function OrganizationDetail(props: {
           {organization.logoUrl && (
             <div className="border rounded flex justify-center p-2 w-full md:w-80 md:h-80 h-48">
               <Image
+                loader={imageLoader}
                 className="object-contain"
                 alt={`${organization.name}'s logo`}
                 width={200}
@@ -150,7 +152,7 @@ export default function OrganizationDetail(props: {
         <div className="border-t my-8" />
         <h2 className="text-xl text-slate-600 mb-4">展会简介</h2>
         <p className="text-slate-700 whitespace-pre-line">
-          {organization.description||'这个主办方很懒，什么介绍也没写过。'}
+          {organization.description || "这个主办方很懒，什么介绍也没写过。"}
         </p>
       </div>
 

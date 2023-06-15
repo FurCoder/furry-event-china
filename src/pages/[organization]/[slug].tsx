@@ -390,7 +390,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           startDate: event?.startDate,
           endDate: event?.endDate,
           // eventStatus: "https://schema.org/EventCancelled",
-          // eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
           location: {
             "@type": "Place",
             name: event?.address,

@@ -6,6 +6,7 @@ import { IoLocation } from "react-icons/io5";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import Image from "next/image";
 import clsx from "clsx";
+import imageLoader from "@/utils/imageLoader";
 
 export default function EventCard({ event }: { event: Event }) {
   const [isWiderImage, setIsWiderImage] = useState(true);
@@ -24,6 +25,7 @@ export default function EventCard({ event }: { event: Event }) {
         >
           {finalEventCoverImage && (
             <Image
+            loader={imageLoader}
               onLoadingComplete={(img) => {
                 img.naturalWidth < img.naturalHeight && setIsWiderImage(false);
               }}

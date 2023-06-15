@@ -1,3 +1,4 @@
+import imageLoader from "@/utils/imageLoader";
 import { Organization, XataClient } from "@/xata/xata";
 import clsx from "clsx";
 import groupBy from "lodash-es/groupBy";
@@ -40,6 +41,7 @@ function OrganizationItem({ organization }: { organization: Organization }) {
         {organization.logoUrl && (
           <div className="relative w-2/4 md:h-3/4 max-h-12">
             <Image
+              loader={imageLoader}
               className="object-contain h-full max-h-12"
               src={organization.logoUrl}
               alt={`${organization.name}'s logo`}
@@ -50,7 +52,8 @@ function OrganizationItem({ organization }: { organization: Organization }) {
         )}
         <h2
           className={clsx(
-            "w-3/4 tracking-wide text-gray-600 md:text-center text-lg border-l md:border-l-0 ml-4 md:ml-0 pl-4 md:pl-0 font-bold",organization.logoUrl&&'md:mt-4'
+            "w-3/4 tracking-wide text-gray-600 md:text-center text-lg border-l md:border-l-0 ml-4 md:ml-0 pl-4 md:pl-0 font-bold",
+            organization.logoUrl && "md:mt-4"
           )}
         >
           {organization.name}

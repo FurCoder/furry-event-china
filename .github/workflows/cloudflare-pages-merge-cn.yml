@@ -1,0 +1,47 @@
+name: CN Prod Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    env:
+      XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
+      XATA_FALLBACK_BRANCH: ${{ vars.XATA_FALLBACK_BRANCH }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
+      ENABLE_CN_DOMAIN: true
+      CNURL: ${{vars.CNURL}}
+    name: Publish to Cloudflare Pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/hydrogen
+      - run: 'yarn && yarn build'
+
+      # Run a build step here if your project requires
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{secrets.CF_ACCOUNT_ID}}
+          projectName: cn-furryeventchina
+          directory: out
+          # Optional: Enable this if you want to have GitHub Deployments triggered
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: Switch what branch you are publishing to.
+          # By default this will be the branch which triggered this workflow
+          branch: main
+          # Optional: Change the working directory
+          # workingDirectory: my-site
+          # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
+          wranglerVersion: "3"
