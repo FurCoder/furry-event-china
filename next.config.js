@@ -46,6 +46,7 @@ const nextConfig = {
           gitRevisionPlugin.lastcommitdatetime()
         ),
         __SENTRY_DEBUG__: false,
+        __SENTRY_TRACING__: false,
       })
     );
     return config;
