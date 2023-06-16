@@ -531,6 +531,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/env@npm:*":
+  version: 13.4.6
+  resolution: "@next/env@npm:13.4.6"
+  checksum: 65d6cfb68adf5067f5e42f339e46908aca5a14fbc78f1e42e0becec1617da108cf68621c98f5a2c2e18da5a7955e355e98d5c4a7894222401bb374b2ca1c08f4
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:13.4.2":
   version: 13.4.2
   resolution: "@next/env@npm:13.4.2"
