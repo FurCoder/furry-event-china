@@ -38,6 +38,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: out
+          path: out
       - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -82,6 +83,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: cn-out
+          path: out
       - name: Deploy
         uses: cloudflare/pages-action@v1
         with:
