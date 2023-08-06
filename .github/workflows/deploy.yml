@@ -60,6 +60,7 @@ jobs:
       ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
       ENABLE_CN_DOMAIN: true
       CNURL: ${{vars.CNURL}}
+      CN_STATIC_URL: ${{vars.CN_STATIC_URL}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
