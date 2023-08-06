@@ -64,7 +64,9 @@ function OrganizationItem({ organization }: { organization: Organization }) {
 export async function getStaticProps() {
   const xata = new XataClient();
 
-  const organizations = await xata.db.organization.select(["*"]).getAll();
+  const organizations = await xata.db.organization
+    .select(["name", "logoUrl", "slug", "status", "id"])
+    .getAll();
   return {
     props: {
       organizations,

@@ -102,7 +102,18 @@ export async function getStaticProps() {
       startDate: { $ge: new Date(new Date().getFullYear(), 0, 1) },
       endDate: { $le: new Date(new Date().getFullYear(), 11, 31) },
     })
-    .select(["*", "organization.*"])
+    .select([
+      "name",
+      "address",
+      "city",
+      "coverUrl",
+      "logoUrl",
+      "startDate",
+      "endDate",
+      "slug",
+      "organization.name",
+      "organization.slug",
+    ])
     .getAll();
   return {
     props: {
