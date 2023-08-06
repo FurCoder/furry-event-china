@@ -60,7 +60,9 @@ export default function City(props: { events: Event[] }) {
           ！紧随其后的是
           <span className="font-bold">
             {groupByCityEventsSortByTotalCount[1]}市
-          </span>，而举办活动次数排名第三的城市是 <span className="font-bold">
+          </span>
+          ，而举办活动次数排名第三的城市是{" "}
+          <span className="font-bold">
             {groupByCityEventsSortByTotalCount[2]}市 🎉。
           </span>
         </p>
@@ -128,7 +130,15 @@ export async function getStaticProps() {
   const xata = new XataClient();
 
   const events = await xata.db.event
-    .select(["*", "organization.slug", "organization.name"])
+    .select([
+      "name",
+      "city",
+      "slug",
+      "logoUrl",
+      "coverUrl",
+      "organization.slug",
+      "organization.name",
+    ])
     .getAll();
 
   const cities = Object.keys(groupBy(events, (event) => event.city));
