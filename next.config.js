@@ -8,6 +8,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.NODE_ENV === "production",
 });
 
+const isProd = process.env.NODE_ENV === "production";
+const isEnableCN = process.env.ENABLE_CN_DOMAIN === "true";
+const CN_STATIC_URL = process.env.CN_STATIC_URL;
+
 const gitRevisionPlugin = new GitRevisionPlugin();
 
 /** @type {import('next').NextConfig} */
@@ -20,6 +24,8 @@ const nextConfig = {
     loaderFile: "./src/utils/imageLoader.ts",
   },
   optimizeFonts: false,
+  assetPrefix:
+    isEnableCN && isProd ? CN_STATIC_URL : undefined,
   experimental: {
     swcPlugins: [
       [

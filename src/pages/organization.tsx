@@ -36,7 +36,7 @@ export default function OrganizationPage({
 function OrganizationItem({ organization }: { organization: Organization }) {
   return (
     <Link href={organization.slug || ""}>
-      <div className="rounded-xl border p-6 cursor-pointer h-full flex flex-row items-center md:flex-col">
+      <div className="rounded-xl border p-6 cursor-pointer h-full flex flex-row items-center justify-center md:flex-col">
         {organization.logoUrl && (
           <div className="relative w-2/4 md:h-3/4 max-h-12">
             <Image
