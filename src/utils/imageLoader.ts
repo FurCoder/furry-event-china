@@ -1,7 +1,7 @@
 import { ImageLoaderProps } from "next/image";
 
 const ENABLE_CN_DOMAIN = process.env.ENABLE_CN_DOMAIN === "true";
-const CNURL = process.env.CNURL;
+const CNURL = process.env.NEXT_PUBLIC_CNURL;
 
 const isEnableCN = () => {
   if (typeof window != "undefined") {
