@@ -4,10 +4,16 @@ import React, { useState } from "react";
 import styles from "@/components/eventCard/index.module.css";
 import { IoLocation } from "react-icons/io5";
 import { BsCalendar2DateFill } from "react-icons/bs";
-import Image from "next/image";
+import Image from "@/components/image";
 import clsx from "clsx";
 
-export default function EventCard({ event }: { event: Event }) {
+export default function EventCard({
+  event,
+  sizes,
+}: {
+  event: Event;
+  sizes?: string;
+}) {
   const [isWiderImage, setIsWiderImage] = useState(true);
 
   const finalEventCoverImage = event.logoUrl || event.coverUrl?.[0];
@@ -27,10 +33,10 @@ export default function EventCard({ event }: { event: Event }) {
               onLoadingComplete={(img) => {
                 img.naturalWidth < img.naturalHeight && setIsWiderImage(false);
               }}
-              fill
               src={finalEventCoverImage}
               alt={`Event cover of ${event.name}`}
-              className={clsx("object-cover")}
+              className={clsx("object-cover absolute h-full w-full")}
+              sizes={sizes}
             />
           )}
           <span className="absolute right-4 top-4 text-white rounded-full px-2 bg-red-400 text-sm">

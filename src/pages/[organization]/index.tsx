@@ -3,7 +3,7 @@ import OrganizationStatus from "@/components/organizationStatus";
 import styles from "@/styles/Organization.module.css";
 import { Event, Organization, XataClient } from "@/xata/xata";
 import clsx from "clsx";
-import Image from "next/image";
+import Image from "@/components/image";
 import { GetStaticPropsContext } from "next/types";
 import { useMemo } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -158,7 +158,11 @@ export default function OrganizationDetail(props: {
         <section className="mt-8 grid gird-cols-1 gap-8 p-6 bg-white rounded-xl">
           <h2 className="text-xl text-slate-600 -mb-4">历届展会</h2>
           {events.map((e) => (
-            <EventCard key={e.id} event={e} />
+            <EventCard
+              key={e.id}
+              event={e}
+              sizes="(max-width: 750px)750px, (max-width: 1080px) 1080px, (min-width: 1200px) 1200px, 1200px"
+            />
           ))}
         </section>
       )}

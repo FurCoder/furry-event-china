@@ -165,7 +165,11 @@ function DurationSection({
           </h3>
           <div className="grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {groupByDateEvent[month].map((event) => (
-              <EventCard key={event.name} event={event} />
+              <EventCard
+                key={event.name}
+                event={event}
+                sizes="(max-width: 750px) 650px, (max-width: 1080px) 435px, (min-width: 1200px) 276px, 276px"
+              />
             ))}
           </div>
         </div>

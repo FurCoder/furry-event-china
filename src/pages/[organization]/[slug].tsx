@@ -3,7 +3,7 @@ import { Event, XataClient } from "@/xata/xata";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { GetStaticPropsContext } from "next";
-import NextImage from "next/image";
+import NextImage from "@/components/image";
 import { useCallback, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { BsCalendar2DateFill } from "react-icons/bs";
@@ -64,7 +64,6 @@ export default function EventDetail({ event }: { event: Event }) {
             <div className="relative w-full h-[500px]">
               <NextImage
                 priority
-                fill
                 src={event.logoUrl}
                 className="object-cover"
                 alt={`The event cover of ${event.name}`}
