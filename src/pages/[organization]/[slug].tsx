@@ -64,7 +64,6 @@ export default function EventDetail({ event }: { event: Event }) {
             <div className="relative w-full h-[500px]">
               <NextImage
                 priority
-                fill
                 src={event.logoUrl}
                 className="object-cover"
                 alt={`The event cover of ${event.name}`}
