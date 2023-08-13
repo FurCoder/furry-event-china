@@ -24,8 +24,7 @@ const nextConfig = {
     loaderFile: "./src/utils/imageLoader.ts",
   },
   optimizeFonts: false,
-  assetPrefix:
-    isEnableCN && isProd ? CN_STATIC_URL : undefined,
+  assetPrefix: isEnableCN && isProd ? CN_STATIC_URL : undefined,
   experimental: {
     swcPlugins: [
       [

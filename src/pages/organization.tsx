@@ -1,7 +1,7 @@
 import { Organization, XataClient } from "@/xata/xata";
 import clsx from "clsx";
 import groupBy from "lodash-es/groupBy";
-import Image from "next/image";
+import Image from "@/components/image";
 import Link from "next/link";
 
 export default function OrganizationPage({
@@ -38,13 +38,14 @@ function OrganizationItem({ organization }: { organization: Organization }) {
     <Link href={organization.slug || ""}>
       <div className="rounded-xl border p-6 cursor-pointer h-full flex flex-row items-center justify-center md:flex-col">
         {organization.logoUrl && (
-          <div className="relative w-2/4 md:h-3/4 max-h-12">
+          <div className="relative w-2/4 md:h-3/4 max-h-12 mx-auto">
             <Image
-              className="object-contain h-full max-h-12"
+              className="object-contain h-full max-h-12 mx-auto"
               src={organization.logoUrl}
               alt={`${organization.name}'s logo`}
               width={124}
               height={50}
+              sizes="(max-width: 750px) 256px, (max-width: 768px) 300px, 300px"
             />
           </div>
         )}
