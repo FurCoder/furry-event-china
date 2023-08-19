@@ -16,11 +16,17 @@ export default function EventCard({
 }) {
   const [isWiderImage, setIsWiderImage] = useState(true);
 
-  const finalEventCoverImage = event.logoUrl || event.coverUrl?.[0];
+  const finalEventCoverImage =
+    event.logoUrl ||
+    event.coverUrl?.[0] ||
+    `https://cdn.furryeventchina.com/fec-event-default-cover.png`;
+  const isDefaultCover = finalEventCoverImage.includes(
+    "fec-event-default-cover"
+  );
 
   return (
     <Link href={`/${event.organization?.slug}/${event.slug}`}>
-      <div className="bg-white rounded-xl h-96 relative group">
+      <div className="bg-white rounded-xl h-96 relative group outline outline-[5px] outline-white shadow-md transition duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-110">
         <div
           id="event-card-context"
           className={clsx(
@@ -39,10 +45,16 @@ export default function EventCard({
               sizes={sizes}
             />
           )}
-          <span className="absolute right-4 top-4 text-white rounded-full px-2 bg-red-400 text-sm">
+          <span className="absolute right-4 top-4 text-white rounded-full px-2 py-1 bg-red-400/70 group-hover:bg-red-400 text-sm transition duration-300">
             {event.city}市
           </span>
-          <div className=" p-4 bg-gray-400/70 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10">
+          <div
+            className={clsx(
+              styles["event-card__desc-container"],
+              "p-4 bg-red-100/20 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10",
+              !isDefaultCover && "backdrop-blur-md"
+            )}
+          >
             <h4 className="text-white font-bold text-2xl">{event.name}</h4>
             <h5 className="text-white text-lg">{event.organization?.name}</h5>
             <h5 className="text-white font-bold text-xl"></h5>
