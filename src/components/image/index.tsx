@@ -25,7 +25,6 @@ function Image({
   const regex = /\b(\d+)px\b(?![^(]*\))/g;
   const getSrcset = () => {
     const sizesResult = Array.from(new Set(sizes?.match(regex)));
-    console.log(sizesResult);
 
     return sizesResult
       .map(
