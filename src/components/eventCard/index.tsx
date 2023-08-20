@@ -30,7 +30,7 @@ export default function EventCard({
         <div
           id="event-card-context"
           className={clsx(
-            "flex flex-col justify-end h-full rounded-xl relative overflow-hidden",
+            "flex flex-col justify-between h-full rounded-xl relative overflow-hidden",
             isWiderImage && styles["event-card"]
           )}
         >
@@ -45,9 +45,30 @@ export default function EventCard({
               sizes={sizes}
             />
           )}
-          <span className="absolute right-4 top-4 text-white rounded-full px-2 py-1 bg-red-400/70 group-hover:bg-red-400 text-sm transition duration-300">
-            {event.city}市
-          </span>
+          <div className="z-10 relative mt-4 mx-4 flex items-center justify-between">
+            <span
+              aria-label="organization name"
+              className="text-white rounded-full bg-red-400/70 group-hover:bg-red-400 text-sm transition duration-300 flex items-center"
+            >
+              {!!event.organization?.logoUrl && (
+                <Image
+                  src={event.organization.logoUrl}
+                  alt={`The organization logo of ${event.name}`}
+                  className={clsx("rounded-full object-cover w-[28px] h-[28px]")}
+                  width={50}
+                  height={50}
+                  sizes="50px"
+                />
+              )}
+            </span>
+            <span
+              aria-label="event location address"
+              className="text-white rounded-full px-2 py-1 bg-red-400/70 group-hover:bg-red-400 text-sm transition duration-300"
+            >
+              {event.city}市
+            </span>
+          </div>
+
           <div
             className={clsx(
               styles["event-card__desc-container"],
@@ -71,7 +92,7 @@ export default function EventCard({
 
               <div className="flex items-center">
                 <IoLocation className="text-white mr-1" />
-                <span aria-label="活动地址">{event.address}</span>
+                <span aria-label="活动地址" className="truncate">{event.address}</span>
               </div>
             </div>
           </div>
