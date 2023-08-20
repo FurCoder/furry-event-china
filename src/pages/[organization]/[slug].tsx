@@ -14,6 +14,7 @@ import { SiBilibili } from "react-icons/si";
 import { TbArrowsRightLeft } from "react-icons/tb";
 import { FaPaw } from "react-icons/fa";
 import Link from "next/link";
+import { EventStatus, EventStatusSchema } from "@/types/event";
 
 const xata = new XataClient();
 
@@ -101,7 +102,9 @@ export default function EventDetail({ event }: { event: Event }) {
             >
               {event.name}
             </h1>
-            <h2 className="text-gray-600 text-sm">由 {event.organization?.name} 主办</h2>
+            <h2 className="text-gray-600 text-sm">
+              由 {event.organization?.name} 主办
+            </h2>
             <p
               aria-label="活动举办地点"
               className="flex items-center text-gray-500 mt-4"
@@ -388,7 +391,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           name: event?.name,
           startDate: event?.startDate,
           endDate: event?.endDate,
-          // eventStatus: "https://schema.org/EventCancelled",
+          eventStatus:
+            EventStatusSchema[event?.status || EventStatus.EventScheduled],
           eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
           location: {
             "@type": "Place",
