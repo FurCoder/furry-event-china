@@ -1,3 +1,4 @@
+import { sendTrack } from "@/utils/track";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -68,7 +69,15 @@ export default function Header() {
               <Link
                 className="flex justify-center px-6 py-2 h-full w-full flex-col max-sm:py-4"
                 href={nav.link}
-                onClick={() => handleMenuClick(false)}
+                onClick={() => {
+                  handleMenuClick(false);
+                  sendTrack({
+                    eventName: "click-nav-link",
+                    eventValue: {
+                      href: nav.link,
+                    },
+                  });
+                }}
               >
                 {nav.name}
               </Link>

@@ -1,4 +1,5 @@
 import { AboutUsLinks, FriendSiteLinks } from "@/constants/staticConfig";
+import { sendTrack } from "@/utils/track";
 import Link from "next/link";
 import { FaKissWinkHeart } from "react-icons/fa";
 
@@ -74,6 +75,14 @@ function FriendLink({ label, link }: { label: string; link: string }) {
       className="mr-2 text-gray-400 underline hover:text-gray-600 transition inline-block"
       href={link}
       referrerPolicy="no-referrer"
+      onClick={() =>
+        sendTrack({
+          eventName: "click-footer-link",
+          eventValue: {
+            href: link,
+          },
+        })
+      }
     >
       {label}
     </a>
@@ -89,6 +98,14 @@ export function FriendSiteBlock() {
           <Link
             href={link.link}
             key={link.link}
+            onClick={() =>
+              sendTrack({
+                eventName: "click-index-friend-link",
+                eventValue: {
+                  href: link,
+                },
+              })
+            }
             className="bg-white p-6 rounded-xl flex items-center justify-center border group hover:border-red-300 transition duration-300 relative"
           >
             <h4 className="transition duration-300 text-center text-gray-600 group-hover:text-red-300 underline decoration-transparent group-hover:decoration-current decoration-wavy underline-offset-4">

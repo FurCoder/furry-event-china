@@ -5,6 +5,7 @@ import groupBy from "lodash-es/groupBy";
 import { useMemo, useState } from "react";
 import { EventScale, EventStatus } from "@/types/event";
 import { Switch } from "@headlessui/react";
+import { sendTrack } from "@/utils/track";
 
 export default function Home(props: { events: Event[] }) {
   const [selectedFilter, setFilter] = useState({
@@ -230,6 +231,13 @@ function Filter({
   };
 }) {
   const handleFilter = (key: string, value: unknown) => {
+    sendTrack({
+      eventName: "click-filter",
+      eventValue: {
+        filterName: key,
+        filterValue: value,
+      },
+    });
     onChange({
       ...selectedFilter,
       [key]: value,
@@ -263,7 +271,7 @@ function Filter({
         </div>
       </Switch.Group>
 
-      <div className="h-full bg-gray-100 w-[2px] h-4 mx-4 hidden sm:block" />
+      <div className="bg-gray-100 w-[2px] h-4 mx-4 hidden sm:block" />
 
       <select
         value={selctedScaleValue[0].key}

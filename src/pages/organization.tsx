@@ -3,6 +3,7 @@ import clsx from "clsx";
 import groupBy from "lodash-es/groupBy";
 import Image from "@/components/image";
 import Link from "next/link";
+import { sendTrack } from "@/utils/track";
 
 export default function OrganizationPage({
   organizations,
@@ -35,7 +36,18 @@ export default function OrganizationPage({
 
 function OrganizationItem({ organization }: { organization: Organization }) {
   return (
-    <Link href={organization.slug || ""}>
+    <Link
+      href={organization.slug || ""}
+      onClick={() =>
+        sendTrack({
+          eventName: "click-organization-card",
+          eventValue: {
+            href: organization.slug,
+            from: "organization list",
+          },
+        })
+      }
+    >
       <div className="rounded-xl border p-6 cursor-pointer h-full flex flex-row items-center justify-center md:flex-col">
         {organization.logoUrl && (
           <div className="relative w-2/4 md:h-3/4 max-h-12 mx-auto">
