@@ -29,7 +29,6 @@ export default function Home(props: { events: Event[] }) {
       selectedFilter.eventScale[0] !== "All" &&
       !selectedFilter.eventScale.includes(event.scale)
     ) {
-      console.log("event.scale", event.scale);
       return false;
     }
     return true;
@@ -221,7 +220,10 @@ function Filter({
   onChange,
   selectedFilter,
 }: {
-  onChange: (filter: unknown) => void;
+  onChange: (filter: {
+    onlyAvailable: boolean;
+    eventScale: (typeof EventScale)[keyof typeof EventScale][];
+  }) => void;
   selectedFilter: {
     onlyAvailable: boolean;
     eventScale: (typeof EventScale)[keyof typeof EventScale][];
