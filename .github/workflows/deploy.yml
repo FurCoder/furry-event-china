@@ -62,6 +62,7 @@ jobs:
       NEXT_PUBLIC_CNURL: ${{vars.CNURL}}
       CN_STATIC_URL: ${{vars.CN_STATIC_URL}}
       SENTRY_DSN: ${{vars.SENTRY_DSN}}
+      NEXT_PUBLIC_SENTRY_DSN: ${{vars.SENTRY_DSN}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
