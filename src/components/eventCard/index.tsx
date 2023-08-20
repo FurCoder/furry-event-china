@@ -6,6 +6,7 @@ import { IoLocation } from "react-icons/io5";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import Image from "@/components/image";
 import clsx from "clsx";
+import { sendTrack } from "@/utils/track";
 
 export default function EventCard({
   event,
@@ -25,8 +26,28 @@ export default function EventCard({
   );
 
   return (
-    <Link href={`/${event.organization?.slug}/${event.slug}`}>
-      <div className="bg-white rounded-xl h-96 relative group outline outline-[5px] outline-white shadow-md transition duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-110">
+    <Link
+      href={`/${event.organization?.slug}/${event.slug}`}
+      onClick={() =>
+        sendTrack({
+          eventName: "click-event-card",
+          eventValue: {
+            href: `/${event.organization?.slug}/${event.slug}`,
+          },
+        })
+      }
+    >
+      <div
+        onMouseEnter={() =>
+          sendTrack({
+            eventName: "hover-event-card",
+            eventValue: {
+              href: `/${event.organization?.slug}/${event.slug}`,
+            },
+          })
+        }
+        className="bg-white rounded-xl h-96 relative group outline outline-[5px] outline-white shadow-md transition duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-110"
+      >
         <div
           id="event-card-context"
           className={clsx(
@@ -54,7 +75,9 @@ export default function EventCard({
                 <Image
                   src={event.organization.logoUrl}
                   alt={`The organization logo of ${event.name}`}
-                  className={clsx("rounded-full object-cover w-[28px] h-[28px]")}
+                  className={clsx(
+                    "rounded-full object-cover w-[28px] h-[28px]"
+                  )}
                   width={50}
                   height={50}
                   sizes="50px"
@@ -92,7 +115,9 @@ export default function EventCard({
 
               <div className="flex items-center">
                 <IoLocation className="text-white mr-1" />
-                <span aria-label="活动地址" className="truncate">{event.address}</span>
+                <span aria-label="活动地址" className="truncate">
+                  {event.address}
+                </span>
               </div>
             </div>
           </div>

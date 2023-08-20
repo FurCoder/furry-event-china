@@ -34,6 +34,10 @@ export default function EventDetail({ event }: { event: Event }) {
     calcImageRatio();
   }, [calcImageRatio]);
 
+  const finalEventCoverImage =
+    event.logoUrl ||
+    `https://cdn.furryeventchina.com/fec-event-default-cover.png`;
+
   return (
     <>
       <Toaster />
@@ -54,24 +58,24 @@ export default function EventDetail({ event }: { event: Event }) {
             ? {}
             : {
                 style: {
-                  backgroundImage: `url(${event.logoUrl || event.coverUrl})`,
+                  backgroundImage: `url(${finalEventCoverImage || event.coverUrl})`,
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                 },
               })}
         >
-          {isWiderImage && event.logoUrl && (
+          {isWiderImage && finalEventCoverImage && (
             <div className="relative w-full h-[500px]">
               <NextImage
                 priority
-                src={event.logoUrl}
+                src={finalEventCoverImage}
                 className="object-cover w-full h-full"
                 alt={`The event cover of ${event.name}`}
               />
             </div>
           )}
-          {!isWiderImage && event.logoUrl && (
+          {!isWiderImage && finalEventCoverImage && (
             <div
               className={clsx("text-center h-full")}
               style={{ backdropFilter: "blur(8px)" }}
@@ -80,7 +84,7 @@ export default function EventDetail({ event }: { event: Event }) {
                 priority
                 width={350}
                 height={500}
-                src={event.logoUrl}
+                src={finalEventCoverImage}
                 alt={`The event cover of ${event.name}`}
                 className="mx-auto h-full object-contain"
               />

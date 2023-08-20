@@ -1,4 +1,5 @@
 import { sortByStartDateDesc } from "@/utils/event";
+import { sendTrack } from "@/utils/track";
 import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import Link from "next/link";
@@ -39,7 +40,18 @@ export default function City(props: { events: Event[] }) {
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {cities.map((city) => (
             <li key={city} className="group">
-              <a href={`#${city}`}>
+              <a
+                href={`#${city}`}
+                onClick={() =>
+                  sendTrack({
+                    eventName: "click-city-jump-link",
+                    eventValue: {
+                      value: city,
+                      from: "city list",
+                    },
+                  })
+                }
+              >
                 <h2 className="text-lg font-bold text-gray-600 group-hover:text-red-400 transition duration-300">
                   {city}市
                   <span className="text-sm font-normal ml-1">
@@ -85,6 +97,15 @@ export default function City(props: { events: Event[] }) {
                       <Link
                         key={event.id}
                         href={`/${event.organization?.slug}/${event.slug}`}
+                        onClick={() =>
+                          sendTrack({
+                            eventName: "click-mini-event-card",
+                            eventValue: {
+                              href: `/${event.organization?.slug}/${event.slug}`,
+                              from: "city list",
+                            },
+                          })
+                        }
                         className="rounded-xl shadow-xl h-36 relative flex justify-center items-center group"
                       >
                         {/* <div className="w-full h-36 overflow-hidden rounded-t-xl p-4">
@@ -136,6 +157,7 @@ export async function getStaticProps() {
       "slug",
       "logoUrl",
       "coverUrl",
+      "startDate",
       "organization.slug",
       "organization.name",
     ])
