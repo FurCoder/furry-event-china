@@ -25,6 +25,7 @@ const tables = [
       { name: "bilibili", type: "string" },
       { name: "wikifur", type: "string" },
     ],
+    revLinks: [{ column: "organization", table: "event" }],
   },
   {
     name: "event",
@@ -40,6 +41,13 @@ const tables = [
       { name: "organization", type: "link", link: { table: "organization" } },
       { name: "slug", type: "string", notNull: true, defaultValue: "" },
       { name: "detail", type: "text" },
+      {
+        name: "status",
+        type: "string",
+        notNull: true,
+        defaultValue: "scheduled",
+      },
+      { name: "scale", type: "string", notNull: true, defaultValue: "small" },
     ],
   },
 ] as const;

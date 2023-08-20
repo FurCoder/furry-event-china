@@ -2,9 +2,37 @@ import EventCard from "@/components/eventCard";
 import { FriendSiteBlock } from "@/components/layout/footer";
 import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { EventScale, EventStatus } from "@/types/event";
+import { Switch } from "@headlessui/react";
 
 export default function Home(props: { events: Event[] }) {
+  const [selectedFilter, setFilter] = useState({
+    onlyAvailable: false,
+    eventScale: ["All"],
+  });
+  const filteredEvents = props.events.filter((event) => {
+    const now = Date.now();
+    const endTime = event.endDate
+      ? new Date(new Date(event.endDate).setHours(23, 59, 59, 999)).getTime()
+      : null;
+    if (selectedFilter.onlyAvailable) {
+      if (event.status === EventStatus.EventCancelled) {
+        return false;
+      }
+      if (endTime && now > endTime) {
+        return false;
+      }
+    }
+
+    if (
+      selectedFilter.eventScale[0] !== "All" &&
+      !selectedFilter.eventScale.includes(event.scale)
+    ) {
+      return false;
+    }
+    return true;
+  });
   const groupByCustomDurationEvent = useMemo(() => {
     const currentMonth = new Date().getMonth() + 1;
     const now = Date.now();
@@ -16,11 +44,13 @@ export default function Home(props: { events: Event[] }) {
       passed: [],
     };
 
-    props.events.forEach((event) => {
+    filteredEvents.forEach((event) => {
       const startTime = event.startDate
-        ? new Date(event.startDate).getTime()
+        ? new Date(new Date(event.startDate).setHours(0, 0, 0, 0)).getTime()
         : null;
-      const endTime = event.endDate ? new Date(event.endDate).getTime() : null;
+      const endTime = event.endDate
+        ? new Date(new Date(event.endDate).setHours(23, 59, 59, 999)).getTime()
+        : null;
       const startMonth = event.startDate
         ? new Date(event.startDate).getMonth() + 1
         : null;
@@ -58,11 +88,15 @@ export default function Home(props: { events: Event[] }) {
     });
 
     return durationObject;
-  }, [props.events]);
+  }, [filteredEvents]);
 
   return (
     <>
       <div>
+        <Filter
+          selectedFilter={selectedFilter}
+          onChange={(filter) => setFilter(filter)}
+        />
         {props.events.length === 0 && (
           <div className="bg-white border rounded-xl p-6 text-center h-96 flex justify-center flex-col">
             <h1 className="text-xl text-red-500 font-bold">
@@ -85,12 +119,6 @@ export default function Home(props: { events: Event[] }) {
 
         <FriendSiteBlock />
       </div>
-
-      {/* <main className="container grid gap-12 grid-cols-3">
-        {props.events.map((event) => (
-          <EventCard key={event.name} event={event} />
-        ))}
-      </main> */}
     </>
   );
 }
@@ -111,7 +139,10 @@ export async function getStaticProps() {
       "startDate",
       "endDate",
       "slug",
+      "status",
+      "scale",
       "organization.name",
+      "organization.logoUrl",
       "organization.slug",
     ])
     .getAll();
@@ -137,7 +168,8 @@ function DurationSection({
 }) {
   const groupByDateEvent = useMemo(() => {
     return groupBy(events, (event) =>
-      event.startDate ? new Date(event.startDate).getMonth() + 1 : "unknown"
+      // Some event open in the last day of start month, but it should be count in next month.
+      event.endDate ? new Date(event.endDate).getMonth() + 1 : "unknown"
     );
   }, [events]);
 
@@ -175,5 +207,76 @@ function DurationSection({
         </div>
       ))}
     </section>
+  );
+}
+
+const EventScaleScaleOptions = [
+  { key: "All", name: "我全都要（全部）" },
+  { key: EventScale.Cosy, name: "三两小聚（小）" },
+  { key: EventScale.Small, name: "有点厉害（中）" },
+  { key: EventScale.Medium, name: "好多人啊（大）" },
+];
+function Filter({
+  onChange,
+  selectedFilter,
+}: {
+  onChange: (filter: {
+    onlyAvailable: boolean;
+    eventScale: (typeof EventScale)[keyof typeof EventScale][];
+  }) => void;
+  selectedFilter: {
+    onlyAvailable: boolean;
+    eventScale: (typeof EventScale)[keyof typeof EventScale][];
+  };
+}) {
+  const handleFilter = (key: string, value: unknown) => {
+    onChange({
+      ...selectedFilter,
+      [key]: value,
+    });
+  };
+
+  const selctedScaleValue = EventScaleScaleOptions.filter((e) =>
+    selectedFilter.eventScale.includes(e.key)
+  );
+  return (
+    <div className="bg-white border rounded-xl p-6 flex sm:items-center flex-col sm:flex-row relative">
+      <Switch.Group>
+        <div className="flex items-center max-sm:mb-4 max-sm:justify-between">
+          <Switch.Label className="mr-4 text-gray-600">
+            只看还未开始的展会
+          </Switch.Label>
+          <Switch
+            checked={selectedFilter.onlyAvailable}
+            onChange={(v) => handleFilter("onlyAvailable", v)}
+            className={`${
+              selectedFilter.onlyAvailable ? "bg-red-400" : "bg-gray-200"
+            } relative inline-flex h-6 w-11 items-center rounded-full`}
+          >
+            <span className="sr-only">只看还未开始的展会</span>
+            <span
+              className={`${
+                selectedFilter.onlyAvailable ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
+        </div>
+      </Switch.Group>
+
+      <div className="h-full bg-gray-100 w-[2px] h-4 mx-4 hidden sm:block" />
+
+      <select
+        value={selctedScaleValue[0].key}
+        id="scale"
+        onChange={(e) => handleFilter("eventScale", [e.target.value])}
+        className="bg-white p-2 border rounded-xl text-gray-600"
+      >
+        {EventScaleScaleOptions.map((option) => (
+          <option className="text-gray-600" key={option.key} value={option.key}>
+            {option.name}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
