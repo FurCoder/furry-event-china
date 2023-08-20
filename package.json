@@ -12,6 +12,7 @@
     "clean": "rm -rf .next && rm -rf out"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@sentry/nextjs": "^7.54.0",
     "@xata.io/client": "^0.24.2",
     "autoprefixer": "^10.4.14",
