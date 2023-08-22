@@ -10,11 +10,13 @@ export function sendTrack({
   }
   window.umami?.track(eventName, eventValue);
   window.gtag && window.gtag("event", eventName, eventValue);
+  window.mixpanel?.track(eventName, eventValue);
 }
 
 declare global {
   interface Window {
     umami: { track: Function } | undefined;
     gtag: Function | undefined;
+    mixpanel: { track: Function } | undefined;
   }
 }
