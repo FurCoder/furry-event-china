@@ -143,6 +143,15 @@ export default function EventDetail({ event }: { event: Event }) {
               href={event.website || "#"}
               target="_blank"
               rel="noreferrer"
+              onClick={() =>
+                sendTrack({
+                  eventName: "click-event-website",
+                  eventValue: {
+                    "eventName": event.name,
+                    link: event.website,
+                  },
+                })
+              }
               className="block mt-8 px-16 py-4 bg-red-400 text-white font-bold rounded-md text-center transition duration-300 border border-2 border-red-100 hover:border-red-400 shadow-lg"
             >
               前往信源
@@ -219,9 +228,21 @@ export default function EventDetail({ event }: { event: Event }) {
                   </div>
                 </div>
 
-                <button className="border rounded px-2 py-1 text-sm text-gray-500 hover:border-slate-400 hover:drop-shadow transition duration-200">
-                  看看展商详情
-                </button>
+                <Link href={`/${event.organization?.slug}`}>
+                  <button
+                    onClick={() =>
+                      sendTrack({
+                        eventName: "click-event-portal",
+                        eventValue: {
+                          link: `/${event.organization?.slug}`,
+                        },
+                      })
+                    }
+                    className="border rounded px-2 py-1 text-sm text-gray-500 hover:border-slate-400 hover:drop-shadow transition duration-200"
+                  >
+                    看看展商详情
+                  </button>
+                </Link>
               </div>
             </div>
 
