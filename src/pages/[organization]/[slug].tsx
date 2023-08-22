@@ -15,6 +15,7 @@ import { TbArrowsRightLeft } from "react-icons/tb";
 import { FaPaw } from "react-icons/fa";
 import Link from "next/link";
 import { EventStatus, EventStatusSchema } from "@/types/event";
+import { sendTrack } from "@/utils/track";
 
 const xata = new XataClient();
 
@@ -58,7 +59,9 @@ export default function EventDetail({ event }: { event: Event }) {
             ? {}
             : {
                 style: {
-                  backgroundImage: `url(${finalEventCoverImage || event.coverUrl})`,
+                  backgroundImage: `url(${
+                    finalEventCoverImage || event.coverUrl
+                  })`,
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
@@ -140,9 +143,18 @@ export default function EventDetail({ event }: { event: Event }) {
               href={event.website || "#"}
               target="_blank"
               rel="noreferrer"
-              className="block mt-8 px-16 py-4 bg-red-400 hover:bg-red-300 text-white font-bold rounded-md text-center transition"
+              onClick={() =>
+                sendTrack({
+                  eventName: "click-event-website",
+                  eventValue: {
+                    "eventName": event.name,
+                    link: event.website,
+                  },
+                })
+              }
+              className="block mt-8 px-16 py-4 bg-red-400 text-white font-bold rounded-md text-center transition duration-300 border border-2 border-red-100 hover:border-red-400 shadow-lg"
             >
-              前往官网
+              前往信源
             </a>
           )}
         </div>
@@ -188,7 +200,7 @@ export default function EventDetail({ event }: { event: Event }) {
           <div className="p-4">
             <div className="flex">
               {event.organization?.logoUrl && (
-                <div className="border rounded flex justify-center p-2 w-20 h-20">
+                <div className="border rounded flex justify-center p-2 w-[100px] h-[100px]">
                   <NextImage
                     className="object-contain"
                     alt={`${event.organization?.name}'s logo`}
@@ -198,25 +210,43 @@ export default function EventDetail({ event }: { event: Event }) {
                   />
                 </div>
               )}
-              <div className="ml-4">
-                <Link
-                  className="text-2xl font-bold text-gray-700 hover:underline"
-                  target="_blank"
-                  href={`/${event.organization?.slug}`}
-                >
-                  {event.organization?.name}
-                </Link>
-                <div className="flex items-center text-gray-500 mb-2">
-                  <span className="flex items-center">
-                    <OrganizationStatus
-                      status={event.organization?.status || ""}
-                    />
-                  </span>
+              <div className="ml-4 flex flex-col justify-between">
+                <div>
+                  <Link
+                    className="text-2xl font-bold text-gray-600"
+                    target="_blank"
+                    href={`/${event.organization?.slug}`}
+                  >
+                    {event.organization?.name}
+                  </Link>
+                  <div className="flex items-center text-gray-500 mb-4">
+                    <span className="text-sm">
+                      <OrganizationStatus
+                        status={event.organization?.status || ""}
+                      />
+                    </span>
+                  </div>
                 </div>
+
+                <Link href={`/${event.organization?.slug}`}>
+                  <button
+                    onClick={() =>
+                      sendTrack({
+                        eventName: "click-event-portal",
+                        eventValue: {
+                          link: `/${event.organization?.slug}`,
+                        },
+                      })
+                    }
+                    className="border rounded px-2 py-1 text-sm text-gray-500 hover:border-slate-400 hover:drop-shadow transition duration-200"
+                  >
+                    看看展商详情
+                  </button>
+                </Link>
               </div>
             </div>
 
-            <p
+            <div
               className={clsx(
                 "flex items-center text-gray-500 grid gap-4 mt-4",
                 !event.detail && "lg:grid-cols-2"
@@ -225,49 +255,50 @@ export default function EventDetail({ event }: { event: Event }) {
               {event.organization?.website && (
                 <OrganizationLinkButton
                   href={event.organization?.website}
-                  bgColorClass="bg-blue-300"
+                  bgColorClass="bg-sky-400"
+                  icon={<HiOutlineHome />}
                 >
-                  <HiOutlineHome className="mr-2" />
                   去官网
                 </OrganizationLinkButton>
               )}
               {event.organization?.qqGroup && (
                 <OrganizationLinkButton
-                  bgColorClass="bg-red-300"
+                  bgColorClass="bg-[#4d9aff]"
+                  icon={<FaQq />}
                   onClick={() => {
                     navigator.clipboard
                       .writeText(event.organization?.qqGroup || "")
                       .then(() => toast.success("🥳 复制成功，快去QQ加群吧"));
                   }}
+                  label="复制QQ群号"
                 >
-                  <FaQq className="mr-2" /> 复制QQ群号:
                   {event.organization?.qqGroup}
                 </OrganizationLinkButton>
               )}
               {event.organization?.bilibili && (
                 <OrganizationLinkButton
-                  bgColorClass="bg-sky-400"
+                  bgColorClass="bg-[#fb7299]"
                   href={event.organization?.bilibili}
+                  icon={<SiBilibili />}
                 >
-                  <SiBilibili className="mr-2" />
-                  去Bilibili
+                  去BiliBili
                 </OrganizationLinkButton>
               )}
               {event.organization?.weibo && (
                 <OrganizationLinkButton
-                  bgColorClass="bg-red-500"
+                  bgColorClass="bg-[#ff5962]"
                   href={event.organization?.weibo}
+                  icon={<FaWeibo />}
                 >
-                  <FaWeibo className="mr-2" />
                   去微博
                 </OrganizationLinkButton>
               )}
               {event.organization?.twitter && (
                 <OrganizationLinkButton
-                  bgColorClass="bg-blue-500"
+                  bgColorClass="bg-[#1da1f2]"
                   href={event.organization?.twitter}
+                  icon={<FaTwitter />}
                 >
-                  <FaTwitter className="mr-2" />
                   去Twitter
                 </OrganizationLinkButton>
               )}
@@ -279,9 +310,10 @@ export default function EventDetail({ event }: { event: Event }) {
                       .writeText(event.organization?.contactMail || "")
                       .then(() => toast.success("🥳 复制成功，快去发邮件吧"));
                   }}
+                  icon={<HiOutlineMail />}
+                  label="复制邮件地址"
                 >
-                  <HiOutlineMail className="mr-2 flex-shrink-0" />
-                  复制邮件地址: {event.organization?.contactMail}
+                  {event.organization?.contactMail}
                 </OrganizationLinkButton>
               )}
 
@@ -289,11 +321,12 @@ export default function EventDetail({ event }: { event: Event }) {
                 <OrganizationLinkButton
                   bgColorClass="bg-blue-800"
                   href={event.organization?.wikifur}
+                  icon={<FaPaw />}
                 >
-                  <FaPaw className="mr-2 flex-shrink-0" />去 Wikifur 了解更多
+                  去 Wikifur 了解更多
                 </OrganizationLinkButton>
               )}
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -302,27 +335,64 @@ export default function EventDetail({ event }: { event: Event }) {
 }
 
 function OrganizationLinkButton({
+  icon,
   children,
   href,
   onClick,
   bgColorClass,
+  label,
 }: {
+  icon?: React.ReactNode;
   children: React.ReactNode;
   onClick?: () => void;
   href?: string;
   bgColorClass?: string;
+  label?: React.ReactNode;
 }) {
   const className = clsx(
-    "flex items-center justify-center rounded-xl px-4 py-2 text-white w-full text-center",
+    "flex items-center rounded-xl px-4 py-3 text-white w-full text-left md:hover:-translate-x-2 shadow transition duration-300",
     bgColorClass
   );
+
+  const track = () => {
+    sendTrack({
+      eventName: "click-event-portal",
+      eventValue: {
+        label,
+        link: href,
+        action: "click",
+      },
+    });
+  };
+  const buttonContext = (
+    <>
+      {icon && <span className="mr-2 flex-shrink-0 text-xl">{icon}</span>}
+      {icon && <span className="h-[16px] w-[2px] bg-white mx-4 opacity-50" />}
+      <div>
+        {label && <span className="text-xs">{label}</span>}
+        <p>{children}</p>
+      </div>
+    </>
+  );
   return href ? (
-    <a href={href} target="_blank" rel="noreferrer" className={className}>
-      {children}
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className={className}
+      onClick={track}
+    >
+      {buttonContext}
     </a>
   ) : (
-    <button className={className} onClick={onClick}>
-      {children}
+    <button
+      className={className}
+      onClick={() => {
+        onClick && onClick();
+        track();
+      }}
+    >
+      {buttonContext}
     </button>
   );
 }
