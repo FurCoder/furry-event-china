@@ -4,10 +4,12 @@ import { GrStatusGoodSmall } from "react-icons/gr";
 export default function OrganizationStatus(props: { status: string }) {
   const statusConfig = getOranizationStatusConfig(props.status);
   return (
-    <span className="flex items-center">
-      <GrStatusGoodSmall className={clsx("mr-1", statusConfig.color)} />
-      {statusConfig.label}
-    </span>
+    <div className="flex items-center">
+      <div className="text-sm h-4 flex justify-center flex-col">
+        <GrStatusGoodSmall className={clsx("mr-1", statusConfig.color)} />
+      </div>
+      <span className="leading-4 h-4">{statusConfig.label}</span>
+    </div>
   );
 }
 

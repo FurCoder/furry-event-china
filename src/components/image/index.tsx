@@ -47,7 +47,7 @@ function Image({
       sizes={sizes}
       srcSet={getSrcset()}
       loading={priority ? "eager" : "lazy"}
-      fetchPriority={priority ? "high" : "auto"}
+      fetchpriority={priority ? "high" : "auto"}
     />
   );
 }
