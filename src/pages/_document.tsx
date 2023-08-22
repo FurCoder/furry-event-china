@@ -97,7 +97,7 @@ export default function Document() {
               
               mixpanel.init('efa97da762d30ad5b34e9187bb2221e6', {
               api_payload_format: 'json',
-              debug: true,
+              debug: false,
               persistence: 'localStorage',
               track_pageview: true,
             })
