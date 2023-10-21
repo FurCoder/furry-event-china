@@ -98,13 +98,14 @@ export default function Home(props: { events: Event[] }) {
           selectedFilter={selectedFilter}
           onChange={(filter) => setFilter(filter)}
         />
-        {props.events.length === 0 && (
-          <div className="bg-white border rounded-xl p-6 text-center h-96 flex justify-center flex-col">
-            <h1 className="text-xl text-red-500 font-bold">
-              今年还没有收集到任何展会，再等等？
+        {filteredEvents.length === 0 && (
+          <div className="bg-white border rounded-xl p-6 mt-6 text-center h-96 flex justify-center flex-col">
+            <h1 className="text-xl text-red-400 font-bold">
+              似乎没有满足查询需求的展会...<br></br>
+              换个查询条件，或者...再等等？
             </h1>
             <p className="text-base text-gray-400 mt-2">
-              或者向我们反馈一个已经官宣的展会
+              你也可以向我们反馈一个已经官宣的展会！页脚有我们的联系方式！
             </p>
           </div>
         )}
