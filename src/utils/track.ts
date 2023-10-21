@@ -18,5 +18,6 @@ declare global {
     umami: { track: Function } | undefined;
     gtag: Function | undefined;
     mixpanel: { track: Function } | undefined;
+    TMap: any | undefined;
   }
 }
