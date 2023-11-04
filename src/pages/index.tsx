@@ -7,6 +7,14 @@ import { EventScale, EventStatus } from "@/types/event";
 import { Switch } from "@headlessui/react";
 import { sendTrack } from "@/utils/track";
 
+enum DurationType {
+  Passed = "passed", //already done.
+  Now = "now", // in the duration of event.
+  Soon = "soon", // in the same month of event start date.
+  Next = "next", // not start yet but plan in this year.
+  NextYear = "nextYear", // in the next year
+}
+
 export default function Home(props: { events: Event[] }) {
   const [selectedFilter, setFilter] = useState({
     onlyAvailable: false,
@@ -42,6 +50,7 @@ export default function Home(props: { events: Event[] }) {
       now: [],
       soon: [],
       next: [],
+      nextYear: [],
       passed: [],
     };
 
@@ -52,11 +61,20 @@ export default function Home(props: { events: Event[] }) {
       const endTime = event.endDate
         ? new Date(new Date(event.endDate).setHours(23, 59, 59, 999)).getTime()
         : null;
+
+      // if a event end date is next year, then count it in next year not in current year.
+      const isNextYear =
+        event.startDate && event.endDate
+          ? new Date(event.startDate).getFullYear() >
+              new Date().getFullYear() ||
+            new Date(event.endDate).getFullYear() > new Date().getFullYear()
+          : false;
+
       const startMonth = event.startDate
-        ? new Date(event.startDate).getMonth() + 1
+        ? new Date(event.startDate).getMonth() + 1 + (isNextYear ? 12 : 0)
         : null;
       const endMonth = event.endDate
-        ? new Date(event.endDate).getMonth() + 1
+        ? new Date(event.endDate).getMonth() + 1 + (isNextYear ? 12 : 0)
         : null;
 
       if (
@@ -84,6 +102,9 @@ export default function Home(props: { events: Event[] }) {
 
       //Next events
       if (startMonth > currentMonth) {
+        if (startMonth > 12) {
+          return durationObject.nextYear.push(event);
+        }
         return durationObject.next.push(event);
       }
     });
@@ -125,42 +146,6 @@ export default function Home(props: { events: Event[] }) {
   );
 }
 
-export async function getStaticProps() {
-  const xata = new XataClient();
-  const events = await xata.db.event
-    .filter({
-      startDate: { $ge: new Date(new Date().getFullYear(), 0, 1) },
-      endDate: { $le: new Date(new Date().getFullYear(), 11, 31) },
-    })
-    .select([
-      "name",
-      "address",
-      "city",
-      "coverUrl",
-      "logoUrl",
-      "startDate",
-      "endDate",
-      "slug",
-      "status",
-      "scale",
-      "organization.name",
-      "organization.logoUrl",
-      "organization.slug",
-    ])
-    .getAll();
-  return {
-    props: {
-      events,
-    },
-  };
-}
-
-enum DurationType {
-  Passed = "passed", //already done.
-  Now = "now", // in the duration of event.
-  Soon = "soon", // in the same month of event start date.
-  Next = "next", // not start yet.
-}
 function DurationSection({
   durationType,
   events,
@@ -187,12 +172,16 @@ function DurationSection({
         {durationType === DurationType.Now && "就是现在"}
         {durationType === DurationType.Soon && "马上就来"}
         {durationType === DurationType.Next && "今年还有"}
+        {durationType === DurationType.NextYear && "看看来年"}
       </h2>
       {months.map((month) => (
         <div key={month} className="border rounded-xl bg-gray-100 p-6 my-4">
           <h3 className="text-xl text-red-400 font-bold mb-6">
-            {month}
-            {month !== "unknown" ? "月" : null}{" "}
+            {month !== "unknown"
+              ? durationType === DurationType.NextYear
+                ? `明年${month}月 `
+                : `${month}月 `
+              : null}
             <span className="text-sm text-gray-500 font-bold">
               共有 {groupByDateEvent[month].length} 个展会
             </span>
@@ -288,4 +277,36 @@ function Filter({
       </select>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const xata = new XataClient();
+  const events = await xata.db.event
+    .filter({
+      startDate: { $ge: new Date(new Date().getFullYear(), 0, 1) },
+      $not: {
+        status: EventStatus.EventCancelled
+      }
+    })
+    .select([
+      "name",
+      "address",
+      "city",
+      "coverUrl",
+      "logoUrl",
+      "startDate",
+      "endDate",
+      "slug",
+      "status",
+      "scale",
+      "organization.name",
+      "organization.logoUrl",
+      "organization.slug",
+    ])
+    .getAll();
+  return {
+    props: {
+      events,
+    },
+  };
 }
