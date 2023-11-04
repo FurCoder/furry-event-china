@@ -7,6 +7,14 @@ import { EventScale, EventStatus } from "@/types/event";
 import { Switch } from "@headlessui/react";
 import { sendTrack } from "@/utils/track";
 
+enum DurationType {
+  Passed = "passed", //already done.
+  Now = "now", // in the duration of event.
+  Soon = "soon", // in the same month of event start date.
+  Next = "next", // not start yet but plan in this year.
+  NextYear = "nextYear", // in the next year
+}
+
 export default function Home(props: { events: Event[] }) {
   const [selectedFilter, setFilter] = useState({
     onlyAvailable: false,
@@ -138,42 +146,6 @@ export default function Home(props: { events: Event[] }) {
   );
 }
 
-export async function getStaticProps() {
-  const xata = new XataClient();
-  const events = await xata.db.event
-    .filter({
-      startDate: { $ge: new Date(new Date().getFullYear(), 0, 1) },
-    })
-    .select([
-      "name",
-      "address",
-      "city",
-      "coverUrl",
-      "logoUrl",
-      "startDate",
-      "endDate",
-      "slug",
-      "status",
-      "scale",
-      "organization.name",
-      "organization.logoUrl",
-      "organization.slug",
-    ])
-    .getAll();
-  return {
-    props: {
-      events,
-    },
-  };
-}
-
-enum DurationType {
-  Passed = "passed", //already done.
-  Now = "now", // in the duration of event.
-  Soon = "soon", // in the same month of event start date.
-  Next = "next", // not start yet but plan in this year.
-  NextYear = "nextYear", // in the next year
-}
 function DurationSection({
   durationType,
   events,
@@ -305,4 +277,36 @@ function Filter({
       </select>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const xata = new XataClient();
+  const events = await xata.db.event
+    .filter({
+      startDate: { $ge: new Date(new Date().getFullYear(), 0, 1) },
+      $not: {
+        status: EventStatus.EventCancelled
+      }
+    })
+    .select([
+      "name",
+      "address",
+      "city",
+      "coverUrl",
+      "logoUrl",
+      "startDate",
+      "endDate",
+      "slug",
+      "status",
+      "scale",
+      "organization.name",
+      "organization.logoUrl",
+      "organization.slug",
+    ])
+    .getAll();
+  return {
+    props: {
+      events,
+    },
+  };
 }
