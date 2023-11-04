@@ -13,9 +13,9 @@
 
 [中文版本](./README.zh.md)
 
-[FEC 兽展日历](https://www.furryeventchina.com) is a website that collects and displays exhibition events related to furries in mainland China. and this is source code repo of it.
+[FEC 兽展日历](https://www.furryeventchina.com) is a website that collects and displays furry conventions hosting within mainland China. This is the source code repository of this site.
 
-## Start develop
+## Start Developing
 
 ```bash
 yarn install
@@ -25,7 +25,9 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Contribute
-If you would like to contribute to this project, there are many tasks waiting to be claimed on our board. Choose one that you are satisfied with and then open a PR!
+
+If you would like to contribute to this project, there are many tasks waiting to be claimed on our board. Choose one that interests you and then open a PR!
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
