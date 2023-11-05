@@ -43,7 +43,7 @@ export default function Home(props: { events: Event[] }) {
     return true;
   });
   const groupByCustomDurationEvent = useMemo(() => {
-    const currentMonth = new Date().getMonth() + 1;
+    const currentMonth = new Date().getUTCMonth() + 1;
     const now = Date.now();
 
     const durationObject: { [x in DurationType]: Event[] } = {
@@ -65,16 +65,17 @@ export default function Home(props: { events: Event[] }) {
       // if a event end date is next year, then count it in next year not in current year.
       const isNextYear =
         event.startDate && event.endDate
-          ? new Date(event.startDate).getFullYear() >
-              new Date().getFullYear() ||
-            new Date(event.endDate).getFullYear() > new Date().getFullYear()
+          ? new Date(event.startDate).getUTCFullYear() >
+              new Date().getUTCFullYear() ||
+            new Date(event.endDate).getUTCFullYear() >
+              new Date().getUTCFullYear()
           : false;
 
       const startMonth = event.startDate
-        ? new Date(event.startDate).getMonth() + 1 + (isNextYear ? 12 : 0)
+        ? new Date(event.startDate).getUTCMonth() + 1 + (isNextYear ? 12 : 0)
         : null;
       const endMonth = event.endDate
-        ? new Date(event.endDate).getMonth() + 1 + (isNextYear ? 12 : 0)
+        ? new Date(event.endDate).getUTCMonth() + 1 + (isNextYear ? 12 : 0)
         : null;
 
       if (
@@ -156,7 +157,7 @@ function DurationSection({
   const groupByDateEvent = useMemo(() => {
     return groupBy(events, (event) =>
       // Some event open in the last day of start month, but it should be count in next month.
-      event.endDate ? new Date(event.endDate).getMonth() + 1 : "unknown"
+      event.endDate ? new Date(event.endDate).getUTCMonth() + 1 : "unknown"
     );
   }, [events]);
 
@@ -283,10 +284,10 @@ export async function getStaticProps() {
   const xata = new XataClient();
   const events = await xata.db.event
     .filter({
-      startDate: { $ge: new Date(new Date().getFullYear(), 0, 1) },
+      startDate: { $ge: new Date(new Date().getUTCFullYear(), 0, 1) },
       $not: {
-        status: EventStatus.EventCancelled
-      }
+        status: EventStatus.EventCancelled,
+      },
     })
     .select([
       "name",
