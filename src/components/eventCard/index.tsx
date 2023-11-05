@@ -18,8 +18,8 @@ export default function EventCard({
   const [isWiderImage, setIsWiderImage] = useState(true);
 
   const finalEventCoverImage =
-    event.logoUrl ||
-    event.coverUrl?.[0] ||
+    event.coverUrl ||
+    event.posterUrl?.[0] ||
     `https://cdn.furryeventchina.com/fec-event-default-cover.png`;
   const isDefaultCover = finalEventCoverImage.includes(
     "fec-event-default-cover"

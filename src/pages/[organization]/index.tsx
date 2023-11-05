@@ -23,9 +23,9 @@ export default function OrganizationDetail(props: {
       const date = new Date(organization.creationTime);
 
       return {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
+        year: date.getUTCFullYear(),
+        month: date.getUTCMonth() + 1,
+        day: date.getUTCDate(),
       };
     } else {
       return null;
@@ -204,8 +204,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const date = events?.[0]?.startDate && new Date(events[0].startDate);
   const dateObj = date && {
     year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate(),
+    month: date.getUTCMonth() + 1,
+    day: date.getUTCDate(),
   };
   const dateString = date
     ? `${dateObj?.year}年${dateObj?.month}月${dateObj?.day}日`

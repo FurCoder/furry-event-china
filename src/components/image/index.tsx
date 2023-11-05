@@ -34,7 +34,7 @@ function Image({
       .join(", ");
   };
 
-  const srcString = width ? imageLoader({ src, width }) : src;
+  const srcString = width ? imageLoader({ src, quality, width }) : src;
 
   return (
     <img

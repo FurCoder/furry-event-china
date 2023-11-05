@@ -16,6 +16,7 @@ import { FaPaw } from "react-icons/fa";
 import Link from "next/link";
 import { EventStatus, EventStatusSchema } from "@/types/event";
 import { sendTrack } from "@/utils/track";
+import { getEventCoverUrl, imageUrl } from "@/utils/imageLoader";
 
 const xata = new XataClient();
 
@@ -23,21 +24,19 @@ export default function EventDetail({ event }: { event: Event }) {
   const [isWiderImage, setIsWiderImage] = useState(true);
 
   const calcImageRatio = useCallback(() => {
-    if (!event.logoUrl) return;
+    if (!event.coverUrl) return;
     const img = new Image();
-    img.src = event.logoUrl;
+    img.src = getEventCoverUrl(event);
     img.onload = function (this) {
       setIsWiderImage(img.width >= img.height);
     };
-  }, [event.logoUrl]);
+  }, [event.coverUrl]);
 
   useEffect(() => {
     calcImageRatio();
   }, [calcImageRatio]);
 
-  const finalEventCoverImage =
-    event.logoUrl ||
-    `https://cdn.furryeventchina.com/fec-event-default-cover.png`;
+  const finalEventCoverImage = getEventCoverUrl(event);
 
   return (
     <>
@@ -59,9 +58,7 @@ export default function EventDetail({ event }: { event: Event }) {
             ? {}
             : {
                 style: {
-                  backgroundImage: `url(${
-                    finalEventCoverImage || event.coverUrl
-                  })`,
+                  backgroundImage: `url(${finalEventCoverImage})`,
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
@@ -147,7 +144,7 @@ export default function EventDetail({ event }: { event: Event }) {
                 sendTrack({
                   eventName: "click-event-website",
                   eventValue: {
-                    "eventName": event.name,
+                    eventName: event.name,
                     link: event.website,
                   },
                 })
@@ -170,9 +167,9 @@ export default function EventDetail({ event }: { event: Event }) {
               />
             </div>
 
-            {!!event.coverUrl?.length && (
+            {!!event.posterUrl?.length && (
               <div className="bg-white rounded-xl flex-grow p-6 md:mr-4">
-                {event.coverUrl.map((cover, index) => (
+                {event.posterUrl.map((cover, index) => (
                   <div className="relative" key={cover}>
                     <NextImage
                       alt={`${event.name}'s poster-${index}`}
@@ -433,7 +430,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           event?.address
         }”举办，喜欢的朋友记得关注开始售票时间～`,
         url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
-        cover: event?.logoUrl || event?.coverUrl?.[0],
+        cover: event?.coverUrl || event?.posterUrl?.[0],
       },
       structuredData: {
         breadcrumb: {
@@ -480,7 +477,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
               addressCountry: "CN",
             },
           },
-          image: [event?.logoUrl || event?.coverUrl?.[0]],
+          image: [event?.coverUrl || event?.posterUrl?.[0]],
           description: event?.detail,
           // offers: {
           //   "@type": "Offer",
@@ -501,12 +498,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           },
         },
         imageObject: [
-          ...(event?.logoUrl ? [event.logoUrl] : []),
-          ...(event?.coverUrl || []),
+          ...(event?.coverUrl ? [event.coverUrl] : []),
+          ...(event?.posterUrl || []),
         ].map((image) => ({
           "@context": "https://schema.org/",
           "@type": "ImageObject",
-          contentUrl: image,
+          contentUrl: imageUrl(image),
           creditText: event?.organization?.name,
           creator: {
             "@type": "Organization",
