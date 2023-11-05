@@ -2,7 +2,6 @@ import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 
 const isEnableTrack = process.env.ENABLE_TRACK === "true";
-const ENABLE_CN_DOMAIN = process.env.ENABLE_CN_DOMAIN === "true";
 
 export default function Document() {
   return (
@@ -38,17 +37,9 @@ export default function Document() {
         <NextScript />
         {isEnableTrack && (
           <Script
-            data-website-id={
-              ENABLE_CN_DOMAIN
-                ? "a0099ded-b6d3-4400-962b-3bc30adfdd70"
-                : "a12ca72b-5704-4910-bb28-9dd09d576e91"
-            }
+            data-website-id={"a12ca72b-5704-4910-bb28-9dd09d576e91"}
             strategy="lazyOnload"
-            src={
-              ENABLE_CN_DOMAIN
-                ? "https://fec-umami.zeabur.app/script.js"
-                : "https://analytics.umami.is/script.js"
-            }
+            src={"https://analytics.umami.is/script.js"}
           />
         )}
         {isEnableTrack && (
