@@ -71,7 +71,7 @@ export async function getStaticProps() {
       "address",
       "city",
       "coverUrl",
-      "logoUrl",
+      "posterUrl",
       "startDate",
       "endDate",
       "slug",

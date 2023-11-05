@@ -4,6 +4,7 @@ import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import Link from "next/link";
 import { useMemo } from "react";
+import { getEventCoverUrl } from "@/utils/imageLoader";
 
 export default function City(props: { events: Event[] }) {
   const { events } = props;
@@ -122,9 +123,7 @@ export default function City(props: { events: Event[] }) {
                         <div
                           className="rounded-xl duration-500 transition group-hover:border-gray-400 w-full h-full absolute brightness-75 hover:brightness-100"
                           style={{
-                            backgroundImage: `url(${
-                              event.logoUrl || event.coverUrl
-                            })`,
+                            backgroundImage: `url(${getEventCoverUrl(event)})`,
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "cover",
@@ -155,7 +154,7 @@ export async function getStaticProps() {
       "name",
       "city",
       "slug",
-      "logoUrl",
+      "posterUrl",
       "coverUrl",
       "startDate",
       "organization.slug",
