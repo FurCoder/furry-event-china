@@ -9,19 +9,35 @@ import toast, { Toaster } from "react-hot-toast";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
 import { HiOutlineHome, HiOutlineMail } from "react-icons/hi";
+import { VscLoading } from "react-icons/vsc";
 import { IoLocation } from "react-icons/io5";
 import { SiBilibili } from "react-icons/si";
+import { RiErrorWarningLine } from "react-icons/ri";
 import { TbArrowsRightLeft } from "react-icons/tb";
 import { FaPaw } from "react-icons/fa";
 import Link from "next/link";
 import { EventStatus, EventStatusSchema } from "@/types/event";
 import { sendTrack } from "@/utils/track";
 import { getEventCoverUrl, imageUrl } from "@/utils/imageLoader";
+import Script from "next/script";
 
 const xata = new XataClient();
 
+const MapLoadingStatus = {
+  Idle: "idle",
+  Loading: "loading",
+  Finished: "finished",
+  Error: "error",
+};
+
 export default function EventDetail({ event }: { event: Event }) {
   const [isWiderImage, setIsWiderImage] = useState(true);
+  const [mapLoadingStatus, setMapLoadingStatus] = useState(() => {
+    if (event.addressLat && event.addressLon) {
+      return MapLoadingStatus.Loading;
+    }
+    return MapLoadingStatus.Idle;
+  });
 
   const calcImageRatio = useCallback(() => {
     if (!event.coverUrl) return;
@@ -37,10 +53,70 @@ export default function EventDetail({ event }: { event: Event }) {
   }, [calcImageRatio]);
 
   const finalEventCoverImage = getEventCoverUrl(event);
+  const initMap = () => {
+    if (!window.TMap) throw new Error("TMap is not loaded");
+    setMapLoadingStatus(MapLoadingStatus.Loading);
+    const center = new window.TMap.LatLng(event.addressLat, event.addressLon);
+    //定义map变量，调用 TMap.Map() 构造函数创建地图
+
+    try {
+      const map = new window.TMap.Map(
+        document.getElementById("event-map-container"),
+        {
+          center: center, //设置地图中心点坐标
+          zoom: 17.2, //设置地图缩放级别
+          pitch: 43.5, //设置俯仰角
+          rotation: 45, //设置地图旋转角度
+        }
+      );
+
+      map.on("tilesloaded", function () {
+        setMapLoadingStatus(MapLoadingStatus.Finished);
+      });
+
+      new window.TMap.MultiMarker({
+        id: "marker-layer", //图层id
+        map: map,
+        styles: {
+          //点标注的相关样式
+          marker: new window.TMap.MarkerStyle({
+            width: 25,
+            height: 35,
+            anchor: { x: 16, y: 32 },
+          }),
+        },
+        geometries: [
+          {
+            //点标注数据数组
+            id: "demo",
+            styleId: "marker",
+            position: new window.TMap.LatLng(
+              event.addressLat,
+              event.addressLon
+            ),
+            properties: {
+              title: "marker",
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      console.error(error);
+      setMapLoadingStatus(MapLoadingStatus.Error);
+    }
+  };
 
   return (
     <>
       <Toaster />
+      {mapLoadingStatus !== MapLoadingStatus.Idle && (
+        <Script
+          src="https://map.qq.com/api/gljs?v=1.exp&key=PXEBZ-QLM6C-RZX2K-AV2XX-SBBW5-VGFC4"
+          strategy="lazyOnload"
+          onReady={initMap}
+        />
+      )}
+
       <div
         className={clsx(
           "flex border bg-white rounded-xl min-h-[500px] overflow-hidden",
@@ -100,6 +176,13 @@ export default function EventDetail({ event }: { event: Event }) {
           )}
         >
           <div className="flex-grow">
+            {event.status === EventStatus.EventCancelled && (
+              <p className="inline-flex items-center bg-red-400 mb-2 px-4 py-2 text-white rounded-md">
+                <RiErrorWarningLine className="mr-2 text-lg" />
+                活动已被主办方取消
+              </p>
+            )}
+
             <h1
               aria-label="活动名称"
               className="font-bold text-2xl text-gray-700"
@@ -109,6 +192,7 @@ export default function EventDetail({ event }: { event: Event }) {
             <h2 className="text-gray-600 text-sm">
               由 {event.organization?.name} 主办
             </h2>
+
             <p
               aria-label="活动举办地点"
               className="flex items-center text-gray-500 mt-4"
@@ -156,6 +240,43 @@ export default function EventDetail({ event }: { event: Event }) {
           )}
         </div>
       </div>
+
+      {mapLoadingStatus !== MapLoadingStatus.Idle && (
+        <div className="my-4 bg-white rounded-xl overflow-hidden elative">
+          <h3 className="text-xl text-gray-600 m-4">展会地图</h3>
+
+          <div
+            id="event-map-container"
+            className="h-[450px] overflow-hidden rounded-2xl m-4 relative"
+          >
+            <div
+              className={clsx(
+                "absolute w-full bg-gray-100/70 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center overflow-hidden transition duration-300",
+                mapLoadingStatus === MapLoadingStatus.Loading && "h-full",
+                mapLoadingStatus !== MapLoadingStatus.Loading && "h-0"
+              )}
+            >
+              <div className="flex items-center z-10 abosolute">
+                <span className="animate-spin mr-2">
+                  <VscLoading className="text-base" />
+                </span>
+                <label className="text-gray-600">正在加载地图</label>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center mt-2 mb-4 px-4">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://uri.amap.com/marker?position=${event.addressLon},${event.addressLat}`}
+              className="px-2 py-2 border border-gray-300 text-sm rounded text-gray-700 hover:text-gray-900 hover:border-gray-400 transition duration-300"
+            >
+              去高德地图查看
+            </a>
+          </div>
+        </div>
+      )}
 
       <div className="flex my-4 lg:items-start flex-col-reverse md:flex-row">
         {event.detail && (
