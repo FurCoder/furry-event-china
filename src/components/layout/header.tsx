@@ -29,13 +29,13 @@ export default function Header() {
   };
 
   return (
-    <header className="mb-6 rounded-b-xl bg-white flex justify-between items-center1 max-sm:sticky max-sm:top-0 max-sm:z-20 max-sm:shadow">
-      <div className="m-6 text-4xl text-geraldine font-bold">
+    <header className="mb-6 rounded-b-xl bg-white flex justify-between max-sm:sticky max-sm:top-0 max-sm:z-20 max-sm:shadow">
+      <div className="m-2 md:m-6 text-base md:text-4xl text-geraldine font-bold">
         <span className="block">FEC 🐺🐱🐯</span>
         <span className="text-base mt-0 block">毛茸茸展会目录</span>
       </div>
       <div
-        className="block sm:hidden flex align-end justify-end mx-4 px-6 py-8 text-3xl text-red-400 items-center"
+        className="block sm:hidden flex align-end justify-end mx-4 md:px-6 md:py-8 text-3xl text-red-400 items-center"
         onClick={() => handleMenuClick(true)}
       >
         <HiMenu />
