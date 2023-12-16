@@ -16,11 +16,12 @@ jobs:
       ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/hydrogen
+      - run: "corepack enable"
       - name: Build
         run: "yarn && yarn build"
       - name: Upload
@@ -35,7 +36,7 @@ jobs:
     needs: global-build
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
@@ -65,11 +66,12 @@ jobs:
       NEXT_PUBLIC_SENTRY_DSN: ${{vars.SENTRY_DSN}}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/hydrogen
+      - run: "corepack enable"
       - name: Build
         run: "yarn && yarn build"
       - name: Upload
