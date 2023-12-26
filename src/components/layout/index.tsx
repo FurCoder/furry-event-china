@@ -4,7 +4,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useRouter } from "next/router";
 
-const isEnableCN = process.env.ENABLE_CN_DOMAIN === "true";
+const isEnableCN = process.env.NEXT_PUBLIC_ENABLE_CN_DOMAIN === "true";
 
 export default function Layout({
   children,

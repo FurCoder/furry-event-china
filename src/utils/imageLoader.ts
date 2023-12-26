@@ -1,7 +1,7 @@
 import { ImageLoaderProps } from "next/image";
 import { EventRecord } from "@/xata/xata";
 
-const ENABLE_CN_DOMAIN = process.env.ENABLE_CN_DOMAIN === "true";
+const ENABLE_CN_DOMAIN = process.env.NEXT_PUBLIC_ENABLE_CN_DOMAIN === "true";
 const CN_IMAGE_URL = "images.furrycons.cn";
 const GLOBAL_IMAGE_URL = "images.furryeventchina.com";
 
