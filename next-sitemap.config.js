@@ -8,6 +8,10 @@ module.exports = {
       href: "https://cn.furryeventchina.com",
       hreflang: "zh",
     },
+    {
+      href: "https://www.furrycons.cn",
+      hreflang: "zh-cn",
+    },
   ],
   // ...other options
 };

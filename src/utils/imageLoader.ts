@@ -2,11 +2,14 @@ import { ImageLoaderProps } from "next/image";
 import { EventRecord } from "@/xata/xata";
 
 const ENABLE_CN_DOMAIN = process.env.ENABLE_CN_DOMAIN === "true";
-const CNURL = process.env.NEXT_PUBLIC_CNURL;
+const CN_IMAGE_URL = "images.furrycons.cn";
+const GLOBAL_IMAGE_URL = "images.furryeventchina.com";
 
 const isEnableCN = () => {
   if (typeof window != "undefined") {
-    return window.location.hostname === "cn.furryeventchina.com";
+    return ["cn.furryeventchina.com", "www.furrycons.cn"].includes(
+      window.location.hostname
+    );
   } else {
     return ENABLE_CN_DOMAIN;
   }
@@ -31,7 +34,7 @@ export const imageUrl = (src: string, needAutoCDN: boolean = false) => {
     return `https://cdn.furryeventchina.com/${withoutDefaultHostSrc}`;
 
   if (isEnableCNCalc) {
-    return `https://${CNURL}/${withoutDefaultHostSrc}}`;
+    return `https://${CN_IMAGE_URL}/${withoutDefaultHostSrc}}`;
   } else {
     return `https://cdn.furryeventchina.com/${withoutDefaultHostSrc}`;
   }
@@ -45,7 +48,7 @@ const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
   const isEnableCNCalc = isEnableCN();
 
   if (isEnableCNCalc) {
-    return `https://${CNURL}/${withoutDefaultHostSrc}?w=${width}&q=${
+    return `https://${CN_IMAGE_URL}/${withoutDefaultHostSrc}?w=${width}&q=${
       quality || 75
     }`;
   } else {
