@@ -113,11 +113,7 @@ export default function Layout({
         <div className="px-4 py-4 bg-white border border-gray-200 mb-6 rounded-xl text-red-400">
           如您感觉加载速度较慢，请访问我们的境内域名地址:{" "}
           <a
-            href={
-              "https://www.furrycons.cn" +
-              window.location.pathname +
-              window.location.search
-            }
+            href={`https://www.furrycons.cn${asPath}`}
             className="underline cursor-pointer"
           >
             www.furrycons.cn
