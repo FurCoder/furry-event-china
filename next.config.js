@@ -9,7 +9,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const isProd = process.env.NODE_ENV === "production";
-const isEnableCN = process.env.ENABLE_CN_DOMAIN === "true";
+const isEnableCN = process.env.NEXT_PUBLIC_ENABLE_CN_DOMAIN === "true";
 const CN_STATIC_URL = process.env.CN_STATIC_URL;
 
 const gitRevisionPlugin = new GitRevisionPlugin();
