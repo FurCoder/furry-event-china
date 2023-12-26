@@ -19,7 +19,8 @@ export const getEventCoverUrl = (event: Partial<EventRecord>) => {
   return imageUrl(
     event.coverUrl ||
       event.posterUrl?.[0] ||
-      `https://cdn.furryeventchina.com/fec-event-default-cover.png`
+      `https://cdn.furryeventchina.com/fec-event-default-cover.png`,
+    true
   );
 };
 
