@@ -27,6 +27,7 @@ export const getEventCoverUrl = (event: Partial<EventRecord>) => {
 export const imageUrl = (src: string, needAutoCDN: boolean = false) => {
   const withoutDefaultHostSrc = src
     .replace("https://cdn.furryeventchina.com/", "")
+    .replace("https://images.furrycons.cn/", "")
     .trim();
 
   const isEnableCNCalc = isEnableCN();
@@ -44,6 +45,7 @@ export const imageUrl = (src: string, needAutoCDN: boolean = false) => {
 const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
   const withoutDefaultHostSrc = src
     .replace("https://cdn.furryeventchina.com/", "")
+    .replace("https://images.furrycons.cn/", "")
     .trim();
 
   const isEnableCNCalc = isEnableCN();
