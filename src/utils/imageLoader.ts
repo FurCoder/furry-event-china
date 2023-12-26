@@ -35,7 +35,7 @@ export const imageUrl = (src: string, needAutoCDN: boolean = false) => {
     return `https://cdn.furryeventchina.com/${withoutDefaultHostSrc}`;
 
   if (isEnableCNCalc) {
-    return `https://${CN_IMAGE_URL}/${withoutDefaultHostSrc}}`;
+    return `https://${CN_IMAGE_URL}/${withoutDefaultHostSrc}`;
   } else {
     return `https://cdn.furryeventchina.com/${withoutDefaultHostSrc}`;
   }
