@@ -22,14 +22,14 @@ export const AboutUsLinks = [
       link: "https://github.com/FurCoder/furry-event-china",
       label: "GitHub",
     },
-    // {
-    //   link: "status.furryeventchina.com",
-    //   label: "Status 监控",
-    // },
-    // {
-    //   link: "https://furcoder.org/?utm_source=fec",
-    //   label: "QQ频道",
-    // },
+    {
+      link: "https://status.furryeventchina.com",
+      label: "Status 监控",
+    },
+    {
+      link: "https://docs.furryeventchina.com",
+      label: "帮助文档",
+    },
     {
       link: "mailto:contact@furryeventchina.com",
       label: "邮件联系我们",
