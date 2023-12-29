@@ -5,12 +5,12 @@ module.exports = {
   outDir: "./out",
   alternateRefs: [
     {
-      href: "https://cn.furryeventchina.com",
-      hreflang: "zh",
-    },
-    {
       href: "https://www.furrycons.cn",
       hreflang: "zh-cn",
+    },
+    {
+      href: "https://cn.furryeventchina.com",
+      hreflang: "zh",
     },
   ],
   // ...other options
