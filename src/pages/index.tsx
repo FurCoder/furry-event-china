@@ -6,112 +6,18 @@ import { useMemo, useState } from "react";
 import { EventScale, EventStatus } from "@/types/event";
 import { Switch } from "@headlessui/react";
 import { sendTrack } from "@/utils/track";
-
-enum DurationType {
-  Passed = "passed", //already done.
-  Now = "now", // in the duration of event.
-  Soon = "soon", // in the same month of event start date.
-  Next = "next", // not start yet but plan in this year.
-  NextYear = "nextYear", // in the next year
-}
+import { DurationType } from "@/types/list";
+import { filteringEvents, groupByCustomDurationEvent } from "@/utils/event";
 
 export default function Home(props: { events: Event[] }) {
   const [selectedFilter, setFilter] = useState({
     onlyAvailable: false,
     eventScale: ["All"],
   });
-  const filteredEvents = props.events.filter((event) => {
-    const now = Date.now();
-    const endTime = event.endDate
-      ? new Date(new Date(event.endDate).setHours(23, 59, 59, 999)).getTime()
-      : null;
-    if (selectedFilter.onlyAvailable) {
-      if (event.status === EventStatus.EventCancelled) {
-        return false;
-      }
-      if (endTime && now > endTime) {
-        return false;
-      }
-    }
 
-    if (
-      selectedFilter.eventScale[0] !== "All" &&
-      !selectedFilter.eventScale.includes(event.scale)
-    ) {
-      return false;
-    }
-    return true;
-  });
-  const groupByCustomDurationEvent = useMemo(() => {
-    const currentMonth = new Date().getUTCMonth() + 1;
-    const now = Date.now();
-
-    const durationObject: { [x in DurationType]: Event[] } = {
-      now: [],
-      soon: [],
-      next: [],
-      nextYear: [],
-      passed: [],
-    };
-
-    filteredEvents.forEach((event) => {
-      const startTime = event.startDate
-        ? new Date(new Date(event.startDate).setHours(0, 0, 0, 0)).getTime()
-        : null;
-      const endTime = event.endDate
-        ? new Date(new Date(event.endDate).setHours(23, 59, 59, 999)).getTime()
-        : null;
-
-      // if a event end date is next year, then count it in next year not in current year.
-      const isNextYear =
-        event.startDate && event.endDate
-          ? new Date(event.startDate).getUTCFullYear() >
-              new Date().getUTCFullYear() ||
-            new Date(event.endDate).getUTCFullYear() >
-              new Date().getUTCFullYear()
-          : false;
-
-      const startMonth = event.startDate
-        ? new Date(event.startDate).getUTCMonth() + 1 + (isNextYear ? 12 : 0)
-        : null;
-      const endMonth = event.endDate
-        ? new Date(event.endDate).getUTCMonth() + 1 + (isNextYear ? 12 : 0)
-        : null;
-
-      if (
-        startTime === null ||
-        endTime === null ||
-        startMonth === null ||
-        endMonth === null
-      ) {
-        return durationObject.next.push(event);
-      }
-      //Passed events
-      if (now > endTime) {
-        return durationObject.passed.push(event);
-      }
-
-      if (startMonth <= currentMonth) {
-        //Now events
-        if (now > startTime && now < endTime) {
-          return durationObject.now.push(event);
-        } else {
-          //Soon events
-          return durationObject.soon.push(event);
-        }
-      }
-
-      //Next events
-      if (startMonth > currentMonth) {
-        if (startMonth > 12) {
-          return durationObject.nextYear.push(event);
-        }
-        return durationObject.next.push(event);
-      }
-    });
-
-    return durationObject;
-  }, [filteredEvents]);
+  const filteredEvents = filteringEvents(props.events, selectedFilter);
+  const groupByCustomDurationEvents =
+    groupByCustomDurationEvent(filteredEvents);
 
   return (
     <>
@@ -131,12 +37,12 @@ export default function Home(props: { events: Event[] }) {
             </p>
           </div>
         )}
-        {Object.keys(groupByCustomDurationEvent).map((type) =>
-          groupByCustomDurationEvent[type as DurationType].length ? (
+        {Object.keys(groupByCustomDurationEvents).map((type) =>
+          groupByCustomDurationEvents[type as DurationType].length ? (
             <DurationSection
               key={type}
               durationType={type}
-              events={groupByCustomDurationEvent[type as DurationType]}
+              events={groupByCustomDurationEvents[type as DurationType]}
             />
           ) : null
         )}
