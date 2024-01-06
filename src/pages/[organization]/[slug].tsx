@@ -551,7 +551,11 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           event?.address
         }”举办，喜欢的朋友记得关注开始售票时间～`,
         url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
-        cover: event?.coverUrl || event?.posterUrl?.[0],
+        cover: imageUrl(
+          event?.coverUrl ||
+            event?.posterUrl?.[0] ||
+            "https://images.furryeventchina.com/fec-event-default-cover.png"
+        ),
       },
       structuredData: {
         breadcrumb: {
@@ -598,7 +602,13 @@ export async function getStaticProps(context: GetStaticPropsContext) {
               addressCountry: "CN",
             },
           },
-          image: [event?.coverUrl || event?.posterUrl?.[0]],
+          image: [
+            imageUrl(
+              event?.coverUrl ||
+                event?.posterUrl?.[0] ||
+                "https://images.furryeventchina.com/fec-event-default-cover.png"
+            ),
+          ],
           description: event?.detail,
           // offers: {
           //   "@type": "Offer",

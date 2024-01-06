@@ -51,7 +51,7 @@ export default function Layout({
         <meta
           property="og:image"
           content={
-            headMetas?.cover || "https://cdn.furryeventchina.com/banner.png"
+            headMetas?.cover || "https://images.furryeventchina.com/banner.png"
           }
           key="image"
         />
@@ -75,7 +75,7 @@ export default function Layout({
         <meta
           name="twitter:image"
           content={
-            headMetas?.cover || "https://cdn.furryeventchina.com/banner.png"
+            headMetas?.cover || "https://images.furryeventchina.com/banner.png"
           }
         />
         <link rel="icon" href="/favicon.ico" />

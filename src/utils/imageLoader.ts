@@ -19,7 +19,7 @@ export const getEventCoverUrl = (event: Partial<EventRecord>) => {
   return imageUrl(
     event.coverUrl ||
       event.posterUrl?.[0] ||
-      `https://cdn.furryeventchina.com/fec-event-default-cover.png`,
+      `https://images.furryeventchina.com/fec-event-default-cover.png`,
     true
   );
 };
@@ -27,24 +27,26 @@ export const getEventCoverUrl = (event: Partial<EventRecord>) => {
 export const imageUrl = (src: string, needAutoCDN: boolean = false) => {
   const withoutDefaultHostSrc = src
     .replace("https://cdn.furryeventchina.com/", "")
+    .replace("https://images.furryeventchina.com/", "")
     .replace("https://images.furrycons.cn/", "")
     .trim();
 
   const isEnableCNCalc = isEnableCN();
 
   if (!needAutoCDN)
-    return `https://cdn.furryeventchina.com/${withoutDefaultHostSrc}`;
+    return `https://images.furryeventchina.com/${withoutDefaultHostSrc}`;
 
   if (isEnableCNCalc) {
     return `https://${CN_IMAGE_URL}/${withoutDefaultHostSrc}`;
   } else {
-    return `https://cdn.furryeventchina.com/${withoutDefaultHostSrc}`;
+    return `https://images.furryeventchina.com/${withoutDefaultHostSrc}`;
   }
 };
 
 const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
   const withoutDefaultHostSrc = src
     .replace("https://cdn.furryeventchina.com/", "")
+    .replace("https://images.furryeventchina.com/", "")
     .replace("https://images.furrycons.cn/", "")
     .trim();
 
@@ -55,7 +57,7 @@ const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
       quality || 75
     }`;
   } else {
-    return `https://cdn.furryeventchina.com/${withoutDefaultHostSrc}?w=${width}&q=${
+    return `https://images.furryeventchina.com/${withoutDefaultHostSrc}?w=${width}&q=${
       quality || 75
     }`;
   }
