@@ -540,6 +540,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       event,
       headMetas: {
         title: `${event?.name} FEC·兽展日历`,
+        keywords:`${event?.name}, ${event?.name} 时间, ${event?.city} 兽展,${event?.city} 兽聚`,
         des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${
           event?.name
         }”的详细信息：这是由“${
