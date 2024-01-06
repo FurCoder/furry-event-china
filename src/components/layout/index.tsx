@@ -79,10 +79,10 @@ export default function Layout({
           }
         />
         <link rel="icon" href="/favicon.ico" />
-        {/* <link
+        <link
           rel="canonical"
           href={`https://www.furryeventchina.com${asPath}`}
-        /> */}
+        />
         {structuredData?.event && (
           <script
             type="application/ld+json"
