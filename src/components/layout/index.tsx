@@ -6,13 +6,20 @@ import { useRouter } from "next/router";
 
 const isEnableCN = process.env.NEXT_PUBLIC_ENABLE_CN_DOMAIN === "true";
 
+const defaultKeywords = "兽聚, 兽展, 兽展日历, 兽聚日历, fec 兽展, fcc 兽展";
 export default function Layout({
   children,
   headMetas,
   structuredData,
 }: {
   children: React.ReactNode;
-  headMetas?: { title?: string; des?: string; url?: string; cover?: string };
+  headMetas?: {
+    title?: string;
+    des?: string;
+    url?: string;
+    cover?: string;
+    keywords?: string;
+  };
   structuredData?: { [key: string]: { [key: string]: string } };
 }) {
   const router = useRouter();
@@ -29,6 +36,15 @@ export default function Layout({
             "欢迎来到FEC·兽展日历！FEC·兽展日历致力于为您提供最新最全的位于中国大陆境内的兽展相关资讯整合，来这里寻找感兴趣的展会，叫上朋友一起来玩吧！"
           }
           key="description"
+        />
+        <meta
+          name="keywords"
+          content={
+            headMetas?.keywords
+              ? headMetas.keywords.concat(', ').concat(defaultKeywords)
+              : defaultKeywords
+          }
+          key="keywords"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
