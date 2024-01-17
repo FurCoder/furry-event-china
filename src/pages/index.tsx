@@ -210,6 +210,14 @@ function Slider() {
         className="relative block"
         target="_blank"
         href="https://www.wilddream.net/contest/2024contest?utm_source=fec"
+        onClick={() => {
+          sendTrack({
+            eventName: "click-slider-link",
+            eventValue: {
+              href: "https://www.wilddream.net/contest/2024contest?utm_source=fec",
+            },
+          });
+        }}
       >
         <NextImage
           priority
@@ -222,7 +230,15 @@ function Slider() {
       <div className="p-6">
         <h6
           className="hover:cursor-pointer w-fit text-gray-600 font-bold text-base md:text-xl flex items-center"
-          onClick={() => setExpand(!expand)}
+          onClick={() => {
+            setExpand(!expand);
+            sendTrack({
+              eventName: "click-slider-detail",
+              eventValue: {
+                item: "wilddream",
+              },
+            });
+          }}
         >
           WildDream 创作站兽主题绘画比赛·2024
           <span className={clsx(!expand && "animate-bounce")}>
@@ -255,6 +271,14 @@ function Slider() {
               className="text-red-400 text-sm underline underline-offset-4 inline-flex items-center"
               target="_blank"
               href="https://www.wilddream.net/contest/2024contest?utm_source=fec"
+              onClick={() => {
+                sendTrack({
+                  eventName: "click-slider-link",
+                  eventValue: {
+                    href: "https://www.wilddream.net/contest/2024contest?utm_source=fec",
+                  },
+                });
+              }}
             >
               前往活动页
               <FaLink />
