@@ -2014,6 +2014,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"embla-carousel-react@npm:^8.0.0-rc19":
+  version: 8.0.0-rc19
+  resolution: "embla-carousel-react@npm:8.0.0-rc19"
+  dependencies:
+    embla-carousel: "npm:8.0.0-rc19"
+    embla-carousel-reactive-utils: "npm:8.0.0-rc19"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0
+  checksum: 61f690f4c8180d88f075289742982df0e8ca21a02ec80778b21a570f5ac093f3e2a833a9ada542f401b9383bf4209b32d9cca3fd03bd889d1404499c02707c42
+  languageName: node
+  linkType: hard
+
+"embla-carousel-reactive-utils@npm:8.0.0-rc19":
+  version: 8.0.0-rc19
+  resolution: "embla-carousel-reactive-utils@npm:8.0.0-rc19"
+  peerDependencies:
+    embla-carousel: 8.0.0-rc19
+  checksum: 4fec08d661e75b941e6c1b7261b69ea2397a1c5b44dde5fbe6a51e5af756a46143903b1c8edfb6ad99eaaec32cf1be9087a8421dfb6c1206879c6103921858dd
+  languageName: node
+  linkType: hard
+
+"embla-carousel@npm:8.0.0-rc19":
+  version: 8.0.0-rc19
+  resolution: "embla-carousel@npm:8.0.0-rc19"
+  checksum: 02248eb882aa1dc0e65b9b7a34b499eb83138eec4417f818e41ad755fd1030a927fba7fdbbcc8b917792811bb31d54329379a5c38cae4d9e9d48d2060df83c6e
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -2746,6 +2774,7 @@ __metadata:
     autoprefixer: "npm:^10.4.16"
     clsx: "npm:^2.0.0"
     date-fns: "npm:^2.30.0"
+    embla-carousel-react: "npm:^8.0.0-rc19"
     eslint: "npm:8.56.0"
     eslint-config-next: "npm:14.0.4"
     git-revision-webpack-plugin: "npm:^5.0.0"
