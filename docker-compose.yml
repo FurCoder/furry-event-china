@@ -1,11 +1,14 @@
-version: '3'
+version: "3"
 services:
   fec-web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: registry.cn-hongkong.aliyuncs.com/fec/web:lastest
     restart: always
     ports:
       - 3000:3000
     environment:
       - NODE_ENV=production
+    networks:
+      static-network:
+        ipv4_address: 10.0.0.9
+      bridge:
+        driver: bridge
