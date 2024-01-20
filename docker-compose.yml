@@ -10,5 +10,3 @@ services:
     networks:
       static-network:
         ipv4_address: 10.0.0.9
-      bridge:
-        driver: bridge
