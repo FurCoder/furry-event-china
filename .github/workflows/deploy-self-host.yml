@@ -70,4 +70,4 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t registry.cn-hongkong.aliyuncs.com/fec/web:$IMAGE_TAG -t registry.cn-hongkong.aliyuncs.com/fec/web:latest .
-          docker push --all-tags registry.cn-hongkong.aliyuncs.com/fec/web:$IMAGE_TAG
+          docker push --a registry.cn-hongkong.aliyuncs.com/fec/web:latest
