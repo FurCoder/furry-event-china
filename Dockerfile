@@ -7,10 +7,9 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN corepack enable
+COPY package.json yarn.lock* .yarnrc.yml package-lock.json* pnpm-lock.yaml* ./
 RUN \
-  if [ -f yarn.lock ]; then yarn --immutable; \
+  if [ -f yarn.lock ]; then corepack enable&&yarn --immutable; \
   elif [ -f package-lock.json ]; then npm ci; \
   elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
@@ -19,6 +18,7 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM base AS builder
+RUN apk add --no-cache git
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -28,8 +28,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN corepack enable
-RUN yarn build
+RUN corepack enable&&yarn build
 
 # If using npm comment out above and use below instead
 # RUN npm run build
