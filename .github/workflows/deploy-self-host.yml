@@ -20,7 +20,7 @@ jobs:
       contents: read
       packages: write
       #
-    environment: Prod
+    environment: Develop
     env:
       XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
       XATA_FALLBACK_BRANCH: ${{ vars.XATA_FALLBACK_BRANCH }}
