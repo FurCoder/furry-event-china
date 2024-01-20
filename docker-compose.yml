@@ -1,7 +1,7 @@
 version: "3"
 services:
   fec-web:
-    image: registry.cn-hongkong.aliyuncs.com/fec/web:lastest
+    image: registry-vpc.cn-hongkong.aliyuncs.com/fec/web:lastest
     restart: always
     ports:
       - 3000:3000
