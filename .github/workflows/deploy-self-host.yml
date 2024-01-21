@@ -1,0 +1,86 @@
+#
+name: Deploy To Selfhost Machine
+
+# Configures this workflow to run every time a change is pushed to the branch called `release`.
+on:
+  push:
+    branches: main
+
+jobs:
+  global-image-release:
+    runs-on: ubuntu-latest
+    environment: Prod
+    env:
+      XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
+      XATA_FALLBACK_BRANCH: ${{ vars.XATA_FALLBACK_BRANCH }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Create Env
+        run: |
+          touch .env
+          echo NEXT_PUBLIC_REGION="GLOBAL" >>.env
+          echo XATA_API_KEY="$XATA_API_KEY" >> .env
+          echo XATA_FALLBACK_BRANCH="$XATA_FALLBACK_BRANCH" >> .env
+          echo SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" >> .env
+          echo ENABLE_TRACK="$ENABLE_TRACK" >> .env
+
+      - name: Login to ACR
+        uses: aliyun/acr-login@v1
+        with:
+          login-server: https://registry.cn-hongkong.aliyuncs.com
+          username: "${{ secrets.REGISTRY_USERNAME }}"
+          password: "${{ secrets.REGISTRY_PASSWORD }}"
+
+      - name: Build and push image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t registry.cn-hongkong.aliyuncs.com/fec/web:$IMAGE_TAG -t registry.cn-hongkong.aliyuncs.com/fec/web:latest .
+          docker push registry.cn-hongkong.aliyuncs.com/fec/web:$IMAGE_TAG
+          docker push registry.cn-hongkong.aliyuncs.com/fec/web:latest
+
+  cn-image-release:
+    runs-on: ubuntu-latest
+    environment: Prod-CN
+    env:
+      XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
+      XATA_FALLBACK_BRANCH: ${{ vars.XATA_FALLBACK_BRANCH }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
+      NEXT_PUBLIC_ENABLE_CN_DOMAIN: true
+      CN_STATIC_URL: ${{vars.CN_STATIC_URL}}
+      SENTRY_DSN: ${{vars.SENTRY_DSN}}
+      NEXT_PUBLIC_SENTRY_DSN: ${{vars.SENTRY_DSN}}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Create Env
+        run: |
+          touch .env
+          echo NEXT_PUBLIC_REGION="CN" >>.env
+          echo XATA_API_KEY="$XATA_API_KEY" >> .env
+          echo XATA_FALLBACK_BRANCH="$XATA_FALLBACK_BRANCH" >> .env
+          echo SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" >> .env
+          echo ENABLE_TRACK="$ENABLE_TRACK" >> .env
+          echo NEXT_PUBLIC_ENABLE_CN_DOMAIN="true" >>.env
+          echo CN_STATIC_URL="$CN_STATIC_URL" >>.env
+          echo SENTRY_DSN="$SENTRY_DSN" >>.env
+          echo NEXT_PUBLIC_SENTRY_DSN="$NEXT_PUBLIC_SENTRY_DSN" >>.env
+
+      - name: Login to ACR
+        uses: aliyun/acr-login@v1
+        with:
+          login-server: https://registry.cn-hongkong.aliyuncs.com
+          username: "${{ secrets.REGISTRY_USERNAME }}"
+          password: "${{ secrets.REGISTRY_PASSWORD }}"
+
+      - name: Build and push image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t registry.cn-hongkong.aliyuncs.com/fec/cn-web:$IMAGE_TAG -t registry.cn-hongkong.aliyuncs.com/fec/cn-web:latest .
+          docker push registry.cn-hongkong.aliyuncs.com/fec/cn-web:$IMAGE_TAG
+          docker push registry.cn-hongkong.aliyuncs.com/fec/cn-web:latest

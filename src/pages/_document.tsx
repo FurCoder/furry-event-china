@@ -2,6 +2,11 @@ import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 
 const isEnableTrack = process.env.ENABLE_TRACK === "true";
+console.log(
+  "ENABLE_TRACK",
+  process.env.ENABLE_TRACK,
+  typeof process.env.ENABLE_TRACK
+);
 
 export default function Document() {
   return (
