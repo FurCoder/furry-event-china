@@ -1,6 +1,6 @@
 version: "3"
 services:
-  fec-web:
+  global-web:
     image: registry-vpc.cn-hongkong.aliyuncs.com/fec/web:latest
     restart: always
     ports:
@@ -12,6 +12,18 @@ services:
     networks:
       static-network:
         ipv4_address: 10.0.0.9
+  cn-web:
+      image: registry-vpc.cn-hongkong.aliyuncs.com/fec/cn-web:latest
+      restart: always
+      ports:
+        - 3000:3000
+      environment:
+        - NODE_ENV=production
+      env_file:
+        - stack.env
+      networks:
+        static-network:
+          ipv4_address: 10.0.0.10
 networks:
   static-network:
     external: true
