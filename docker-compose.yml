@@ -16,7 +16,7 @@ services:
       image: registry-vpc.cn-hongkong.aliyuncs.com/fec/cn-web:latest
       restart: always
       ports:
-        - 3000:3000
+        - 3001:3001
       environment:
         - NODE_ENV=production
       env_file:
