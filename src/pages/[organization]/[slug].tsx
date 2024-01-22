@@ -555,7 +555,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         cover: imageUrl(
           event?.coverUrl ||
             event?.posterUrl?.[0] ||
-            "https://images.furryeventchina.com/fec-event-default-cover.png"
+            "https://images.furrycons.cn/fec-event-default-cover.png"
         ),
       },
       structuredData: {
@@ -607,7 +607,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
             imageUrl(
               event?.coverUrl ||
                 event?.posterUrl?.[0] ||
-                "https://images.furryeventchina.com/fec-event-default-cover.png"
+                "https://images.furrycons.cn/fec-event-default-cover.png"
             ),
           ],
           description: event?.detail,

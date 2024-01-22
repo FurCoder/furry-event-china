@@ -1,46 +1,24 @@
 import { ImageLoaderProps } from "next/image";
 import { EventRecord } from "@/xata/xata";
 
-const ENABLE_CN_DOMAIN = process.env.NEXT_PUBLIC_ENABLE_CN_DOMAIN === "true";
-const CN_IMAGE_URL = "images.furrycons.cn";
-const GLOBAL_IMAGE_URL = "images.furryeventchina.com";
-
-const isEnableCN = () => {
-  if (typeof window != "undefined") {
-    return ["cn.furryeventchina.com", "www.furrycons.cn"].includes(
-      window.location.hostname
-    );
-  } else {
-    return ENABLE_CN_DOMAIN;
-  }
-};
+const GLOBAL_AUTO_CDN_IMAGE_URL = "images.furrycons.cn";
 
 export const getEventCoverUrl = (event: Partial<EventRecord>) => {
   return imageUrl(
     event.coverUrl ||
       event.posterUrl?.[0] ||
-      `https://images.furryeventchina.com/fec-event-default-cover.png`,
-    true
+      `https://images.furryeventchina.com/fec-event-default-cover.png`
   );
 };
 
-export const imageUrl = (src: string, needAutoCDN: boolean = false) => {
+export const imageUrl = (src: string) => {
   const withoutDefaultHostSrc = src
     .replace("https://cdn.furryeventchina.com/", "")
     .replace("https://images.furryeventchina.com/", "")
     .replace("https://images.furrycons.cn/", "")
     .trim();
 
-  const isEnableCNCalc = isEnableCN();
-
-  if (!needAutoCDN)
-    return `https://images.furryeventchina.com/${withoutDefaultHostSrc}`;
-
-  if (isEnableCNCalc) {
-    return `https://${CN_IMAGE_URL}/${withoutDefaultHostSrc}`;
-  } else {
-    return `https://images.furryeventchina.com/${withoutDefaultHostSrc}`;
-  }
+  return `https://${GLOBAL_AUTO_CDN_IMAGE_URL}/${withoutDefaultHostSrc}`;
 };
 
 const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
@@ -50,17 +28,9 @@ const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
     .replace("https://images.furrycons.cn/", "")
     .trim();
 
-  const isEnableCNCalc = isEnableCN();
-
-  if (isEnableCNCalc) {
-    return `https://${CN_IMAGE_URL}/${withoutDefaultHostSrc}?w=${width}&q=${
-      quality || 75
-    }`;
-  } else {
-    return `https://images.furryeventchina.com/${withoutDefaultHostSrc}?w=${width}&q=${
-      quality || 75
-    }`;
-  }
+  return `https://${GLOBAL_AUTO_CDN_IMAGE_URL}/${withoutDefaultHostSrc}?w=${width}&q=${
+    quality || 75
+  }`;
 };
 
 export default imageLoader;
