@@ -8,7 +8,7 @@ services:
       - SENTRY_AUTH_TOKEN=$GLOBAL_SENTRY_TOKEN
       - NEXT_PUBLIC_REGION=GLOBAL
       - NEXT_PUBLIC_WEBSITE_URL=www.furryeventchina.com
-      - NEXT_PUBLIC_STATIC_CDN_URL=static.furrycons.cn
+      - NEXT_PUBLIC_STATIC_CDN_URL=https://static.furrycons.cn
     env_file:
       - stack.env
     networks:
@@ -22,7 +22,7 @@ services:
         - SENTRY_AUTH_TOKEN=$CN_SENTRY_TOKEN
         - NEXT_PUBLIC_REGION=CN
         - NEXT_PUBLIC_WEBSITE_URL=www.furrycons.cn
-        - NEXT_PUBLIC_STATIC_CDN_URL=static.furrycons.cn
+        - NEXT_PUBLIC_STATIC_CDN_URL=https://static.furrycons.cn
         - NEXT_PUBLIC_SENTRY_DSN=$CN_SENTRY_DSN
       env_file:
         - stack.env
