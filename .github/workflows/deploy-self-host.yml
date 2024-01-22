@@ -12,9 +12,13 @@ jobs:
     environment: Prod
     env:
       XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
+      XATA_BRANCH: ${{ vars.XATA_BRANCH }}
       XATA_FALLBACK_BRANCH: ${{ vars.XATA_FALLBACK_BRANCH }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
+      NEXT_PUBLIC_REGION: ${{ vars.NEXT_PUBLIC_REGION }}
+      STATIC_CDN_URL: ${{vars.STATIC_CDN_URL}}
+      NEXT_PUBLIC_WEBSITE_URL: ${{vars.NEXT_PUBLIC_WEBSITE_URL}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,6 +30,8 @@ jobs:
           echo XATA_FALLBACK_BRANCH="$XATA_FALLBACK_BRANCH" >> .env
           echo SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" >> .env
           echo ENABLE_TRACK="$ENABLE_TRACK" >> .env
+          echo STATIC_CDN_URL="$STATIC_CDN_URL" >>.env
+          echo NEXT_PUBLIC_WEBSITE_URL="$NEXT_PUBLIC_WEBSITE_URL" >>.env
 
       - name: Login to ACR
         uses: aliyun/acr-login@v1
@@ -47,28 +53,29 @@ jobs:
     environment: Prod-CN
     env:
       XATA_API_KEY: ${{ secrets.XATA_API_KEY }}
+      XATA_BRANCH: ${{ vars.XATA_BRANCH }}
       XATA_FALLBACK_BRANCH: ${{ vars.XATA_FALLBACK_BRANCH }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
-      NEXT_PUBLIC_ENABLE_CN_DOMAIN: true
-      CN_STATIC_URL: ${{vars.CN_STATIC_URL}}
-      SENTRY_DSN: ${{vars.SENTRY_DSN}}
-      NEXT_PUBLIC_SENTRY_DSN: ${{vars.SENTRY_DSN}}
+      NEXT_PUBLIC_REGION: ${{ vars.NEXT_PUBLIC_REGION }}
+      NEXT_PUBLIC_SENTRY_DSN: ${{vars.NEXT_PUBLIC_SENTRY_DSN}}
+      STATIC_CDN_URL: ${{vars.STATIC_CDN_URL}}
+      NEXT_PUBLIC_WEBSITE_URL: ${{vars.NEXT_PUBLIC_WEBSITE_URL}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Create Env
         run: |
           touch .env
-          echo NEXT_PUBLIC_REGION="CN" >>.env
           echo XATA_API_KEY="$XATA_API_KEY" >> .env
+          echo XATA_BRANCH="$XATA_BRANCH" >> .env
           echo XATA_FALLBACK_BRANCH="$XATA_FALLBACK_BRANCH" >> .env
           echo SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" >> .env
           echo ENABLE_TRACK="$ENABLE_TRACK" >> .env
-          echo NEXT_PUBLIC_ENABLE_CN_DOMAIN="true" >>.env
-          echo CN_STATIC_URL="$CN_STATIC_URL" >>.env
-          echo SENTRY_DSN="$SENTRY_DSN" >>.env
+          echo NEXT_PUBLIC_REGION="$NEXT_PUBLIC_REGION" >>.env
           echo NEXT_PUBLIC_SENTRY_DSN="$NEXT_PUBLIC_SENTRY_DSN" >>.env
+          echo STATIC_CDN_URL="$STATIC_CDN_URL" >>.env
+          echo NEXT_PUBLIC_WEBSITE_URL="$NEXT_PUBLIC_WEBSITE_URL" >>.env
 
       - name: Login to ACR
         uses: aliyun/acr-login@v1

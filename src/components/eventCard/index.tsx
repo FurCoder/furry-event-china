@@ -20,7 +20,7 @@ export default function EventCard({
   const finalEventCoverImage =
     event.coverUrl ||
     event.posterUrl?.[0] ||
-    `https://images.furryeventchina.com/fec-event-default-cover.png`;
+    `https://images.furrycons.cn/fec-event-default-cover.png`;
   const isDefaultCover = finalEventCoverImage.includes(
     "fec-event-default-cover"
   );

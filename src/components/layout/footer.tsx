@@ -3,7 +3,7 @@ import { sendTrack } from "@/utils/track";
 import Link from "next/link";
 import { FaKissWinkHeart } from "react-icons/fa";
 
-export default function Footer({ isEnableCN }: { isEnableCN: boolean }) {
+export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
   const dateString = new Date(LASTCOMMITDATETIME).toLocaleDateString();
 
   return (
@@ -59,7 +59,7 @@ export default function Footer({ isEnableCN }: { isEnableCN: boolean }) {
               和<span className="mx-1 text-xl">🍜</span>
               制作而成
             </span>
-            {isEnableCN && (
+            {isCNRegion && (
               <span className="mt-2">
                 <a href="https://beian.miit.gov.cn/" target="_blank">
                   渝ICP备18016662号-2

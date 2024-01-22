@@ -4,7 +4,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useRouter } from "next/router";
 
-const isEnableCN = process.env.NEXT_PUBLIC_ENABLE_CN_DOMAIN === "true";
+const IS_CN_REGION = process.env.NEXT_PUBLIC_REGION === "CN";
 
 const defaultKeywords = "兽聚, 兽展, 兽展日历, 兽聚日历, fec 兽展, fcc 兽展";
 export default function Layout({
@@ -67,7 +67,7 @@ export default function Layout({
         <meta
           property="og:image"
           content={
-            headMetas?.cover || "https://images.furryeventchina.com/banner.png"
+            headMetas?.cover || "https://images.furrycons.cn/banner.png"
           }
           key="image"
         />
@@ -91,7 +91,7 @@ export default function Layout({
         <meta
           name="twitter:image"
           content={
-            headMetas?.cover || "https://images.furryeventchina.com/banner.png"
+            headMetas?.cover || "https://images.furrycons.cn/banner.png"
           }
         />
         <link rel="icon" href="/favicon.ico" />
@@ -125,7 +125,7 @@ export default function Layout({
         )}
       </Head>
       <Header />
-      {!isEnableCN && (
+      {!IS_CN_REGION && (
         <div className="px-4 py-4 bg-white border border-gray-200 mb-6 rounded-xl text-red-400">
           如您感觉加载速度较慢，请访问我们的境内域名地址:{" "}
           <a
@@ -138,7 +138,7 @@ export default function Layout({
         </div>
       )}
       <div className="flex-grow mx-1 lg:mx-0">{children}</div>
-      <Footer isEnableCN={isEnableCN} />
+      <Footer isCNRegion={IS_CN_REGION} />
     </div>
   );
 }
