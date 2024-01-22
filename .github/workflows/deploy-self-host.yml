@@ -17,7 +17,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
       NEXT_PUBLIC_REGION: ${{ vars.NEXT_PUBLIC_REGION }}
-      STATIC_CDN_URL: ${{vars.STATIC_CDN_URL}}
+      NEXT_PUBLIC_STATIC_CDN_URL: ${{vars.NEXT_PUBLIC_STATIC_CDN_URL}}
       NEXT_PUBLIC_WEBSITE_URL: ${{vars.NEXT_PUBLIC_WEBSITE_URL}}
     steps:
       - name: Checkout repository
@@ -30,7 +30,7 @@ jobs:
           echo XATA_FALLBACK_BRANCH="$XATA_FALLBACK_BRANCH" >> .env
           echo SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" >> .env
           echo ENABLE_TRACK="$ENABLE_TRACK" >> .env
-          echo STATIC_CDN_URL="$STATIC_CDN_URL" >>.env
+          echo NEXT_PUBLIC_STATIC_CDN_URL="$NEXT_PUBLIC_STATIC_CDN_URL" >>.env
           echo NEXT_PUBLIC_WEBSITE_URL="$NEXT_PUBLIC_WEBSITE_URL" >>.env
 
       - name: Login to ACR
@@ -59,7 +59,7 @@ jobs:
       ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
       NEXT_PUBLIC_REGION: ${{ vars.NEXT_PUBLIC_REGION }}
       NEXT_PUBLIC_SENTRY_DSN: ${{vars.NEXT_PUBLIC_SENTRY_DSN}}
-      STATIC_CDN_URL: ${{vars.STATIC_CDN_URL}}
+      NEXT_PUBLIC_STATIC_CDN_URL: ${{vars.NEXT_PUBLIC_STATIC_CDN_URL}}
       NEXT_PUBLIC_WEBSITE_URL: ${{vars.NEXT_PUBLIC_WEBSITE_URL}}
     steps:
       - name: Checkout repository
@@ -74,7 +74,7 @@ jobs:
           echo ENABLE_TRACK="$ENABLE_TRACK" >> .env
           echo NEXT_PUBLIC_REGION="$NEXT_PUBLIC_REGION" >>.env
           echo NEXT_PUBLIC_SENTRY_DSN="$NEXT_PUBLIC_SENTRY_DSN" >>.env
-          echo STATIC_CDN_URL="$STATIC_CDN_URL" >>.env
+          echo NEXT_PUBLIC_STATIC_CDN_URL="$NEXT_PUBLIC_STATIC_CDN_URL" >>.env
           echo NEXT_PUBLIC_WEBSITE_URL="$NEXT_PUBLIC_WEBSITE_URL" >>.env
 
       - name: Login to ACR
