@@ -59,7 +59,6 @@ jobs:
       ENABLE_TRACK: ${{ vars.ENABLE_TRACK }}
       NEXT_PUBLIC_REGION: ${{ vars.NEXT_PUBLIC_REGION }}
       NEXT_PUBLIC_SENTRY_DSN: ${{vars.NEXT_PUBLIC_SENTRY_DSN}}
-      NEXT_PUBLIC_STATIC_CDN_URL: ${{vars.NEXT_PUBLIC_STATIC_CDN_URL}}
       NEXT_PUBLIC_WEBSITE_URL: ${{vars.NEXT_PUBLIC_WEBSITE_URL}}
     steps:
       - name: Checkout repository
@@ -74,7 +73,6 @@ jobs:
           echo ENABLE_TRACK="$ENABLE_TRACK" >> .env
           echo NEXT_PUBLIC_REGION="$NEXT_PUBLIC_REGION" >>.env
           echo NEXT_PUBLIC_SENTRY_DSN="$NEXT_PUBLIC_SENTRY_DSN" >>.env
-          echo NEXT_PUBLIC_STATIC_CDN_URL="$NEXT_PUBLIC_STATIC_CDN_URL" >>.env
           echo NEXT_PUBLIC_WEBSITE_URL="$NEXT_PUBLIC_WEBSITE_URL" >>.env
 
       - name: Login to ACR

@@ -67,7 +67,7 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
               </span>
             )}
             <span className="ml-2" suppressHydrationWarning>
-              build.{VERSION} {dateString}
+              build.{COMMITHASH} {dateString}
             </span>
           </div>
         </div>
