@@ -65,7 +65,7 @@ export default function City(props: { events: Event[] }) {
         </ul>
 
         <p className="text-gray-600 mt-4">
-          FurrrEventChina.com 共在 {cities.length} 个城市收录到 {events.length}{" "}
+          我们共在 {cities.length} 个城市收录到 {events.length}{" "}
           个活动，其中，举办活动次数最多的城市是{" "}
           <span className="font-bold">
             {groupByCityEventsSortByTotalCount[0]}市

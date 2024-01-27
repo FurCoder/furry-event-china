@@ -7,6 +7,7 @@ import { BsCalendar2DateFill } from "react-icons/bs";
 import Image from "@/components/image";
 import clsx from "clsx";
 import { sendTrack } from "@/utils/track";
+import { getEventCoverUrl } from "@/utils/imageLoader";
 
 export default function EventCard({
   event,
@@ -17,10 +18,7 @@ export default function EventCard({
 }) {
   const [isWiderImage, setIsWiderImage] = useState(true);
 
-  const finalEventCoverImage =
-    event.coverUrl ||
-    event.posterUrl?.[0] ||
-    `https://images.furrycons.cn/fec-event-default-cover.png`;
+  const finalEventCoverImage = getEventCoverUrl(event);
   const isDefaultCover = finalEventCoverImage.includes(
     "fec-event-default-cover"
   );
@@ -116,7 +114,7 @@ export default function EventCard({
               <div className="flex items-center">
                 <IoLocation className="text-white mr-1" />
                 <span aria-label="活动地址" className="truncate">
-                  {event.address}
+                  {event.address || "尚未公布"}
                 </span>
               </div>
             </div>

@@ -44,7 +44,7 @@ const nextConfig = {
     config.plugins.push(
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(gitRevisionPlugin.version()),
-        COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
+        COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash().slice(0, 7)),
         BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
         LASTCOMMITDATETIME: JSON.stringify(
           gitRevisionPlugin.lastcommitdatetime()
