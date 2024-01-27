@@ -32,7 +32,7 @@ export default function Header() {
     <header className="mb-6 rounded-b-xl bg-white flex justify-between max-sm:sticky max-sm:top-0 max-sm:z-20 max-sm:shadow">
       <div className="m-2 md:m-6 text-base md:text-4xl text-geraldine font-bold">
         <span className="block">FEC 🐺🐱🐯</span>
-        <span className="text-base mt-0 block">毛茸茸展会目录</span>
+        <span className="text-base mt-0 block">FEC·兽展日历 / 新年快乐！🏮</span>
       </div>
       <div
         className="block sm:hidden flex align-end justify-end mx-4 md:px-6 md:py-8 text-3xl text-red-400 items-center"

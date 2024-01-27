@@ -9,9 +9,10 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
   return (
     <footer className="mt-8 bg-white rounded-t-xl p-6 text-sm text-center md:text-left">
       <h5 className="block text-gray-600 mb-4 text-sm flex flex-col md:flex-row">
-        <span className="font-bold mr-2">毛茸茸展会目录</span>
+        <span className="font-bold mr-2">FEC·兽展日历</span>
         <span className="">
-          FURRYEVENTCHINA.COM ©️{new Date().getFullYear()}
+          {isCNRegion ? "FURRYCONS.CN" : "FURRYEVENTCHINA.COM"} ©️
+          {new Date().getFullYear()}
         </span>
       </h5>
 
@@ -100,7 +101,7 @@ export function FriendSiteBlock() {
   return (
     <section className="bg-white p-6 rounded-xl mt-8 mx-1 lg:mx-0">
       <h3 className="font-bold text-gray-600 text-2xl">友情链接</h3>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
         {FriendSiteLinks.map((link) => (
           <Link
             href={link.link}
@@ -113,11 +114,12 @@ export function FriendSiteBlock() {
                 },
               })
             }
-            className="bg-white p-6 rounded-xl flex items-center justify-center border group hover:border-red-300 transition duration-300 relative"
+            className="bg-white p-6 rounded-xl flex flex-col border group hover:border-red-300 hover:bg-red-300 transition duration-300 relative"
           >
-            <h4 className="transition duration-300 text-center text-gray-600 group-hover:text-red-300 underline decoration-transparent group-hover:decoration-current decoration-wavy underline-offset-4">
+            <h4 className="text-xl font-bold mb-3 transition duration-300 text-gray-600 group-hover:text-white decoration-transparent group-hover:decoration-current decoration-wavy">
               {link.label}
             </h4>
+            <p className="group-hover:text-white transition duration-300 text-gray-600">{link.description}</p>
           </Link>
         ))}
       </div>
