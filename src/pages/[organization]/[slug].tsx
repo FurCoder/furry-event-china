@@ -198,7 +198,7 @@ export default function EventDetail({ event }: { event: Event }) {
               className="flex items-center text-gray-500 mt-4"
             >
               <IoLocation className="text-gray-500 inline-block mr-2" />
-              {`${event.city} · ${event.address}`}
+              {`${event.city} · ${event.address?event.address:'暂未公布'}`}
             </p>
             <p
               aria-label="活动时间"
@@ -208,13 +208,13 @@ export default function EventDetail({ event }: { event: Event }) {
               <time aria-label="活动开始时间" suppressHydrationWarning>
                 {event.startDate
                   ? new Date(event.startDate).toLocaleDateString()
-                  : null}
+                  : '暂未公布'}
               </time>
               <TbArrowsRightLeft className="mx-2  text-sm" />
               <time aria-label="活动结束时间" suppressHydrationWarning>
                 {event.endDate
                   ? new Date(event.endDate).toLocaleDateString()
-                  : null}
+                  : '暂未公布'}
               </time>
             </p>
           </div>
@@ -535,13 +535,10 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     })
     .select(["*", "organization"])
     .getFirst();
-  return {
-    props: {
-      event,
-      headMetas: {
-        title: `${event?.name} FEC·兽展日历`,
-        keywords:`${event?.name}, ${event?.name} 时间, ${event?.city} 兽展,${event?.city} 兽聚`,
-        des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${
+
+  const metaDes =
+    event?.startDate && event.endDate
+      ? `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${
           event?.name
         }”的详细信息：这是由“${
           event?.organization?.name
@@ -550,7 +547,16 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           "yyyy年MM月dd日"
         )}至${format(event?.endDate!, "yyyy年MM月dd日")}在“${event?.city}${
           event?.address
-        }”举办，喜欢的朋友记得关注开始售票时间～`,
+        }”举办，喜欢的朋友记得关注开始售票时间～`
+      : `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${event?.name}”的详细信息：这是由“${event?.organization?.name}”举办的兽展，将在“${event?.city}${event?.address}”举办，喜欢的朋友记得关注开始售票时间～`;
+
+  return {
+    props: {
+      event,
+      headMetas: {
+        title: `${event?.name} FEC·兽展日历`,
+        keywords: `${event?.name}, ${event?.name} 时间, ${event?.city} 兽展,${event?.city} 兽聚`,
+        des: metaDes,
         url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
         cover: imageUrl(
           event?.coverUrl ||

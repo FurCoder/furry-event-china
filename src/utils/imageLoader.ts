@@ -33,6 +33,12 @@ const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
     .replace("https://images.furrycons.cn/", "")
     .trim();
 
+  if (process.env.NODE_ENV === "development") {
+    return `https://${GLOBAL_MANUAL_CDN_IMAGE_URL}/${withoutDefaultHostSrc}?w=${width}&q=${
+      quality || 75
+    }`;
+  }
+
   return `https://${GLOBAL_AUTO_CDN_IMAGE_URL}/${withoutDefaultHostSrc}?w=${width}&q=${
     quality || 75
   }`;

@@ -101,7 +101,7 @@ export function FriendSiteBlock() {
   return (
     <section className="bg-white p-6 rounded-xl mt-8 mx-1 lg:mx-0">
       <h3 className="font-bold text-gray-600 text-2xl">友情链接</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         {FriendSiteLinks.map((link) => (
           <Link
             href={link.link}

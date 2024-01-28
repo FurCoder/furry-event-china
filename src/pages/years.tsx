@@ -44,7 +44,7 @@ export default function Years({ events }: { events: Event[] }) {
               {yearLabel === "no-date" ? "暂未定档" : yearLabel}
             </h1>
             <p className="text-gray-600 mb-4">
-              {yearLabel}年共有 {groupByYearEvents[yearLabel].length} 场活动：
+              {yearLabel=== "no-date" ? "" : `${yearLabel}年`}共有 {groupByYearEvents[yearLabel].length} 场活动：
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {groupByYearEvents[yearLabel].map((event) => (
@@ -84,7 +84,7 @@ export async function getStaticProps() {
       events,
       headMetas: {
         title: "年度时间轴 FEC·兽展日历",
-        des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆的 ${cities} 个城市举办过的 ${events.length} 场 Furry 相关的展会活动，你去过多少次呢？愿你能在这里找到最美好的回忆！`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆的 ${cities} 个城市举办过的 ${events.length} 场 Furry 相关的展会活动，你去过多少场呢？愿你能在这里找到最美好的回忆！`,
         link: "https://www.furryeventchina.com/years",
       },
       structuredData: {

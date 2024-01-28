@@ -66,7 +66,7 @@ export default function City(props: { events: Event[] }) {
 
         <p className="text-gray-600 mt-4">
           我们共在 {cities.length} 个城市收录到 {events.length}{" "}
-          个活动，其中，举办活动次数最多的城市是{" "}
+          个活动，其中，举办活动场数最多的城市是{" "}
           <span className="font-bold">
             {groupByCityEventsSortByTotalCount[0]}市
           </span>
@@ -74,7 +74,7 @@ export default function City(props: { events: Event[] }) {
           <span className="font-bold">
             {groupByCityEventsSortByTotalCount[1]}市
           </span>
-          ，而举办活动次数排名第三的城市是{" "}
+          ，而举办活动场数排名第三的城市是{" "}
           <span className="font-bold">
             {groupByCityEventsSortByTotalCount[2]}市 🎉。
           </span>
