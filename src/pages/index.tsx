@@ -300,7 +300,10 @@ export async function getStaticProps() {
   const xata = new XataClient();
   const events = await xata.db.event
     .filter({
-      endDate: { $ge: new Date(new Date().getUTCFullYear(), 0, 1) },
+      $any: [
+        { endDate: { $ge: new Date(new Date().getUTCFullYear(), 0, 1) } },
+        { $notExists: "endDate" },
+      ],
       $not: {
         status: EventStatus.EventCancelled,
       },

@@ -76,9 +76,9 @@ export default function EventCard({
                   className={clsx(
                     "rounded-full object-cover w-[28px] h-[28px]"
                   )}
-                  width={50}
-                  height={50}
-                  sizes="50px"
+                  width={100}
+                  height={100}
+                  sizes="100px"
                 />
               )}
             </span>

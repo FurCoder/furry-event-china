@@ -119,7 +119,10 @@ export function groupByCustomDurationEvent(events: Event[]) {
     }
 
     //Soon events
-    if (startMonth === currentMonth && isBefore(now, startTime)) {
+    if (
+      (startMonth === currentMonth || currentMonth + 1 === startMonth) &&
+      isBefore(now, startTime)
+    ) {
       return durationObject.soon.push(event);
     }
 
