@@ -33,7 +33,7 @@ export default function Layout({
           name="description"
           content={
             headMetas?.des ||
-            "欢迎来到FEC·兽展日历！FEC·兽展日历致力于为您提供最新最全的位于中国大陆境内的兽展相关资讯整合，来这里寻找感兴趣的展会，叫上朋友一起来玩吧！"
+            "欢迎来到FEC·兽展日历！FEC·兽展日历致力于为您提供最新最全的位于中国大陆境内的兽展、兽聚等相关资讯整合，来这里寻找感兴趣的展会，叫上朋友一起来玩吧！"
           }
           key="description"
         />
@@ -56,7 +56,7 @@ export default function Layout({
           property="og:description"
           content={
             headMetas?.des ||
-            "欢迎来到FEC·兽展日历！FEC·兽展日历致力于为您提供最新最全的位于中国大陆境内的兽展相关资讯整合，来这里寻找感兴趣的展会，叫上朋友一起来玩吧！"
+            "欢迎来到FEC·兽展日历！FEC·兽展日历致力于为您提供最新最全的位于中国大陆境内的兽展、兽聚相关资讯整合，来这里寻找感兴趣的展会，叫上朋友一起来玩吧！"
           }
         />
         <meta

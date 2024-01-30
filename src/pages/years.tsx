@@ -40,9 +40,9 @@ export default function Years({ events }: { events: Event[] }) {
             key={yearLabel}
             className="mb-4 border rounded-xl p-6 bg-white"
           >
-            <h1 className="font-bold text-gray-400 text-3xl mb-4">
+            <h2 className="font-bold text-gray-400 text-3xl mb-4">
               {yearLabel === "no-date" ? "暂未定档" : yearLabel}
-            </h1>
+            </h2>
             <p className="text-gray-600 mb-4">
               {yearLabel=== "no-date" ? "" : `${yearLabel}年`}共有 {groupByYearEvents[yearLabel].length} 场活动：
             </p>
