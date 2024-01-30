@@ -207,13 +207,13 @@ export default function EventDetail({ event }: { event: Event }) {
               <BsCalendar2DateFill className="text-gray-500 inline-block mr-2" />
               <time aria-label="活动开始时间" suppressHydrationWarning>
                 {event.startDate
-                  ? new Date(event.startDate).toLocaleDateString()
+                  ? format(event.startDate,'yyyy年MM月dd日')
                   : '暂未公布'}
               </time>
               <TbArrowsRightLeft className="mx-2  text-sm" />
               <time aria-label="活动结束时间" suppressHydrationWarning>
                 {event.endDate
-                  ? new Date(event.endDate).toLocaleDateString()
+                  ? format(event.endDate,'yyyy年MM月dd日')
                   : '暂未公布'}
               </time>
             </p>
@@ -554,8 +554,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     props: {
       event,
       headMetas: {
-        title: `${event?.name} FEC·兽展日历`,
-        keywords: `${event?.name}, ${event?.name} 时间, ${event?.city} 兽展,${event?.city} 兽聚`,
+        title: `${event?.name}-FEC·兽展日历`,
+        keywords: `${event?.name}, ${event?.name} 时间, ${event?.city}兽展,${event?.city}兽聚`,
         des: metaDes,
         url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
         cover: imageUrl(
