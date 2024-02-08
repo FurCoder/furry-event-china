@@ -49,7 +49,7 @@ export default function OrganizationDetail(props: {
             </div>
           )}
           <div className="mt-4 md:mt-0 md:ml-4">
-            <h1 className="text-2xl font-bold mb-2">{organization.name}</h1>
+            <h2 className="text-2xl font-bold mb-2">{organization.name}</h2>
 
             <div className="flex items-center mb-2 text-gray-500">
               <OrganizationStatus status={organization.status} />
