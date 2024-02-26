@@ -1,15 +1,7 @@
-import { EventStatus } from "@/types/event";
 import { DurationType, SelectedFilterType } from "@/types/list";
 import { Event } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
-import {
-  isBefore,
-  isAfter,
-  endOfDay,
-  startOfDay,
-  endOfToday,
-  startOfToday,
-} from "date-fns";
+import { isBefore, isAfter } from "date-fns";
 
 export function sortByStartDateDesc(data: Event[]) {
   const groupByStartDate = groupBy(data, (e) =>

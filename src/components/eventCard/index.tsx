@@ -8,6 +8,8 @@ import Image from "@/components/image";
 import clsx from "clsx";
 import { sendTrack } from "@/utils/track";
 import { getEventCoverUrl } from "@/utils/imageLoader";
+import { format } from "date-fns";
+import { zhCN } from "date-fns/locale";
 
 export default function EventCard({
   event,
@@ -105,8 +107,10 @@ export default function EventCard({
                 <div className="flex items-center" suppressHydrationWarning>
                   <BsCalendar2DateFill className="text-white mr-1" />
                   {event.startDate && event.endDate
-                    ? `${new Date(event.startDate).toLocaleDateString()} -
-                ${new Date(event.endDate).toLocaleDateString()}`
+                    ? `${format(event.startDate, "yyyy/MM/dd", {
+                        locale: zhCN,
+                      })} -
+                ${format(event.endDate, "yyyy/MM/dd", { locale: zhCN })}`
                     : null}
                 </div>
               )}

@@ -28,7 +28,7 @@ export default function Layout({
   return (
     <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen">
       <Head>
-        <title>{headMetas?.title || "FEC·兽展日历"}</title>
+        <title>{headMetas?.title || "FEC·兽展日历 | FEC·兽聚日历"}</title>
         <meta
           name="description"
           content={

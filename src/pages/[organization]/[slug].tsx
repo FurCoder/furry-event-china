@@ -183,12 +183,12 @@ export default function EventDetail({ event }: { event: Event }) {
               </p>
             )}
 
-            <h1
+            <h2
               aria-label="活动名称"
               className="font-bold text-2xl text-gray-700"
             >
               {event.name}
-            </h1>
+            </h2>
             <h2 className="text-gray-600 text-sm">
               由 {event.organization?.name} 主办
             </h2>
