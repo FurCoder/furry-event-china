@@ -34,7 +34,7 @@ export default function Header() {
         <span className="block">FEC 🐺🐱🐯</span>
         <div className="flex">
           <h1 className="text-base mt-0">FEC·兽展日历</h1>
-          <span className="text-base"> / 新年快乐！🏮</span>
+          <span className="text-base"> / 开学大吉！🥁</span>
         </div>
       </div>
       <div

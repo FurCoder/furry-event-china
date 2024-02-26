@@ -2,9 +2,11 @@ import { AboutUsLinks, FriendSiteLinks } from "@/constants/staticConfig";
 import { sendTrack } from "@/utils/track";
 import Link from "next/link";
 import { FaKissWinkHeart } from "react-icons/fa";
+import { format } from "date-fns";
+import { zhCN } from "date-fns/locale";
 
 export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
-  const dateString = new Date(LASTCOMMITDATETIME).toLocaleDateString();
+  const dateString = format(LASTCOMMITDATETIME, "yyyy/MM/dd", { locale: zhCN });
 
   return (
     <footer className="mt-8 bg-white rounded-t-xl p-6 text-sm text-center md:text-left">
@@ -119,7 +121,9 @@ export function FriendSiteBlock() {
             <h4 className="text-xl font-bold mb-3 transition duration-300 text-gray-600 group-hover:text-white decoration-transparent group-hover:decoration-current decoration-wavy">
               {link.label}
             </h4>
-            <p className="group-hover:text-white transition duration-300 text-gray-600">{link.description}</p>
+            <p className="group-hover:text-white transition duration-300 text-gray-600">
+              {link.description}
+            </p>
           </Link>
         ))}
       </div>
