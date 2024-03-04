@@ -1,7 +1,16 @@
 import { DurationType, SelectedFilterType } from "@/types/list";
 import { Event } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
-import { isBefore, isAfter } from "date-fns";
+import {
+  isBefore,
+  isAfter,
+  getYear,
+  getMonth,
+  setDefaultOptions,
+} from "date-fns";
+import { zhCN } from "date-fns/locale";
+
+setDefaultOptions({ locale: zhCN });
 
 export function sortByStartDateDesc(data: Event[]) {
   const groupByStartDate = groupBy(data, (e) =>
@@ -54,17 +63,17 @@ export function filteringEvents(
 }
 
 function isDateBelongNextYear(testDate: string) {
-  return new Date(testDate).getUTCFullYear() > new Date().getUTCFullYear();
+  return getYear(new Date(testDate)) > getYear(new Date());
 }
 
 function getDateMonth(testDate: string) {
   const isNextYear = isDateBelongNextYear(testDate);
-  const dateBelongMonth = new Date(testDate).getUTCMonth() + 1;
+  const dateBelongMonth = getMonth(new Date(testDate)) + 1;
   return isNextYear ? dateBelongMonth + 12 : dateBelongMonth;
 }
 
 export function groupByCustomDurationEvent(events: Event[]) {
-  const currentMonth = new Date().getUTCMonth() + 1;
+  const currentMonth = getMonth(new Date()) + 1;
   const now = Date.now();
 
   const durationObject: { [x in DurationType]: Event[] } = {
