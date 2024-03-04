@@ -105,7 +105,7 @@ export default function EventCard({
             <div className="text-white text-base">
               {event.startDate && event.endDate && (
                 <div className="flex items-center" suppressHydrationWarning>
-                  <BsCalendar2DateFill className="text-white mr-1" />
+                  <BsCalendar2DateFill className="text-white mr-1 text-sm" />
                   {event.startDate && event.endDate
                     ? `${format(event.startDate, "yyyy/MM/dd", {
                         locale: zhCN,
@@ -116,7 +116,7 @@ export default function EventCard({
               )}
 
               <div className="flex items-center">
-                <IoLocation className="text-white mr-1" />
+                <IoLocation className="text-white mr-1 flex-shrink-0 text-sm" />
                 <span aria-label="活动地址" className="truncate">
                   {event.address || "尚未公布"}
                 </span>
