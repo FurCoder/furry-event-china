@@ -90,9 +90,10 @@ export default function Layout({
           name="twitter:image"
           content={headMetas?.cover || "https://images.furrycons.cn/banner.png"}
         />
-        {IS_CN_REGION && (
-          <meta name="baidu-site-verification" content="codeva-GHH5uUsoan" />
-        )}
+        <meta
+          name="baidu-site-verification"
+          content={IS_CN_REGION ? "codeva-GHH5uUsoan" : "codeva-UlpDYpags1"}
+        />
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="canonical"
