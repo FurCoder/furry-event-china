@@ -41,7 +41,7 @@ export default function Layout({
           name="keywords"
           content={
             headMetas?.keywords
-              ? headMetas.keywords.concat(', ').concat(defaultKeywords)
+              ? headMetas.keywords.concat(", ").concat(defaultKeywords)
               : defaultKeywords
           }
           key="keywords"
@@ -66,9 +66,7 @@ export default function Layout({
         />
         <meta
           property="og:image"
-          content={
-            headMetas?.cover || "https://images.furrycons.cn/banner.png"
-          }
+          content={headMetas?.cover || "https://images.furrycons.cn/banner.png"}
           key="image"
         />
         <meta name="twitter:card" content="summary_large_image" />
@@ -90,10 +88,11 @@ export default function Layout({
         />
         <meta
           name="twitter:image"
-          content={
-            headMetas?.cover || "https://images.furrycons.cn/banner.png"
-          }
+          content={headMetas?.cover || "https://images.furrycons.cn/banner.png"}
         />
+        {IS_CN_REGION && (
+          <meta name="baidu-site-verification" content="codeva-GHH5uUsoan" />
+        )}
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="canonical"
