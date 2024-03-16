@@ -46,13 +46,14 @@ export default function EventCard({
             },
           })
         }
-        className="bg-white rounded-xl h-96 relative group outline outline-[5px] outline-white shadow-md transition duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-110"
+        className={clsx(
+          "bg-white rounded-xl h-48 md:h-96 relative group md:outline md:outline-[5px] outline-white md:shadow-md transition duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-110",
+          styles["event-card"]
+        )}
       >
         <div
-          id="event-card-context"
           className={clsx(
-            "flex flex-col justify-between h-full rounded-xl relative overflow-hidden",
-            isWiderImage && styles["event-card"]
+            "flex flex-col justify-between h-full rounded-xl relative overflow-hidden"
           )}
         >
           {finalEventCoverImage && (
@@ -62,50 +63,59 @@ export default function EventCard({
               }}
               src={finalEventCoverImage}
               alt={`Event cover of ${event.name}`}
-              className={clsx("object-cover absolute h-full w-full")}
+              className={clsx(
+                "event-cover object-cover absolute h-full w-full shadow-md",
+                isWiderImage && styles["event-vertical-cover"]
+              )}
               sizes={sizes}
             />
           )}
-          <div className="z-10 relative mt-4 mx-4 flex items-center justify-between">
-            <span
-              aria-label="organization name"
-              className="text-white rounded-full bg-red-400/70 group-hover:bg-red-400 text-sm transition duration-300 flex items-center"
+          <div className="z-10 top-0 relative">
+            <div
+              className={clsx(
+                "absolute right-0 mt-2 md:mt-4 mr-2 md:mr-4",
+                "flex w-fit items-center",
+                "bg-red-400 rounded-full"
+              )}
             >
               {!!event.organization?.logoUrl && (
-                <Image
-                  src={event.organization.logoUrl}
-                  alt={`The organization logo of ${event.name}`}
-                  className={clsx(
-                    "rounded-full object-cover w-[28px] h-[28px]"
-                  )}
-                  width={100}
-                  height={100}
-                  sizes="100px"
-                />
+                <div className="border-2 rounded-full border-transparent">
+                  <Image
+                    src={event.organization.logoUrl}
+                    alt={`The organization logo of ${event.name}`}
+                    className={clsx(
+                      "rounded-full object-cover w-[28px] h-[28px] "
+                    )}
+                    width={100}
+                    height={100}
+                    sizes="100px"
+                    aria-label="organization's logo"
+                  />
+                </div>
               )}
-            </span>
-            <span
-              aria-label="event location address"
-              className="text-white rounded-full px-2 py-1 bg-red-400/70 group-hover:bg-red-400 text-sm transition duration-300"
-            >
-              {event.city}市
-            </span>
+              <span
+                aria-label="event location address"
+                className="text-white rounded-full pl-1 pr-2 py-1 bg-red-400 text-xs md:text-sm"
+              >
+                {event.city}市
+              </span>
+            </div>
           </div>
 
           <div
             className={clsx(
               styles["event-card__desc-container"],
-              "p-4 bg-red-100/20 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10",
+              "p-2 md:p-4 bg-red-100/20 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10 w-full",
+              "text-white",
               !isDefaultCover && "backdrop-blur-md"
             )}
           >
-            <h4 className="text-white font-bold text-2xl">{event.name}</h4>
-            <h5 className="text-white text-lg">{event.organization?.name}</h5>
-            <h5 className="text-white font-bold text-xl"></h5>
-            <div className="text-white text-base">
+            <h4 className=" font-bold text-base md:text-2xl">{event.name}</h4>
+            <h5 className="text-sm md:text-lg">{event.organization?.name}</h5>
+            <div className="text-xs md:text-base">
               {event.startDate && event.endDate && (
                 <div className="flex items-center" suppressHydrationWarning>
-                  <BsCalendar2DateFill className="text-white mr-1 text-sm" />
+                  <BsCalendar2DateFill className="mr-1 flex-shrink-0 text-sm" />
                   {event.startDate && event.endDate
                     ? `${format(event.startDate, "yyyy/MM/dd", {
                         locale: zhCN,
@@ -114,13 +124,12 @@ export default function EventCard({
                     : null}
                 </div>
               )}
-
-              <div className="flex items-center">
-                <IoLocation className="text-white mr-1 flex-shrink-0 text-sm" />
-                <span aria-label="活动地址" className="truncate">
-                  {event.address || "尚未公布"}
-                </span>
-              </div>
+            </div>
+            <div className="flex items-center text-xs md:text-base">
+              <IoLocation className="mr-1 flex-shrink-0 text-sm" />
+              <span aria-label="活动地址" className="truncate">
+                {event.address || "尚未公布"}
+              </span>
             </div>
           </div>
         </div>
