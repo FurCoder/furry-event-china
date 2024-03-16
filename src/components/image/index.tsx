@@ -2,6 +2,7 @@ import imageLoader from "@/utils/imageLoader";
 
 /* eslint-disable @next/next/no-img-element */
 function Image({
+  id,
   src,
   alt,
   sizes,
@@ -12,6 +13,7 @@ function Image({
   height,
   priority,
 }: {
+  id?: string;
   src: string;
   alt: string;
   className?: string;
@@ -38,6 +40,7 @@ function Image({
 
   return (
     <img
+      id={id}
       className={className}
       src={srcString}
       alt={alt}

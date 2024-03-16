@@ -16,12 +16,27 @@
   }
 }
 
-.event-card:hover img {
-  animation-duration: 6s;
-  animation-name: moveImage;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: frames(10);
+.event-card {
+  @media (max-width: 768px) {
+    .event-vertical-cover {
+      animation-duration: 6s;
+      animation-name: moveImage;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: frames(10);
+    }
+  }
+  @media (min-width: 768px) {
+    &:hover {
+      .event-vertical-cover {
+        animation-duration: 6s;
+        animation-name: moveImage;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-timing-function: frames(10);
+      }
+    }
+  }
 }
 
 .event-card__desc-container {

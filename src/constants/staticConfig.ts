@@ -11,7 +11,7 @@ export const FriendSiteLinks = [
     description:"地表最强兽人控游戏索引！从传统角色扮演兽游到恋爱模拟，或是战略类兽人游戏，甚至更小众的选择，你都能在这里找到。"
   },
   {
-    link: "https://novel.tigerkk.me/?utm_source=fec",
+    link: "https://furrynovel.com/?utm_source=fec",
     label: "兽人控小说站",
     description:
       "兽人控小说站是一个专为兽人控打造的聚合在线阅读平台。在这里，你可以找到和各种兽人相关的小说，随时享受阅读的乐趣，无需下载或安装任何软件。还可以自由切换翻译，选择你喜欢的阅读模式。",
