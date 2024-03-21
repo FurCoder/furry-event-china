@@ -1,0 +1,6 @@
+.TMap-style-fix {
+  img {
+    max-width: inherit;
+    height: inherit;
+  }
+}

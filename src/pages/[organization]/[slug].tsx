@@ -20,15 +20,11 @@ import { EventStatus, EventStatusSchema } from "@/types/event";
 import { sendTrack } from "@/utils/track";
 import { getEventCoverUrl, imageUrl } from "@/utils/imageLoader";
 import Script from "next/script";
+import { MapLoadingStatus } from "@/constants/TMap";
 
 const xata = new XataClient();
 
-const MapLoadingStatus = {
-  Idle: "idle",
-  Loading: "loading",
-  Finished: "finished",
-  Error: "error",
-};
+
 
 export default function EventDetail({ event }: { event: Event }) {
   const [isWiderImage, setIsWiderImage] = useState(true);

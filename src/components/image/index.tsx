@@ -15,7 +15,7 @@ function Image({
 }: {
   id?: string;
   src: string;
-  alt: string;
+  alt?: string;
   className?: string;
   sizes?: string;
   onLoadingComplete?: (img: HTMLImageElement) => void;
