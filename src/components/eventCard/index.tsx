@@ -73,7 +73,7 @@ export default function EventCard({
           <div className="z-10 top-0 relative">
             <div
               className={clsx(
-                "absolute right-0 mt-2 md:mt-4 mr-2 md:mr-4",
+                "absolute left-0 mt-2 md:mt-4 ml-2 md:ml-4",
                 "flex w-fit items-center",
                 "bg-red-400 rounded-full"
               )}
