@@ -216,8 +216,16 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       events,
       headMetas: {
         title: `${organization?.name} FEC·兽展日历`,
-        des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${organization?.name} 的有关信息，这家展商已累计举办 ${events.length} 场兽展，最近的一场在${dateString}，他们是这样介绍自己的“${organization?.description}”`,
-        keywords:`${organization?.name}, ${organization?.name} 兽展, ${organization?.name} 兽聚`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${
+          organization?.name
+        } 的有关信息，这家展商已累计举办 ${
+          events.length
+        } 场兽展，最近的一场在${dateString}，${
+          organization?.description
+            ? "他们是这样介绍自己的“${organization?.description}”"
+            : "不过他们没怎么介绍自己。"
+        }`,
+        keywords: `${organization?.name}, ${organization?.name} 兽展, ${organization?.name} 兽聚`,
         url: `https://www.furryeventchina.com/${organization?.slug}`,
         cover: organization?.logoUrl,
       },
