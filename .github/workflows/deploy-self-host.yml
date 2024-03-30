@@ -5,6 +5,7 @@ name: Deploy To Selfhost Machine
 on:
   push:
     branches: main
+  workflow_dispatch:
 
 jobs:
   global-image-release:
