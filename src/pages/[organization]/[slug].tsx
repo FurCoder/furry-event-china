@@ -20,6 +20,16 @@ import { EventStatus, EventStatusSchema } from "@/types/event";
 import { sendTrack } from "@/utils/track";
 import { getEventCoverUrl, imageUrl } from "@/utils/imageLoader";
 import Script from "next/script";
+import OrganizationLinkButton, {
+  BiliButton,
+  EmailButton,
+  QQGroupButton,
+  TwitterButton,
+  WebsiteButton,
+  WeiboButton,
+  WikifurButton,
+} from "@/components/OrganizationLinkButton";
+import { keywordgenerator } from "@/utils/meta";
 
 const xata = new XataClient();
 
@@ -376,147 +386,35 @@ export default function EventDetail({ event }: { event: Event }) {
               )}
             >
               {event.organization?.website && (
-                <OrganizationLinkButton
-                  href={event.organization?.website}
-                  bgColorClass="bg-sky-400"
-                  icon={<HiOutlineHome />}
-                >
-                  去官网
-                </OrganizationLinkButton>
+                <WebsiteButton href={event.organization.website} />
               )}
               {event.organization?.qqGroup && (
-                <OrganizationLinkButton
-                  bgColorClass="bg-[#4d9aff]"
-                  icon={<FaQq />}
-                  onClick={() => {
-                    navigator.clipboard
-                      .writeText(event.organization?.qqGroup || "")
-                      .then(() => toast.success("🥳 复制成功，快去QQ加群吧"));
-                  }}
-                  label="复制QQ群号"
-                >
-                  {event.organization?.qqGroup}
-                </OrganizationLinkButton>
+                <QQGroupButton text={event.organization.qqGroup} />
               )}
               {event.organization?.bilibili && (
-                <OrganizationLinkButton
-                  bgColorClass="bg-[#fb7299]"
-                  href={event.organization?.bilibili}
-                  icon={<SiBilibili />}
-                >
-                  去BiliBili
-                </OrganizationLinkButton>
+                <BiliButton href={event.organization.bilibili} />
               )}
+
               {event.organization?.weibo && (
-                <OrganizationLinkButton
-                  bgColorClass="bg-[#ff5962]"
-                  href={event.organization?.weibo}
-                  icon={<FaWeibo />}
-                >
-                  去微博
-                </OrganizationLinkButton>
+                <WeiboButton href={event.organization.weibo} />
               )}
+
               {event.organization?.twitter && (
-                <OrganizationLinkButton
-                  bgColorClass="bg-[#1da1f2]"
-                  href={event.organization?.twitter}
-                  icon={<FaTwitter />}
-                >
-                  去Twitter
-                </OrganizationLinkButton>
+                <TwitterButton href={event.organization.twitter} />
               )}
+
               {event.organization?.contactMail && (
-                <OrganizationLinkButton
-                  bgColorClass="bg-emerald-500"
-                  onClick={() => {
-                    navigator.clipboard
-                      .writeText(event.organization?.contactMail || "")
-                      .then(() => toast.success("🥳 复制成功，快去发邮件吧"));
-                  }}
-                  icon={<HiOutlineMail />}
-                  label="复制邮件地址"
-                >
-                  {event.organization?.contactMail}
-                </OrganizationLinkButton>
+                <EmailButton mail={event.organization.contactMail} />
               )}
 
               {event.organization?.wikifur && (
-                <OrganizationLinkButton
-                  bgColorClass="bg-blue-800"
-                  href={event.organization?.wikifur}
-                  icon={<FaPaw />}
-                >
-                  去 Wikifur 了解更多
-                </OrganizationLinkButton>
+                <WikifurButton href={event.organization.wikifur} />
               )}
             </div>
           </div>
         </div>
       </div>
     </>
-  );
-}
-
-function OrganizationLinkButton({
-  icon,
-  children,
-  href,
-  onClick,
-  bgColorClass,
-  label,
-}: {
-  icon?: React.ReactNode;
-  children: React.ReactNode;
-  onClick?: () => void;
-  href?: string;
-  bgColorClass?: string;
-  label?: React.ReactNode;
-}) {
-  const className = clsx(
-    "flex items-center rounded-xl px-4 py-3 text-white w-full text-left md:hover:-translate-x-2 shadow transition duration-300",
-    bgColorClass
-  );
-
-  const track = () => {
-    sendTrack({
-      eventName: "click-event-portal",
-      eventValue: {
-        label,
-        link: href,
-        action: "click",
-      },
-    });
-  };
-  const buttonContext = (
-    <>
-      {icon && <span className="mr-2 flex-shrink-0 text-xl">{icon}</span>}
-      {icon && <span className="h-[16px] w-[2px] bg-white mx-4 opacity-50" />}
-      <div>
-        {label && <span className="text-xs">{label}</span>}
-        <p>{children}</p>
-      </div>
-    </>
-  );
-  return href ? (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className={className}
-      onClick={track}
-    >
-      {buttonContext}
-    </a>
-  ) : (
-    <button
-      className={className}
-      onClick={() => {
-        onClick && onClick();
-        track();
-      }}
-    >
-      {buttonContext}
-    </button>
   );
 }
 
@@ -560,7 +458,14 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       event,
       headMetas: {
         title: `${event?.name}-FEC·兽展日历`,
-        keywords: `${event?.name}, ${event?.name} 时间, ${event?.city}兽展,${event?.city}兽聚`,
+        keywords: keywordgenerator({
+          page: "event",
+          event: {
+            name: event?.name,
+            startDate: event?.startDate,
+            city: event?.city,
+          },
+        }),
         des: metaDes,
         url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
         cover: imageUrl(
@@ -653,6 +558,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
             name: event?.organization?.name,
           },
           copyrightNotice: event?.organization?.name,
+          license: "https://creativecommons.org/licenses/by-nc/4.0/",
+          acquireLicensePage: "https://docs.furryeventchina.com/blog/about",
         })),
       },
     },

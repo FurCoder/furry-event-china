@@ -2,8 +2,11 @@
 // with Sentry.
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+const { format } = require("date-fns");
+
 const { withSentryConfig } = require("@sentry/nextjs");
 const { GitRevisionPlugin } = require("git-revision-webpack-plugin");
+
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.NODE_ENV === "production",
 });
@@ -46,9 +49,10 @@ const nextConfig = {
         VERSION: JSON.stringify(gitRevisionPlugin.version()),
         COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash().slice(0, 7)),
         BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
-        LASTCOMMITDATETIME: JSON.stringify(
-          gitRevisionPlugin.lastcommitdatetime()
-        ),
+        // LASTCOMMITDATETIME: JSON.stringify(
+        //   gitRevisionPlugin.lastcommitdatetime()
+        // ),
+        LASTCOMMITDATETIME: JSON.stringify(format(Date.now(), "yyyy/MM/dd")),
         __SENTRY_DEBUG__: false,
       })
     );

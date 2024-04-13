@@ -3,6 +3,7 @@ import React from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useRouter } from "next/router";
+import { universalKeywords } from "@/utils/meta";
 
 const IS_CN_REGION = process.env.NEXT_PUBLIC_REGION === "CN";
 
@@ -41,8 +42,10 @@ export default function Layout({
           name="keywords"
           content={
             headMetas?.keywords
-              ? headMetas.keywords.concat(", ").concat(defaultKeywords)
-              : defaultKeywords
+              ? headMetas.keywords
+                  .concat(",")
+                  .concat(universalKeywords.join(","))
+              : universalKeywords.join(",")
           }
           key="keywords"
         />
