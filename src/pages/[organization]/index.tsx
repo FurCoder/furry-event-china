@@ -7,9 +7,18 @@ import Image from "@/components/image";
 import { GetStaticPropsContext } from "next/types";
 import { useMemo } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
+import { FaPaw, FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { SiBilibili } from "react-icons/si";
+// import {
+//   WebsiteButton,
+//   QQGroupButton,
+//   BiliButton,
+//   WeiboButton,
+//   TwitterButton,
+//   EmailButton,
+//   WikifurButton,
+// } from "@/components/OrganizationLinkButton";
 
 const xata = new XataClient();
 export default function OrganizationDetail(props: {
@@ -38,17 +47,18 @@ export default function OrganizationDetail(props: {
       <div className="border bg-white rounded-xl p-6">
         <div className="flex flex-col md:flex-row">
           {organization.logoUrl && (
-            <div className="border rounded flex justify-center p-2 w-full md:w-80 md:h-80 h-48">
+            <div className="border rounded flex justify-center p-2 w-full md:w-48 md:h-48 h-48 shrink-0">
               <Image
-                className="object-contain"
-                alt={`${organization.name}'s logo`}
+                className="object-contain h-full"
+                containerClassName="h-full"
+                alt={`${organization.name}的展会徽标`}
                 width={200}
                 height={200}
                 src={organization.logoUrl}
               />
             </div>
           )}
-          <div className="mt-4 md:mt-0 md:ml-4">
+          <div className="mt-4 md:mt-0 md:ml-4 ">
             <h2 className="text-2xl font-bold mb-2">{organization.name}</h2>
 
             <div className="flex items-center mb-2 text-gray-500">
@@ -66,8 +76,8 @@ export default function OrganizationDetail(props: {
 
             <div
               className={clsx(
-                "flex items-center flex-wrap first:mr-0 gap-4",
-                styles.links
+                "flex items-center flex-wrap first:mr-0 gap-4"
+                // styles.links
               )}
             >
               {organization.website && (
@@ -75,30 +85,18 @@ export default function OrganizationDetail(props: {
                   href={organization.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="bg-blue-300 rounded-xl px-4 py-1 text-white"
+                  className="bg-blue-300 hover:bg-blue-400 transition rounded-xl px-4 py-1 text-white"
                 >
                   去官网
                 </a>
               )}
-              {organization?.qqGroup && (
-                <button
-                  onClick={() => {
-                    navigator.clipboard
-                      .writeText(organization?.qqGroup || "")
-                      .then(() => toast.success("🥳 复制成功，快去QQ加群吧"));
-                  }}
-                  className="flex items-center justify-center bg-red-300 rounded-xl px-4 py-1 text-white text-center"
-                >
-                  <FaQq className="mr-2" /> 复制QQ群号:
-                  {organization?.qqGroup}
-                </button>
-              )}
+
               {organization?.bilibili && (
                 <a
                   href={organization?.bilibili}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center bg-sky-400 rounded-xl px-4 py-1 text-white text-center"
+                  className="flex items-center justify-center bg-sky-400 hover:bg-sky-500 transition rounded-xl px-4 py-1 text-white text-center"
                 >
                   <SiBilibili className="mr-2" />
                   去Bilibili
@@ -109,25 +107,53 @@ export default function OrganizationDetail(props: {
                   href={organization?.weibo}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center bg-red-500 rounded-xl px-4 py-1 text-white text-center"
+                  className="flex items-center justify-center bg-red-500 hover:bg-red-600 transition rounded-xl px-4 py-1 text-white text-center"
                 >
                   <FaWeibo className="mr-2" />
                   去微博
                 </a>
               )}
+
               {organization?.twitter && (
                 <a
                   href={organization?.twitter}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center bg-blue-500 rounded-xl px-4 py-1 text-white text-center"
+                  className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 transition rounded-xl px-4 py-1 text-white text-center"
                 >
                   <FaTwitter className="mr-2" />
                   去Twitter
                 </a>
               )}
+
+              {organization?.wikifur && (
+                <a
+                  href={organization?.wikifur}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center bg-blue-800 hover:bg-blue-900 transition rounded-xl px-4 py-1 text-white text-center"
+                >
+                  <FaPaw className="mr-2" />
+                  去 Wikifur 了解更多
+                </a>
+              )}
+
+              {organization?.qqGroup && (
+                <button
+                  onClick={() => {
+                    navigator.clipboard
+                      .writeText(organization?.qqGroup || "")
+                      .then(() => toast.success("🥳 复制成功，快去QQ加群吧"));
+                  }}
+                  className="flex items-center justify-center bg-red-300 hover:bg-red-400 transition rounded-xl px-4 py-1 text-white text-center"
+                >
+                  <FaQq className="mr-2" /> 复制QQ群号:
+                  {organization?.qqGroup}
+                </button>
+              )}
+
               {organization.contactMail && (
-                <div className="flex items-center bg-green-600 rounded-xl px-4 py-1 text-white">
+                <div className="flex items-center bg-green-600 hover:bg-green-700 transition rounded-xl px-4 py-1 text-white">
                   <a href={`mailto:${organization.contactMail}`}>
                     发邮件给 {organization.contactMail}
                   </a>
@@ -137,7 +163,7 @@ export default function OrganizationDetail(props: {
                         .writeText(organization.contactMail!)
                         .then(() => toast.success("🥳 复制成功，快去发邮件吧"));
                     }}
-                    className="border-l pl-2 cursor-pointer"
+                    className="border-l ml-2 pl-2 cursor-pointer"
                   >
                     <MdOutlineContentCopy />
                   </div>
@@ -154,16 +180,40 @@ export default function OrganizationDetail(props: {
         </p>
       </div>
 
+      {/* <div
+        className={clsx(
+          "mt-8 p-6 bg-white rounded-xl border",
+          "grid gird-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-8",
+          styles.links
+        )}
+      >
+        {organization?.website && <WebsiteButton href={organization.website} />}
+        {organization?.qqGroup && <QQGroupButton text={organization.qqGroup} />}
+        {organization?.bilibili && <BiliButton href={organization.bilibili} />}
+
+        {organization?.weibo && <WeiboButton href={organization.weibo} />}
+
+        {organization?.twitter && <TwitterButton href={organization.twitter} />}
+
+        {organization?.contactMail && (
+          <EmailButton mail={organization.contactMail} />
+        )}
+
+        {organization?.wikifur && <WikifurButton href={organization.wikifur} />}
+      </div> */}
+
       {!!events.length && (
-        <section className="mt-8 grid gird-cols-1 gap-8 p-6 bg-white rounded-xl">
-          <h2 className="text-xl text-slate-600 -mb-4">历届展会</h2>
-          {events.map((e) => (
-            <EventCard
-              key={e.id}
-              event={e}
-              sizes="(max-width: 750px)750px, (max-width: 1080px) 1080px, (min-width: 1200px) 1200px, 1200px"
-            />
-          ))}
+        <section className="mt-8 p-6 bg-white rounded-xl border">
+          <h2 className="text-xl text-slate-600 mb-4">历届展会</h2>
+          <div className="grid gird-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-8">
+            {events.map((e) => (
+              <EventCard
+                key={e.id}
+                event={e}
+                sizes="(max-width: 750px)750px, (max-width: 1080px) 1080px, (min-width: 1200px) 1200px, 1200px"
+              />
+            ))}
+          </div>
         </section>
       )}
     </div>
