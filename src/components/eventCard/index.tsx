@@ -62,12 +62,14 @@ export default function EventCard({
                 img.naturalWidth < img.naturalHeight && setIsWiderImage(false);
               }}
               src={finalEventCoverImage}
-              alt={`Event cover of ${event.name}`}
+              alt={`${event.name}的活动封面`}
+              containerClassName="absolute h-full w-full"
               className={clsx(
-                "event-cover object-cover absolute h-full w-full shadow-md",
+                "event-cover object-cover h-full w-full",
                 isWiderImage && styles["event-vertical-cover"]
               )}
               sizes={sizes}
+              autoFormat
             />
           )}
           <div className="z-10 top-0 relative">
@@ -82,7 +84,7 @@ export default function EventCard({
                 <div className="border-2 rounded-full border-transparent">
                   <Image
                     src={event.organization.logoUrl}
-                    alt={`The organization logo of ${event.name}`}
+                    alt={`${event.name}的展会徽标`}
                     className={clsx(
                       "rounded-full object-cover w-[28px] h-[28px] "
                     )}
@@ -95,7 +97,10 @@ export default function EventCard({
               )}
               <span
                 aria-label="event location address"
-                className="text-white rounded-full pl-1 pr-2 py-1 bg-red-400 text-xs md:text-sm"
+                className={clsx(
+                  "text-white rounded-full pr-2 py-1 bg-red-400 text-xs md:text-sm",
+                  event.organization?.logoUrl ? "pl-1" : "pl-2"
+                )}
               >
                 {event.city}市
               </span>

@@ -148,6 +148,8 @@ export default function EventDetail({ event }: { event: Event }) {
                 src={finalEventCoverImage}
                 className="object-cover w-full h-full"
                 alt={`The event cover of ${event.name}`}
+                autoFormat
+                quality={100}
               />
             </div>
           )}
@@ -163,6 +165,7 @@ export default function EventDetail({ event }: { event: Event }) {
                 src={finalEventCoverImage}
                 alt={`The event cover of ${event.name}`}
                 className="mx-auto h-full object-contain"
+                autoFormat
               />
             </div>
           )}
@@ -198,7 +201,7 @@ export default function EventDetail({ event }: { event: Event }) {
               className="flex items-center text-gray-500 mt-4"
             >
               <IoLocation className="text-gray-500 inline-block mr-2" />
-              {`${event.city} · ${event.address?event.address:'暂未公布'}`}
+              {`${event.city} · ${event.address ? event.address : "暂未公布"}`}
             </p>
             <p
               aria-label="活动时间"
@@ -207,14 +210,14 @@ export default function EventDetail({ event }: { event: Event }) {
               <BsCalendar2DateFill className="text-gray-500 inline-block mr-2" />
               <time aria-label="活动开始时间" suppressHydrationWarning>
                 {event.startDate
-                  ? format(event.startDate,'yyyy年MM月dd日')
-                  : '暂未公布'}
+                  ? format(event.startDate, "yyyy年MM月dd日")
+                  : "暂未公布"}
               </time>
               <TbArrowsRightLeft className="mx-2  text-sm" />
               <time aria-label="活动结束时间" suppressHydrationWarning>
                 {event.endDate
-                  ? format(event.endDate,'yyyy年MM月dd日')
-                  : '暂未公布'}
+                  ? format(event.endDate, "yyyy年MM月dd日")
+                  : "暂未公布"}
               </time>
             </p>
           </div>
@@ -293,12 +296,14 @@ export default function EventDetail({ event }: { event: Event }) {
                 {event.posterUrl.map((cover, index) => (
                   <div className="relative" key={cover}>
                     <NextImage
-                      alt={`${event.name}'s poster-${index}`}
+                      alt={`${event.name}的详情图片-${index + 1}`}
                       src={cover}
                       width={600}
                       height={1000}
                       className="w-full"
                       priority
+                      autoFormat
+                      quality={90}
                     />
                   </div>
                 ))}
