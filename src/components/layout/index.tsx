@@ -2,8 +2,10 @@ import Head from "next/head";
 import React from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import { useRouter } from "next/router";
 import { universalKeywords } from "@/utils/meta";
+import AnnouncementSlider from "@/components/announcementSlider";
+import { useRouter } from "next/router";
+import { Toaster } from "react-hot-toast";
 
 const IS_CN_REGION = process.env.NEXT_PUBLIC_REGION === "CN";
 
@@ -127,19 +129,9 @@ export default function Layout({
           />
         )}
       </Head>
+      <Toaster />
       <Header />
-      {!IS_CN_REGION && (
-        <div className="px-4 py-4 bg-white border border-gray-200 mb-6 rounded-xl text-red-400">
-          如您感觉加载速度较慢，请访问我们的境内域名地址:{" "}
-          <a
-            href={`https://www.furrycons.cn${asPath}`}
-            className="underline cursor-pointer"
-          >
-            www.furrycons.cn
-          </a>
-          ，放心点击，您的路径将保持一致。
-        </div>
-      )}
+      <AnnouncementSlider />
       <div className="flex-grow mx-1 lg:mx-0">{children}</div>
       <Footer isCNRegion={IS_CN_REGION} />
     </div>

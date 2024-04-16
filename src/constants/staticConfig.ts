@@ -6,7 +6,7 @@ export const FriendSiteLinks = [
       "WildDream 创作站（野梦）是一个以原创作品分享为主的中文兽、兽人、动物、奇幻生物主题创作与交流站点，自 2015 年 8 月以来，为兽主题作品提供托管与展示服务。",
   },
   {
-    link: "https://www.kemono.games/?utm_source=fec",
+    link: "https://kemono.games/?utm_source=fec",
     label: "兽人控游戏库 Kemono.Games",
     description:"地表最强兽人控游戏索引！从传统角色扮演兽游到恋爱模拟，或是战略类兽人游戏，甚至更小众的选择，你都能在这里找到。"
   },

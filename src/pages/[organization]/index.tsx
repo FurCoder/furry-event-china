@@ -6,7 +6,7 @@ import clsx from "clsx";
 import Image from "@/components/image";
 import { GetStaticPropsContext } from "next/types";
 import { useMemo } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { FaPaw, FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { SiBilibili } from "react-icons/si";
@@ -43,7 +43,6 @@ export default function OrganizationDetail(props: {
 
   return (
     <div>
-      <Toaster />
       <div className="border bg-white rounded-xl p-6">
         <div className="flex flex-col md:flex-row">
           {organization.logoUrl && (
