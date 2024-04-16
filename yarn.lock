@@ -2077,6 +2077,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"embla-carousel-autoplay@npm:^8.0.2":
+  version: 8.0.2
+  resolution: "embla-carousel-autoplay@npm:8.0.2"
+  peerDependencies:
+    embla-carousel: 8.0.2
+  checksum: e9e37b681c197f18087c2feb1b61b8bf63150de9b965a694fc07c1ea6f95368736b7b60563ff26b412201362aa10c6393d2d4aaabf07feb1c24998d8af996bf2
+  languageName: node
+  linkType: hard
+
 "embla-carousel-react@npm:^8.0.0":
   version: 8.0.0
   resolution: "embla-carousel-react@npm:8.0.0"
@@ -2837,6 +2846,7 @@ __metadata:
     autoprefixer: "npm:^10.4.17"
     clsx: "npm:^2.1.0"
     date-fns: "npm:^3.3.1"
+    embla-carousel-autoplay: "npm:^8.0.2"
     embla-carousel-react: "npm:^8.0.0"
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.1.0"
