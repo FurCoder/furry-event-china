@@ -5,16 +5,11 @@ import { format } from "date-fns";
 import { GetStaticPropsContext } from "next";
 import NextImage from "@/components/image";
 import { useCallback, useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 import { BsCalendar2DateFill } from "react-icons/bs";
-import { FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
-import { HiOutlineHome, HiOutlineMail } from "react-icons/hi";
 import { VscLoading } from "react-icons/vsc";
 import { IoLocation } from "react-icons/io5";
-import { SiBilibili } from "react-icons/si";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { TbArrowsRightLeft } from "react-icons/tb";
-import { FaPaw } from "react-icons/fa";
 import Link from "next/link";
 import { EventStatus, EventStatusSchema } from "@/types/event";
 import { sendTrack } from "@/utils/track";
@@ -41,7 +36,6 @@ const MapLoadingStatus = {
 };
 
 export default function EventDetail({ event }: { event: Event }) {
-  const [isWiderImage, setIsWiderImage] = useState(true);
   const [mapLoadingStatus, setMapLoadingStatus] = useState(() => {
     if (event.addressLat && event.addressLon) {
       return MapLoadingStatus.Loading;
@@ -49,20 +43,8 @@ export default function EventDetail({ event }: { event: Event }) {
     return MapLoadingStatus.Idle;
   });
 
-  const calcImageRatio = useCallback(() => {
-    if (!event.coverUrl) return;
-    const img = new Image();
-    img.src = getEventCoverUrl(event);
-    img.onload = function (this) {
-      setIsWiderImage(img.width >= img.height);
-    };
-  }, [event.coverUrl]);
-
-  useEffect(() => {
-    calcImageRatio();
-  }, [calcImageRatio]);
-
   const finalEventCoverImage = getEventCoverUrl(event);
+
   const initMap = () => {
     if (!window.TMap) throw new Error("TMap is not loaded");
     setMapLoadingStatus(MapLoadingStatus.Loading);
@@ -118,7 +100,6 @@ export default function EventDetail({ event }: { event: Event }) {
 
   return (
     <>
-      <Toaster />
       {mapLoadingStatus !== MapLoadingStatus.Idle && (
         <Script
           src="https://map.qq.com/api/gljs?v=1.exp&key=PXEBZ-QLM6C-RZX2K-AV2XX-SBBW5-VGFC4"
@@ -130,62 +111,41 @@ export default function EventDetail({ event }: { event: Event }) {
       <div
         className={clsx(
           "flex border bg-white rounded-xl min-h-[500px] overflow-hidden",
-          isWiderImage && "flex-col",
-          !isWiderImage && "lg:flex-row flex-col"
+          "lg:flex-row flex-col"
         )}
       >
         <div
-          className={clsx(
-            "event-detail__left",
-            isWiderImage && "w-full h-[500px]",
-            !isWiderImage && "lg:w-7/12 w-full h-[500px]"
-          )}
-          {...(isWiderImage
-            ? {}
-            : {
-                style: {
-                  backgroundImage: `url(${finalEventCoverImage})`,
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                },
-              })}
+          className={clsx("event-detail__left", "lg:w-7/12 w-full h-[500px]")}
         >
-          {isWiderImage && finalEventCoverImage && (
-            <div className="relative w-full h-[500px]">
-              <NextImage
-                priority
-                src={finalEventCoverImage}
-                className="object-cover w-full h-full"
-                alt={`The event cover of ${event.name}`}
-                autoFormat
-                quality={100}
-              />
-            </div>
-          )}
-          {!isWiderImage && finalEventCoverImage && (
-            <div
-              className={clsx("text-center h-full")}
-              style={{ backdropFilter: "blur(8px)" }}
-            >
-              <NextImage
-                priority
-                width={350}
-                height={500}
-                src={finalEventCoverImage}
-                alt={`The event cover of ${event.name}`}
-                className="mx-auto h-full object-contain"
-                autoFormat
-              />
-            </div>
-          )}
+          <div className={clsx("relative text-center h-full")}>
+            <NextImage
+              containerClassName="relative z-20"
+              priority
+              width={350}
+              height={500}
+              src={finalEventCoverImage}
+              alt={`${event.name}的活动海报`}
+              className="mx-auto h-full object-contain"
+              autoFormat
+            />
+
+            <NextImage
+              containerClassName="absolute top-0 left-0 w-full h-full z-10 blur object-cover object-center brightness-50"
+              width={350}
+              height={500}
+              src={finalEventCoverImage}
+              alt={`${event.name}的活动海报`}
+              className="mx-auto h-full object-cover"
+              autoFormat
+            />
+          </div>
         </div>
         <div
           className={clsx(
-            "p-6 event-detail__right w-full sm1:w-5/12 flex",
-            isWiderImage && "w-full flex-col sm:flex-row sm:items-end",
-            !isWiderImage &&
-              "lg:w-5/12 flex-col sm:flex-row sm:max-lg:items-end lg:flex-col"
+            "event-detail__right",
+            "p-6 bg-white z-10 flex",
+            "flex-col sm:flex-row sm:max-lg:items-end lg:flex-col",
+            "w-full lg:w-5/12"
           )}
         >
           <div className="flex-grow">
@@ -234,7 +194,7 @@ export default function EventDetail({ event }: { event: Event }) {
 
           {event.website && (
             <a
-              href={event.website || "#"}
+              href={event.website}
               target="_blank"
               rel="noreferrer"
               onClick={() =>
