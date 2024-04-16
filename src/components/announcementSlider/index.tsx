@@ -33,7 +33,12 @@ function AnnouncementSlider() {
         )}
 
         <div
-          className={clsx(SliderStyle.embla__slide, defaultSliderClass, "ml-4")}
+          className={clsx(
+            SliderStyle.embla__slide,
+            defaultSliderClass,
+            !IS_CN_REGION && "ml-4",
+            IS_CN_REGION && "basis-full"
+          )}
         >
           有任何建议和反馈，请加入我们的QQ群聊
           <a
