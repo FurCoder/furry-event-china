@@ -130,12 +130,12 @@ export default function EventDetail({ event }: { event: Event }) {
             />
 
             <NextImage
-              containerClassName="absolute top-0 left-0 w-full h-full z-10 blur object-cover object-center brightness-50"
+              containerClassName="absolute top-0 left-0 w-full h-full z-10 blur brightness-50"
               width={350}
               height={500}
               src={finalEventCoverImage}
               alt={`${event.name}的活动海报`}
-              className="mx-auto h-full object-cover"
+              className="mx-auto h-full w-full object-cover"
               autoFormat
             />
           </div>
