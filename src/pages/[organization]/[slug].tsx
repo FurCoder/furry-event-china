@@ -427,7 +427,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           },
         }),
         des: metaDes,
-        url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
+        url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}/`,
         cover: imageUrl(
           event?.coverUrl ||
             event?.posterUrl?.[0] ||
@@ -449,7 +449,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
               "@type": "ListItem",
               position: 2,
               name: event?.organization?.name,
-              item: `https://www.furryeventchina.com/${context.params?.organization}`,
+              item: `https://www.furryeventchina.com/${context.params?.organization}/`,
             },
             {
               "@type": "ListItem",
@@ -502,7 +502,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           organizer: {
             "@type": "Organization",
             name: event?.organization?.name,
-            url: `https://www.furryeventchina.com/${context.params?.organization}`,
+            url: `https://www.furryeventchina.com/${context.params?.organization}/`,
           },
         },
         imageObject: [

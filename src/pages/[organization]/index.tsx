@@ -275,7 +275,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
             : "不过他们没怎么介绍自己。"
         }`,
         keywords: `${organization?.name}, ${organization?.name} 兽展, ${organization?.name} 兽聚`,
-        url: `https://www.furryeventchina.com/${organization?.slug}`,
+        url: `https://www.furryeventchina.com/${organization?.slug}/`,
         cover: organization?.logoUrl,
       },
       structuredData: {
