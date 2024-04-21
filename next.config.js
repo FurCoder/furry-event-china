@@ -3,6 +3,7 @@
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 const { format } = require("date-fns");
+const { zhCN } = require("date-fns/locale");
 
 const { withSentryConfig } = require("@sentry/nextjs");
 const { GitRevisionPlugin } = require("git-revision-webpack-plugin");
@@ -52,7 +53,9 @@ const nextConfig = {
         // LASTCOMMITDATETIME: JSON.stringify(
         //   gitRevisionPlugin.lastcommitdatetime()
         // ),
-        LASTCOMMITDATETIME: JSON.stringify(format(Date.now(), "yyyy/MM/dd")),
+        LASTCOMMITDATETIME: JSON.stringify(
+          format(Date.now(), "yyyy/MM/dd", { locale: zhCN })
+        ),
         __SENTRY_DEBUG__: false,
       })
     );

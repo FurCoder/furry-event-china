@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { format } from "date-fns";
 import { GetStaticPropsContext } from "next";
 import NextImage from "@/components/image";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { VscLoading } from "react-icons/vsc";
 import { IoLocation } from "react-icons/io5";

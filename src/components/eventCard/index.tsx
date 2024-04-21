@@ -1,6 +1,6 @@
 import { Event } from "@/xata/xata";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import styles from "@/components/eventCard/index.module.css";
 import { IoLocation } from "react-icons/io5";
 import { BsCalendar2DateFill } from "react-icons/bs";
@@ -18,7 +18,6 @@ export default function EventCard({
   event: Event;
   sizes?: string;
 }) {
-  const [isWiderImage, setIsWiderImage] = useState(true);
 
   const finalEventCoverImage = getEventCoverUrl(event);
   const isDefaultCover = finalEventCoverImage.includes(
@@ -58,15 +57,12 @@ export default function EventCard({
         >
           {finalEventCoverImage && (
             <Image
-              onLoadingComplete={(img) => {
-                img.naturalWidth < img.naturalHeight && setIsWiderImage(false);
-              }}
               src={finalEventCoverImage}
               alt={`${event.name}的活动封面`}
               containerClassName="absolute h-full w-full"
               className={clsx(
                 "event-cover object-cover h-full w-full",
-                isWiderImage && styles["event-vertical-cover"]
+                styles["event-vertical-cover"]
               )}
               sizes={sizes}
               autoFormat
