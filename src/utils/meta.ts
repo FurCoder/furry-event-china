@@ -40,12 +40,7 @@ function keywordgenerator({
     `${event?.name}举办时间`,
     `${event?.name}时间`,
     ...(event?.city ? [`${event.city}兽聚`, `${event.city}兽展`] : []),
-    ...(startYear
-      ? [
-          `${startYear}兽聚`,
-          `${startYear}兽展`,
-        ]
-      : []),
+    ...(startYear ? [`${startYear}兽聚`, `${startYear}兽展`] : []),
   ];
 
   const universalOrganizationKeywords = [
@@ -74,4 +69,10 @@ function keywordgenerator({
   }
 }
 
-export { universalKeywords, keywordgenerator };
+function titleGenerator(title?: string) {
+  return title
+    ? `${title}-FEC·兽展日历 | FEC·兽聚日历`
+    : "FEC·兽展日历 | FEC·兽聚日历";
+}
+
+export { universalKeywords, keywordgenerator, titleGenerator };

@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import { universalKeywords } from "@/utils/meta";
+import { titleGenerator, universalKeywords } from "@/utils/meta";
 import AnnouncementSlider from "@/components/announcementSlider";
 import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
@@ -31,7 +31,7 @@ export default function Layout({
   return (
     <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen">
       <Head>
-        <title>{headMetas?.title || "FEC·兽展日历 | FEC·兽聚日历"}</title>
+        <title>{titleGenerator(headMetas?.title)}</title>
         <meta
           name="description"
           content={
@@ -54,7 +54,7 @@ export default function Layout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           property="og:title"
-          content={headMetas?.title || "FEC·兽展日历"}
+          content={titleGenerator(headMetas?.title)}
         />
         <meta property="og:type" content="website" />
         <meta
@@ -82,7 +82,7 @@ export default function Layout({
         />
         <meta
           name="twitter:title"
-          content={headMetas?.title || "FEC·兽展日历"}
+          content={titleGenerator(headMetas?.title)}
         />
         <meta
           name="twitter:description"

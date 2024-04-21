@@ -417,7 +417,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     props: {
       event,
       headMetas: {
-        title: `${event?.name}-FEC·兽展日历`,
+        title: `${event?.name}-${event?.organization?.name}`,
         keywords: keywordgenerator({
           page: "event",
           event: {

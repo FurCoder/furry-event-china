@@ -167,7 +167,7 @@ export async function getStaticProps() {
     props: {
       events,
       headMetas: {
-        title: "兽展城市列表 FEC·兽展日历",
+        title: "兽展城市列表",
         des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆共 ${cities} 个城市举办过的 ${events.length} 场 Furry 相关的展会活动信息！快来看看这些城市有没有你所在的地方吧！`,
         link: "https://www.furryeventchina.com/city",
       },
