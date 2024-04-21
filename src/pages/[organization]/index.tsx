@@ -264,7 +264,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       organization,
       events,
       headMetas: {
-        title: `${organization?.name} FEC·兽展日历`,
+        title: `${organization?.name}`,
         des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${
           organization?.name
         } 的有关信息，这家展商已累计举办 ${
