@@ -103,7 +103,7 @@ export function FriendSiteBlock() {
   return (
     <section className="bg-white p-3 md:p-6 rounded-xl mt-8">
       <h3 className="font-bold text-gray-600 text-xl md:text-2xl">友情链接</h3>
-      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 gap-4 mt-4">
         {FriendSiteLinks.map((link) => (
           <Link
             href={link.link}
@@ -116,7 +116,7 @@ export function FriendSiteBlock() {
                 },
               })
             }
-            className="bg-white p-3 md:p-6 rounded-xl flex flex-col border group hover:border-red-300 hover:bg-red-300 transition duration-300 relative"
+            className="bg-white p-3 md:p-4 rounded-xl flex flex-col border group hover:border-red-300 hover:bg-red-300 transition duration-300 relative"
           >
             <h4 className="text-base md:text-xl font-bold mb-1 md:mb-3 transition duration-300 text-gray-600 group-hover:text-white decoration-transparent group-hover:decoration-current decoration-wavy">
               {link.label}

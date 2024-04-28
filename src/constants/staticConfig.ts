@@ -8,7 +8,14 @@ export const FriendSiteLinks = [
   {
     link: "https://kemono.games/?utm_source=fec",
     label: "兽人控游戏库 Kemono.Games",
-    description:"地表最强兽人控游戏索引！从传统角色扮演兽游到恋爱模拟，或是战略类兽人游戏，甚至更小众的选择，你都能在这里找到。"
+    description:
+      "地表最强兽人控游戏索引！从传统角色扮演兽游到恋爱模拟，或是战略类兽人游戏，甚至更小众的选择，你都能在这里找到。",
+  },
+  {
+    link: "https://furrynovel.ink/?utm_source=fec&utm_campaign=friend_link",
+    label: "Linpx",
+    description:
+      "Linpx 是一个包含多种常用功能的 Pixiv 小说阅读器。Linpx 旨在帮助读者快速、方便地阅读 Pixiv 小说，有效地找到喜欢的作者和作品并帮助作者将作品带给更多读者。",
   },
   {
     link: "https://furrynovel.com/?utm_source=fec",
@@ -16,7 +23,6 @@ export const FriendSiteLinks = [
     description:
       "兽人控小说站是一个专为兽人控打造的聚合在线阅读平台。在这里，你可以找到和各种兽人相关的小说，随时享受阅读的乐趣，无需下载或安装任何软件。还可以自由切换翻译，选择你喜欢的阅读模式。",
   },
-
   {
     link: "https://furcoder.org/?utm_source=fec",
     label: "FurCoder.org",
