@@ -523,5 +523,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         })),
       },
     },
+    revalidate: 86400,
   };
 }

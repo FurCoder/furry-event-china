@@ -186,5 +186,6 @@ export async function getStaticProps() {
         },
       },
     },
+    revalidate: 86400,
   };
 }
