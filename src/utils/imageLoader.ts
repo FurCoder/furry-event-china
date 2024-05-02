@@ -29,6 +29,7 @@ export const imageUrl = (src: string) => {
 const imageLoader = ({
   src,
   width,
+  height,
   quality,
   avif,
   webp,
@@ -36,6 +37,7 @@ const imageLoader = ({
   avif?: boolean;
   webp?: boolean;
   width?: number;
+  height?: number;
 }) => {
   const withoutDefaultHostSrc = src
     .replace("https://cdn.furryeventchina.com/", "")
@@ -50,6 +52,7 @@ const imageLoader = ({
   const imageURL = new URL(`${imageURLHost}/${withoutDefaultHostSrc}`);
 
   width !== undefined && imageURL.searchParams.set("w", width.toString());
+  height !== undefined && imageURL.searchParams.set("h", height.toString());
   imageURL.searchParams.set(
     "q",
     quality === undefined ? "75" : quality.toString()

@@ -28,14 +28,28 @@ function Image({
   priority?: boolean;
   autoFormat?: boolean;
 }) {
-  const srcString = width ? imageLoader({ src, quality, width }) : src;
+  const srcString = imageLoader({ src, quality, width, height });
 
   return (
     <picture className={containerClassName}>
       {autoFormat && (
         <ImgSources
-          avifsrcSet={getSrcset({ src, quality, sizes, avif: true })}
-          webpsrcSet={getSrcset({ src, quality, sizes, webp: true })}
+          avifsrcSet={getSrcset({
+            src,
+            quality,
+            sizes,
+            avif: true,
+            width,
+            height,
+          })}
+          webpsrcSet={getSrcset({
+            src,
+            quality,
+            sizes,
+            webp: true,
+            width,
+            height,
+          })}
           sizes={sizes}
         />
       )}
@@ -48,7 +62,7 @@ function Image({
           onLoadingComplete && onLoadingComplete(e.target as HTMLImageElement)
         }
         sizes={sizes}
-        srcSet={getSrcset({ src, quality, sizes })}
+        srcSet={getSrcset({ src, quality, sizes, width, height })}
         loading={priority ? "eager" : "lazy"}
         //@ts-ignore
         fetchpriority={priority ? "high" : "auto"}
@@ -84,10 +98,14 @@ function getSrcset({
   sizes,
   avif,
   webp,
+  width,
+  height,
 }: {
   src: string;
   quality?: number;
   sizes?: string;
+  width?: number;
+  height?: number;
   avif?: boolean;
   webp?: boolean;
 }) {
@@ -103,6 +121,7 @@ function getSrcset({
             src,
             quality,
             width: parseInt(w),
+            height,
             avif,
             webp,
           })} ${parseInt(w)}w`
@@ -114,6 +133,8 @@ function getSrcset({
       quality,
       avif,
       webp,
+      width,
+      height,
     });
   }
 }
