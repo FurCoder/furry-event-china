@@ -35,7 +35,8 @@ export default function Header() {
         <div className="flex">
           <h1 className="text-base mt-0">FEC·兽展日历</h1>
           <span className="text-base mx-1">/</span>
-          <span className="text-base">等待假期🌔</span>
+          <span className="text-base">五一五一🥳</span>
+          {/* <span className="text-base">等待假期🌔</span> */}
         </div>
       </div>
       <div

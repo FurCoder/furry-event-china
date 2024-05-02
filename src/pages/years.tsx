@@ -44,7 +44,8 @@ export default function Years({ events }: { events: Event[] }) {
               {yearLabel === "no-date" ? "暂未定档" : yearLabel}
             </h2>
             <p className="text-gray-600 mb-4">
-              {yearLabel=== "no-date" ? "" : `${yearLabel}年`}共有 {groupByYearEvents[yearLabel].length} 场活动：
+              {yearLabel === "no-date" ? "" : `${yearLabel}年`}共有{" "}
+              {groupByYearEvents[yearLabel].length} 场活动：
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {groupByYearEvents[yearLabel].map((event) => (
@@ -102,5 +103,6 @@ export async function getStaticProps() {
         },
       },
     },
+    revalidate: 86400,
   };
 }

@@ -132,8 +132,7 @@ export default function OrganizationDetail(props: {
                   rel="noreferrer"
                   className="flex items-center justify-center bg-blue-800 hover:bg-blue-900 transition rounded-xl px-4 py-1 text-white text-center"
                 >
-                  <FaPaw className="mr-2" />
-                  去 Wikifur 了解更多
+                  <FaPaw className="mr-2" />去 Wikifur 了解更多
                 </a>
               )}
 
@@ -298,5 +297,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         },
       },
     },
+    revalidate: 86400,
   };
 }

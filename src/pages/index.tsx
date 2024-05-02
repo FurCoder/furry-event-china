@@ -86,7 +86,10 @@ function DurationSection({
         {durationType === DurationType.NextYear && "看看来年"}
       </h2>
       {months.map((month) => (
-        <div key={month} className="border rounded-xl bg-gray-100 p-2 md:p-6 my-4">
+        <div
+          key={month}
+          className="border rounded-xl bg-gray-100 p-2 md:p-6 my-4"
+        >
           <h3 className="text-lg md:text-xl text-red-400 font-bold mb-2 md:mb-6">
             {month !== "unknown"
               ? durationType === DurationType.NextYear
@@ -228,5 +231,6 @@ export async function getStaticProps() {
     props: {
       events,
     },
+    revalidate: 86400,
   };
 }
