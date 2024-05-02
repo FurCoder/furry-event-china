@@ -28,6 +28,7 @@ jobs:
           touch .env
           echo NEXT_PUBLIC_REGION="GLOBAL" >>.env
           echo XATA_API_KEY="$XATA_API_KEY" >> .env
+          echo XATA_BRANCH="$XATA_BRANCH" >> .env
           echo XATA_FALLBACK_BRANCH="$XATA_FALLBACK_BRANCH" >> .env
           echo SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" >> .env
           echo ENABLE_TRACK="$ENABLE_TRACK" >> .env

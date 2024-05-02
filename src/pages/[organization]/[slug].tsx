@@ -121,7 +121,7 @@ export default function EventDetail({ event }: { event: Event }) {
             <NextImage
               containerClassName="relative z-20"
               priority
-              width={350}
+              width={600}
               height={500}
               src={finalEventCoverImage}
               alt={`${event.name}的活动海报`}
@@ -131,7 +131,7 @@ export default function EventDetail({ event }: { event: Event }) {
 
             <NextImage
               containerClassName="absolute top-0 left-0 w-full h-full z-10 blur brightness-50"
-              width={350}
+              width={600}
               height={500}
               src={finalEventCoverImage}
               alt={`${event.name}的活动海报`}
@@ -269,7 +269,6 @@ export default function EventDetail({ event }: { event: Event }) {
                       alt={`${event.name}的详情图片-${index + 1}`}
                       src={cover}
                       width={600}
-                      height={1000}
                       className="w-full"
                       priority
                       autoFormat
