@@ -270,7 +270,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           events.length
         } 场兽展，最近的一场在${dateString}，${
           organization?.description
-            ? "他们是这样介绍自己的“${organization?.description}”"
+            ? `他们是这样介绍自己的：“${organization?.description}”。`
             : "不过他们没怎么介绍自己。"
         }`,
         keywords: `${organization?.name}, ${organization?.name} 兽展, ${organization?.name} 兽聚`,
