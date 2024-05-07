@@ -31,7 +31,7 @@ export default function OrganizationDetail(props: {
 
   const foramtedFirstEventTime = useMemo(() => {
     const theBeginningEvent = events[events.length - 1];
-    if (theBeginningEvent.startDate) {
+    if (theBeginningEvent && theBeginningEvent.startDate) {
       const date = new Date(theBeginningEvent.startDate);
 
       return {
