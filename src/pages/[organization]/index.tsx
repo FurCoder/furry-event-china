@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 import { FaPaw, FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { SiBilibili } from "react-icons/si";
+import { formatDistanceToNowStrict } from "date-fns";
+import { zhCN } from "date-fns/locale";
 // import {
 //   WebsiteButton,
 //   QQGroupButton,
@@ -27,6 +29,21 @@ export default function OrganizationDetail(props: {
 }) {
   const { organization, events } = props;
 
+  const foramtedFirstEventTime = useMemo(() => {
+    const theBeginningEvent = events[events.length - 1];
+    if (theBeginningEvent.startDate) {
+      const date = new Date(theBeginningEvent.startDate);
+
+      return {
+        year: date.getUTCFullYear(),
+        month: date.getUTCMonth() + 1,
+        day: date.getUTCDate(),
+      };
+    }
+
+    return null;
+  }, [events]);
+
   const formatedCreationTime = useMemo(() => {
     if (organization.creationTime) {
       const date = new Date(organization.creationTime);
@@ -35,6 +52,7 @@ export default function OrganizationDetail(props: {
         year: date.getUTCFullYear(),
         month: date.getUTCMonth() + 1,
         day: date.getUTCDate(),
+        createDistance: formatDistanceToNowStrict(date, { locale: zhCN }),
       };
     } else {
       return null;
@@ -65,11 +83,17 @@ export default function OrganizationDetail(props: {
             </div>
 
             <div className={clsx("mb-2 text-gray-500", styles["intro-bar"])}>
-              <span>已累计举办 {events.length} 场展会</span>
               {formatedCreationTime && (
-                <span className="lex items-center">
-                  {`首次举办于 ${formatedCreationTime?.year}年${formatedCreationTime?.month}月${formatedCreationTime?.day}日`}
+                <span>已创立 {formatedCreationTime.createDistance}</span>
+              )}
+              <span>已累计收录 {events.length} 场展会</span>
+              {foramtedFirstEventTime && (
+                <span>
+                  {`首次举办于 ${foramtedFirstEventTime?.year}年${foramtedFirstEventTime?.month}月${foramtedFirstEventTime?.day}日`}
                 </span>
+              )}
+              {formatedCreationTime && (
+                <span>{`首次出现于 ${formatedCreationTime?.year}年${formatedCreationTime?.month}月${formatedCreationTime?.day}日`}</span>
               )}
             </div>
 
