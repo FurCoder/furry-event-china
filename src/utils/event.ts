@@ -7,12 +7,14 @@ import {
   getYear,
   getMonth,
   setDefaultOptions,
+  compareAsc,
+  compareDesc,
 } from "date-fns";
 import { zhCN } from "date-fns/locale";
 
 setDefaultOptions({ locale: zhCN });
 
-export function sortByStartDateDesc(data: Event[]) {
+export function eventGroupByYear(data: Event[], order: "asc" | "desc") {
   const groupByStartDate = groupBy(data, (e) =>
     e.startDate ? new Date(e.startDate).getFullYear() : "no-date"
   );
@@ -30,7 +32,10 @@ export function sortByStartDateDesc(data: Event[]) {
     return 0;
   });
 
-  return years.map((year) => ({ year, events: groupByStartDate[year] }));
+  return years.map((year) => ({
+    year,
+    events: sortEvents(groupByStartDate[year], order),
+  }));
 }
 
 export function filteringEvents(
@@ -137,4 +142,14 @@ export function groupByCustomDurationEvent(events: Event[]) {
   });
 
   return durationObject;
+}
+
+export function sortEvents(events: Event[], order: "asc" | "desc") {
+  return events.sort((a, b) =>
+    a.startDate && b.startDate
+      ? order === "asc"
+        ? compareAsc(a.startDate, b.startDate)
+        : compareDesc(a.startDate, b.startDate)
+      : 0
+  );
 }

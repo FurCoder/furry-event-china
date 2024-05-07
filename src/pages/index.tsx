@@ -7,7 +7,11 @@ import { EventScale, EventStatus } from "@/types/event";
 import { Switch } from "@headlessui/react";
 import { sendTrack } from "@/utils/track";
 import { DurationType } from "@/types/list";
-import { filteringEvents, groupByCustomDurationEvent } from "@/utils/event";
+import {
+  filteringEvents,
+  groupByCustomDurationEvent,
+  sortEvents,
+} from "@/utils/event";
 
 import { compareAsc } from "date-fns";
 
@@ -101,19 +105,13 @@ function DurationSection({
             </span>
           </h3>
           <div className="grid gap-4 md:gap-12 grid-cols-1 xs:grid-cols-2 lg:grid-cols-3">
-            {groupByDateEvent[month]
-              .sort((a, b) =>
-                a.startDate && b.startDate
-                  ? compareAsc(a?.startDate, b.startDate)
-                  : 0
-              )
-              .map((event) => (
-                <EventCard
-                  key={event.name}
-                  event={event}
-                  sizes="(max-width: 750px) 650px, (max-width: 1080px) 552px, 552px"
-                />
-              ))}
+            {sortEvents(groupByDateEvent[month], "asc").map((event) => (
+              <EventCard
+                key={event.name}
+                event={event}
+                sizes="(max-width: 750px) 650px, (max-width: 1080px) 552px, 552px"
+              />
+            ))}
           </div>
         </div>
       ))}
