@@ -52,10 +52,7 @@ export default function Layout({
           key="keywords"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          property="og:title"
-          content={titleGenerator(headMetas?.title)}
-        />
+        <meta property="og:title" content={titleGenerator(headMetas?.title)} />
         <meta property="og:type" content="website" />
         <meta
           property="og:description"
@@ -80,10 +77,7 @@ export default function Layout({
           property="twitter:url"
           content={headMetas?.url || "https://www.furryeventchina.com"}
         />
-        <meta
-          name="twitter:title"
-          content={titleGenerator(headMetas?.title)}
-        />
+        <meta name="twitter:title" content={titleGenerator(headMetas?.title)} />
         <meta
           name="twitter:description"
           content={

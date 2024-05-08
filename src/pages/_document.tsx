@@ -6,31 +6,7 @@ const isEnableTrack = process.env.ENABLE_TRACK === "true";
 export default function Document() {
   return (
     <Html lang="zh-Hans">
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          as="style"
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
-        />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `</style>
-              <link
-                rel="stylesheet"
-                href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Rubik&display=swap"
-                media="print"
-                onload="this.media = 'all'"
-              />
-              <style>`,
-          }}
-        />
-      </Head>
+      <Head></Head>
 
       <body>
         <Main />
@@ -43,22 +19,6 @@ export default function Document() {
             src={"https://umami.abo.network/script.js"}
           />
         )}
-        {/* {isEnableTrack && (
-          <Script
-            strategy="lazyOnload"
-            src="https://www.googletagmanager.com/gtag/js?id=G-RBND7XQ43D"
-          />
-        )} */}
-        {/* {isEnableTrack && (
-          <Script id="google-analytics" strategy="lazyOnload">
-            {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-RBND7XQ43D');
-        `}
-          </Script>
-        )} */}
         {isEnableTrack && (
           <Script
             id="clarity-script"
