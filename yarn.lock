@@ -635,6 +635,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@iconify-json/fluent-emoji@npm:^1.1.18":
+  version: 1.1.18
+  resolution: "@iconify-json/fluent-emoji@npm:1.1.18"
+  dependencies:
+    "@iconify/types": "npm:*"
+  checksum: 234737c630e05f658f9f92a2f70a175fd0df5307aecf9ed44c285566e624a09461aa9c79363a8416807f4a3387e56933c2bc314b8765f36dbda155b2d573786d
+  languageName: node
+  linkType: hard
+
+"@iconify/tailwind@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@iconify/tailwind@npm:1.0.1"
+  dependencies:
+    "@iconify/types": "npm:^2.0.0"
+  checksum: 3788aba70cb35f49d621f4aa2bdcb01a33e44d8c9490aea66eca94e1e06ca0f1798d0ac38517222eb9f7944d15fd99ee076bd0bdfa7090e10cd4be77fd43aca8
+  languageName: node
+  linkType: hard
+
+"@iconify/types@npm:*, @iconify/types@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@iconify/types@npm:2.0.0"
+  checksum: 1b3425ecbc0eef44f23d3f27355ae7ef306d5119c566f013ef1849995b016e1fdcc5af6b74c3bc0554485d70cf5179cb9c1095b14d662a55abcae1148e1a13c9
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -3207,6 +3232,8 @@ __metadata:
   resolution: "furry-event-china@workspace:."
   dependencies:
     "@headlessui/react": "npm:^2.0.1"
+    "@iconify-json/fluent-emoji": "npm:^1.1.18"
+    "@iconify/tailwind": "npm:^1.0.1"
     "@next/bundle-analyzer": "npm:^14.2.3"
     "@next/third-parties": "npm:^14.2.3"
     "@radix-ui/react-collapsible": "npm:^1.0.3"

@@ -6,6 +6,50 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { HiMenu } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
 
+// const AnimeEmojis = [
+//   "tiger-face",
+//   "wolf",
+//   "lion",
+//   "dog-face",
+//   "fox",
+//   "leopard",
+//   "bison",
+//   "ox",
+//   "cow",
+//   "water-buffalo",
+//   "cow-face",
+//   "boar",
+//   "elephant",
+//   "mammoth",
+//   "rhinoceros",
+//   "hippopotamus",
+//   "shark",
+//   "seal",
+//   "dolphin",
+//   "whale",
+//   "spouting",
+//   "dragon",
+//   "crocodile",
+//   "parrot",
+//   "owl",
+//   "eagle",
+//   "dove",
+//   "penguin",
+//   "bird",
+//   "paw",
+//   "badger",
+//   "skunk",
+//   "langaroo",
+//   "otter",
+//   "sloth",
+//   "panda",
+//   "koala",
+//   "polar-bear",
+//   "bear",
+// ].map((emojiName) => (
+//   <span key={emojiName} className={`icon-[fluent-emoji--${emojiName}]`} />
+// ));
+
 export default function Header() {
   const { pathname } = useRouter();
 
@@ -32,7 +76,18 @@ export default function Header() {
     <header className="mb-6 rounded-b-xl bg-white flex justify-between max-sm:sticky max-sm:top-0 max-sm:z-[9999] max-sm:shadow">
       <Link href="/">
         <div className="m-2 md:m-6 text-base md:text-4xl text-geraldine font-bold">
-          <span className="block">FEC 🐺🐱🐯</span>
+          <div className="flex items-center">
+            <span className="">FEC</span>
+            {/* <span className="ml-2 text-2xl">🐺🦁🐯</span> */}
+            <span className="ml-2 text-3xl flex items-center">
+              <span
+                key={"tiger-face"}
+                className={`icon-[fluent-emoji--tiger-face]`}
+              />
+              <span key={"wolf"} className={`icon-[fluent-emoji--wolf]`} />
+              <span key={"lion"} className={`icon-[fluent-emoji--lion]`} />
+            </span>
+          </div>
           <div className="flex">
             <h1 className="text-base mt-0">FEC·兽展日历</h1>
             <span className="text-base mx-1">/</span>
