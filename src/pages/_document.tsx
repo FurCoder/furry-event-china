@@ -37,18 +37,19 @@ export default function Document() {
         <NextScript />
         {isEnableTrack && (
           <Script
-            data-website-id={"a12ca72b-5704-4910-bb28-9dd09d576e91"}
+            data-website-id={"3a8b1e6a-70fd-49e8-bb58-902caa3124d8"}
             strategy="lazyOnload"
-            src={"https://analytics.umami.is/script.js"}
+            async
+            src={"https://umami.abo.network/script.js"}
           />
         )}
-        {isEnableTrack && (
+        {/* {isEnableTrack && (
           <Script
             strategy="lazyOnload"
             src="https://www.googletagmanager.com/gtag/js?id=G-RBND7XQ43D"
           />
-        )}
-        {isEnableTrack && (
+        )} */}
+        {/* {isEnableTrack && (
           <Script id="google-analytics" strategy="lazyOnload">
             {`
           window.dataLayer = window.dataLayer || [];
@@ -57,11 +58,12 @@ export default function Document() {
           gtag('config', 'G-RBND7XQ43D');
         `}
           </Script>
-        )}
+        )} */}
         {isEnableTrack && (
           <Script
             id="clarity-script"
             strategy="lazyOnload"
+            async
             dangerouslySetInnerHTML={{
               __html: `
               (function(c,l,a,r,i,t,y){

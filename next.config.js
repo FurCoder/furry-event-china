@@ -20,13 +20,13 @@ const gitRevisionPlugin = new GitRevisionPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
+  poweredByHeader: false,
   reactStrictMode: true,
   images: {
     unoptimized: false,
     loader: "custom",
     loaderFile: "./src/utils/imageLoader.ts",
   },
-  optimizeFonts: false,
   assetPrefix: isProd && STATIC_CDN_URL ? STATIC_CDN_URL : undefined,
   experimental: {
     swcPlugins: [
@@ -38,7 +38,6 @@ const nextConfig = {
       ],
     ],
   },
-  trailingSlash: true,
   sentry: {
     disableClientWebpackPlugin: true,
     disableServerWebpackPlugin: true,
