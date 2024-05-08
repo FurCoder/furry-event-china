@@ -58,8 +58,9 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
           <div className="mt-1 flex flex-col md:flex-row1 justify-center md:justify-end items-center md:items-end">
             <span className="flex items-center">
               由
-              <FaKissWinkHeart className="inline-block text-xl text-red-400 mx-1" />
-              和<span className="mx-1 text-xl">🍜</span>
+              <span className="icon-[fluent-emoji--smiling-face-with-hearts] text-xl mx-1"></span>
+              和
+              <span className="icon-[fluent-emoji--steaming-bowl] mx-1 text-xl"></span>
               制作而成
             </span>
             {isCNRegion && (
