@@ -34,7 +34,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <Layout
         headMetas={pageProps.headMetas}
         structuredData={pageProps.structuredData}
-        fonts={[notoSC]}
       >
         <Component {...pageProps} />
         {isEnableTrack && <GoogleAnalytics gaId="G-RBND7XQ43D" />}
