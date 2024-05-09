@@ -72,6 +72,7 @@ export default function OrganizationDetail(props: {
                 width={200}
                 height={200}
                 src={organization.logoUrl}
+                autoFormat
               />
             </div>
           )}

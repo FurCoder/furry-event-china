@@ -13,8 +13,6 @@ import {
   sortEvents,
 } from "@/utils/event";
 
-import { compareAsc } from "date-fns";
-
 export default function Home(props: { events: Event[] }) {
   const [selectedFilter, setFilter] = useState({
     onlyAvailable: false,
