@@ -6,7 +6,7 @@ import Layout from "@/components/layout";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 
-const isEnableTrack = process.env.ENABLE_TRACK === "true";
+const isDisableTrack = process.env.ENABLE_TRACK === "false";
 
 const notoSC = Noto_Sans_SC({
   weight: ["400", "500", "700"],
@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
         structuredData={pageProps.structuredData}
       >
         <Component {...pageProps} />
-        {isEnableTrack && <GoogleAnalytics gaId="G-RBND7XQ43D" />}
+        {!isDisableTrack && <GoogleAnalytics gaId="G-RBND7XQ43D" />}
       </Layout>
     </>
   );
