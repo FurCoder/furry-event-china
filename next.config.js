@@ -39,9 +39,10 @@ const nextConfig = {
     ],
   },
   sentry: {
-    disableClientWebpackPlugin: true,
-    disableServerWebpackPlugin: true,
+    // disableClientWebpackPlugin: true,
+    // disableServerWebpackPlugin: true,
     hideSourcemaps: true,
+    disableLogger: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.plugins.push(

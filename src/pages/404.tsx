@@ -1,4 +1,5 @@
 import { sendTrack } from "@/utils/track";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function NotFoundPage() {
@@ -12,9 +13,27 @@ export default function NotFoundPage() {
   }, []);
 
   return (
-    <div className="bg-white p-6 text-center">
-      <h1 className="text-xl text-red-400">你似乎迷路了...</h1>
-      <span>Who is my fearless hero?</span>
-    </div>
+    <main className="grid min-h-full place-items-center bg-white rounded-2xl px-6 py-24 sm:py-32 lg:px-8">
+      <div className="text-center">
+        <p className="text-base font-semibold text-red-400">404</p>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight text-red-400 sm:text-5xl">
+          你似乎迷路了...
+        </h1>
+        <p className="mt-6 text-base leading-7 text-gray-600">
+          Who is my fearless hero?
+        </p>
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+          <Link
+            href="/"
+            className="rounded-md bg-red-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            回到首页
+          </Link>
+          {/* <a href="#" className="text-sm font-semibold text-gray-900">
+            通知管理员 <span aria-hidden="true">&rarr;</span>
+          </a> */}
+        </div>
+      </div>
+    </main>
   );
 }
