@@ -1,6 +1,6 @@
 import { Event } from "@/xata/xata";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "@/components/eventCard/index.module.css";
 import { IoLocation } from "react-icons/io5";
 import { BsCalendar2DateFill } from "react-icons/bs";
@@ -11,6 +11,8 @@ import { getEventCoverUrl } from "@/utils/imageLoader";
 import { format } from "date-fns";
 import { zhCN } from "date-fns/locale";
 
+let instancesCount = 0;
+
 export default function EventCard({
   event,
   sizes,
@@ -18,11 +20,17 @@ export default function EventCard({
   event: Event;
   sizes?: string;
 }) {
-
   const finalEventCoverImage = getEventCoverUrl(event);
   const isDefaultCover = finalEventCoverImage.includes(
     "fec-event-default-cover"
   );
+
+  useEffect(() => {
+    instancesCount += 1;
+    return () => {
+      instancesCount -= 1;
+    };
+  }, []);
 
   return (
     <Link
@@ -66,6 +74,7 @@ export default function EventCard({
               )}
               sizes={sizes}
               autoFormat
+              priority={instancesCount <= 3}
             />
           )}
           <div className="z-10 top-0 relative">
@@ -89,6 +98,7 @@ export default function EventCard({
                     sizes="100px"
                     aria-label="organization's logo"
                     autoFormat
+                    priority={instancesCount <= 3}
                   />
                 </div>
               )}
