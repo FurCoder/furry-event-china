@@ -79,13 +79,28 @@ export default function Header() {
           <div className="flex items-center">
             <span className="">FEC</span>
             {/* <span className="ml-2 text-2xl">🐺🦁🐯</span> */}
-            <span className="ml-2 text-3xl flex items-center">
-              <span
+            <span className="ml-2 text-4xl flex items-center">
+              {/* <span
                 key={"tiger-face"}
                 className={`icon-[fluent-emoji--tiger-face]`}
+              /> */}
+              <img
+                alt="title-emoji"
+                src="/svgs/tiger-face.svg"
+                className="w-8"
               />
-              <span key={"wolf"} className={`icon-[fluent-emoji--wolf]`} />
-              <span key={"lion"} className={`icon-[fluent-emoji--lion]`} />
+              <img
+                alt="title-emoji"
+                src="/svgs/wolf.svg"
+                className="w-8"
+              />
+              <img
+                alt="title-emoji"
+                src="/svgs/lion.svg"
+                className="w-8"
+              />
+              {/* <span key={"wolf"} className={`icon-[fluent-emoji--wolf]`} /> */}
+              {/* <span key={"lion"} className={`icon-[fluent-emoji--lion]`} /> */}
             </span>
           </div>
           <div className="flex">
