@@ -13,6 +13,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const isProd = process.env.NODE_ENV === "production";
+const IS_CN_REGION = process.env.NEXT_PUBLIC_REGION === "CN";
 const STATIC_CDN_URL = process.env.NEXT_PUBLIC_STATIC_CDN_URL;
 
 const gitRevisionPlugin = new GitRevisionPlugin();
@@ -41,7 +42,7 @@ const nextConfig = {
   sentry: {
     // disableClientWebpackPlugin: true,
     // disableServerWebpackPlugin: true,
-    hideSourcemaps: true,
+    hideSourceMaps: true,
     disableLogger: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -70,11 +71,10 @@ const sentryWebpackPluginOptions = {
   //   release, url, authToken, configFile, stripPrefix,
   //   urlPrefix, include, ignore
 
-  org: "jipai",
-  project: "furryeventchina",
+  org: IS_CN_REGION ? "kemono-games" : "jipai",
+  project: IS_CN_REGION ? "fec-web" : "furryeventchina",
 
   silent: true, // Suppresses all logs
-  hideSourcemaps: true,
 
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
