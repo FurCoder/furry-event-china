@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require("tailwindcss/defaultTheme");
-const { addDynamicIconSelectors } = require("@iconify/tailwind");
 
 module.exports = {
   content: [
@@ -23,7 +22,7 @@ module.exports = {
       },
     },
   },
-  plugins: [addDynamicIconSelectors()],
+  plugins: [],
   future: {
     hoverOnlyWhenSupported: true,
   },
