@@ -58,6 +58,7 @@ function OrganizationItem({ organization }: { organization: Organization }) {
               width={124}
               height={50}
               sizes="(max-width: 750px) 256px, (max-width: 768px) 300px, 300px"
+              autoFormat
             />
           </div>
         )}

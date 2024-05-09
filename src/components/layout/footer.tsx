@@ -1,7 +1,6 @@
 import { AboutUsLinks, FriendSiteLinks } from "@/constants/staticConfig";
 import { sendTrack } from "@/utils/track";
 import Link from "next/link";
-import { FaKissWinkHeart } from "react-icons/fa";
 import { format } from "date-fns";
 import { zhCN } from "date-fns/locale";
 
@@ -58,8 +57,17 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
           <div className="mt-1 flex flex-col md:flex-row1 justify-center md:justify-end items-center md:items-end">
             <span className="flex items-center">
               由
-              <FaKissWinkHeart className="inline-block text-xl text-red-400 mx-1" />
-              和<span className="mx-1 text-xl">🍜</span>
+              <img
+                alt="smiling-face-with-hearts"
+                src="/svgs/smiling-face-with-hearts.svg"
+                className="w-6 mx-1"
+              />
+              和
+              <img
+                alt="steaming-bowl"
+                src="/svgs/steaming-bowl.svg"
+                className="w-6 mx-1"
+              />
               制作而成
             </span>
             {isCNRegion && (

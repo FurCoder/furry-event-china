@@ -299,6 +299,7 @@ export default function EventDetail({ event }: { event: Event }) {
                     width={200}
                     height={200}
                     src={event.organization.logoUrl}
+                    autoFormat
                   />
                 </div>
               )}

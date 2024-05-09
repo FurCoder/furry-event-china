@@ -88,6 +88,7 @@ export default function EventCard({
                     height={100}
                     sizes="100px"
                     aria-label="organization's logo"
+                    autoFormat
                   />
                 </div>
               )}

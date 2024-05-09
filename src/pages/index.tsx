@@ -13,8 +13,6 @@ import {
   sortEvents,
 } from "@/utils/event";
 
-import { compareAsc } from "date-fns";
-
 export default function Home(props: { events: Event[] }) {
   const [selectedFilter, setFilter] = useState({
     onlyAvailable: false,
@@ -121,9 +119,9 @@ function DurationSection({
 
 const EventScaleScaleOptions = [
   { key: "All", name: "我全都要（全部）" },
-  { key: EventScale.Cosy, name: "三两小聚（小）" },
-  { key: EventScale.Small, name: "有点厉害（中）" },
-  { key: EventScale.Medium, name: "好多人啊（大）" },
+  { key: EventScale.Cosy, name: "三两小聚（小型展）" },
+  { key: EventScale.Small, name: "有点厉害（中型展）" },
+  { key: EventScale.Medium, name: "好多人啊（大型展）" },
 ];
 function Filter({
   onChange,

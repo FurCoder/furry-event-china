@@ -793,6 +793,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/third-parties@npm:^14.2.3":
+  version: 14.2.3
+  resolution: "@next/third-parties@npm:14.2.3"
+  dependencies:
+    third-party-capital: "npm:1.0.20"
+  peerDependencies:
+    next: ^13.0.0 || ^14.0.0
+    react: ^18.2.0
+  checksum: 3e6a5166601f3e25b113dcc8baeff2663526c73c5969b537b8174b881620e636ae4fbb9ac57fc359d978211991302280fb276168f8039e84d81df0e1fa990f09
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -3196,6 +3208,7 @@ __metadata:
   dependencies:
     "@headlessui/react": "npm:^2.0.1"
     "@next/bundle-analyzer": "npm:^14.2.3"
+    "@next/third-parties": "npm:^14.2.3"
     "@radix-ui/react-collapsible": "npm:^1.0.3"
     "@sentry/nextjs": "npm:^7.113.0"
     "@types/lodash-es": "npm:^4.17.12"
@@ -6355,6 +6368,13 @@ __metadata:
   dependencies:
     any-promise: "npm:^1.0.0"
   checksum: 486e1283a867440a904e36741ff1a177faa827cf94d69506f7e3ae4187b9afdf9ec368b3d8da225c192bfe2eb943f3f0080594156bf39f21b57cd1411e2e7f6d
+  languageName: node
+  linkType: hard
+
+"third-party-capital@npm:1.0.20":
+  version: 1.0.20
+  resolution: "third-party-capital@npm:1.0.20"
+  checksum: 40e2531b428a21f05531fc62ef82859c0071211eff09588baf75d4b525096bbdb4f93e17e2d538849db8d4fc3cceb074933d7be59fddc26f86718fbbe852a97f
   languageName: node
   linkType: hard
 
