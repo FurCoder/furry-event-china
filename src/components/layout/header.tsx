@@ -88,16 +88,19 @@ export default function Header() {
                 alt="title-emoji"
                 src="/svgs/tiger-face.svg"
                 className="w-8"
+                fetchPriority="low"
               />
               <img
                 alt="title-emoji"
                 src="/svgs/wolf.svg"
                 className="w-8"
+                fetchPriority="low"
               />
               <img
                 alt="title-emoji"
                 src="/svgs/lion.svg"
                 className="w-8"
+                fetchPriority="low"
               />
               {/* <span key={"wolf"} className={`icon-[fluent-emoji--wolf]`} /> */}
               {/* <span key={"lion"} className={`icon-[fluent-emoji--lion]`} /> */}

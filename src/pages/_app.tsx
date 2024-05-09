@@ -12,14 +12,14 @@ const notoSC = Noto_Sans_SC({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-noto-sans",
-  preload: false,
+  preload: true,
 });
 
 const rubik = Rubik({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-rubik",
-  preload: false,
+  preload: true,
 });
 
 export default function App({ Component, pageProps }: AppProps) {
