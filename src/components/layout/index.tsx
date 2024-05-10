@@ -94,10 +94,10 @@ export default function Layout({
           content={IS_CN_REGION ? "codeva-GHH5uUsoan" : "codeva-UlpDYpags1"}
         />
         <link rel="icon" href="/favicon.ico" />
-        <link
+        {/* <link
           rel="canonical"
           href={`https://www.furryeventchina.com${asPath}`}
-        />
+        /> */}
         {structuredData?.event && (
           <script
             type="application/ld+json"
