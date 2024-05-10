@@ -1,63 +1,68 @@
 import EventCard from "@/components/eventCard";
 import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
-import { useMemo } from "react";
+import { eventGroupByMonth, eventGroupByYear } from "@/utils/event";
+import SimpleEventCard from "@/components/SimpleEventCard";
 
 export default function Years({ events }: { events: Event[] }) {
-  const groupByYearEvents = useMemo(
-    () =>
-      groupBy(events, (e) =>
-        e.startDate ? new Date(e.startDate).getFullYear() : "no-date"
-      ),
-    [events]
-  );
+  const groupByYearEvents = eventGroupByYear(events, "asc");
 
-  const years = Object.keys(groupByYearEvents);
+  const years = groupByYearEvents.map((group) => group.year);
 
   return (
     <div className="">
       <div className="mb-4 border rounded-xl p-6 bg-white">
+        <h2 className="font-bold text-red-400 text-2xl mb-4">总结</h2>
         <p className="text-gray-600">
-          {years.filter((year) => year !== "no-date").length} 年共收录到{" "}
-          {events.length} 个活动，历年活动数据如下：
+          FEC·兽展日历共在 {years.filter((year) => year !== "no-date").length}{" "}
+          年里收录到 {events.length} 个兽展/兽聚。 其中：
+          <br />
+          {groupByYearEvents.map((group, groupIndex) => (
+            <span key={group.year}>{`${group.year}年共有 ${
+              group.events.length
+            } 个兽展${
+              groupIndex === groupByYearEvents.length - 1 ? "。" : "，"
+            }`}</span>
+          ))}
         </p>
       </div>
-      {Object.keys(groupByYearEvents)
-        .sort((a, b) => {
-          if (a !== "no-date" && b !== "no-date") {
-            return Number(b) - Number(a);
-          }
-          if (a === "no-date") {
-            return -1;
-          }
-          if (b === "no-date") {
-            return 1;
-          }
-          return 0;
-        })
-        .map((yearLabel) => (
-          <section
-            key={yearLabel}
-            className="mb-4 border rounded-xl p-6 bg-white"
-          >
-            <h2 className="font-bold text-gray-400 text-3xl mb-4">
-              {yearLabel === "no-date" ? "暂未定档" : yearLabel}
-            </h2>
-            <p className="text-gray-600 mb-4">
-              {yearLabel === "no-date" ? "" : `${yearLabel}年`}共有{" "}
-              {groupByYearEvents[yearLabel].length} 场活动：
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-              {groupByYearEvents[yearLabel].map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  sizes="(max-width: 750px) 650px, (max-width: 1080px) 552px, 552px"
-                />
-              ))}
-            </div>
-          </section>
-        ))}
+
+      {groupByYearEvents.map((yearGroup) => (
+        <section
+          key={yearGroup.year}
+          className="mb-4 border rounded-xl p-6 bg-white"
+        >
+          <h2 className="font-bold text-red-400 text-2xl mb-4">
+            {yearGroup.year === "no-date" ? "暂未定档" : yearGroup.year}
+          </h2>
+          <p className="text-gray-600 mb-4">
+            {yearGroup.year === "no-date" ? "" : `这一年`}共有{" "}
+            {yearGroup.events.length} 场兽展/兽聚：
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            {eventGroupByMonth(yearGroup.events, "asc").map((monthGroup) => (
+              // <EventCard
+              //   key={event.id}
+              //   event={event}
+              //   sizes="(max-width: 750px) 650px, (max-width: 1080px) 552px, 552px"
+              // />
+              <div
+                key={monthGroup.month + yearGroup.year}
+                className="border rounded-xl bg-gray-100 p-2"
+              >
+                <h3 className="text-red-400 text-xl font-bold mb-2">
+                  {monthGroup.month}月
+                </h3>
+                <div className="grid grid-cols-1 gap-2">
+                  {monthGroup.events.map((event) => (
+                    <SimpleEventCard key={event.id} event={event} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   );
 }

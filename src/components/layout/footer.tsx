@@ -64,6 +64,8 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
                 //@ts-ignore
                 fetchPriority="low"
                 loading="lazy"
+                width={32}
+                height={32}
               />
               和
               <img
@@ -73,6 +75,8 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
                 //@ts-ignore
                 fetchPriority="low"
                 loading="lazy"
+                width={32}
+                height={32}
               />
               制作而成
             </span>

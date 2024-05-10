@@ -38,6 +38,35 @@ export function eventGroupByYear(data: Event[], order: "asc" | "desc") {
   }));
 }
 
+export function eventGroupByMonth(data: Event[], monthOrder: "asc" | "desc") {
+  const groupByStartDate = groupBy(data, (e) =>
+    e.startDate ? new Date(e.startDate).getMonth() + 1 : "no-date"
+  );
+
+  const months = Object.keys(groupByStartDate).sort((a, b) => {
+    if (a !== "no-date" && b !== "no-date") {
+      if (monthOrder === "desc") {
+        return Number(b) - Number(a);
+      }
+      return Number(a) - Number(b);
+    }
+
+    if (a === "no-date") {
+      return 1;
+    }
+    if (b === "no-date") {
+      return -1;
+    }
+
+    return 0;
+  });
+
+  return months.map((month) => ({
+    month,
+    events: sortEvents(groupByStartDate[month], "asc"),
+  }));
+}
+
 export function filteringEvents(
   events: Event[],
   selectedFilter: SelectedFilterType
@@ -145,11 +174,22 @@ export function groupByCustomDurationEvent(events: Event[]) {
 }
 
 export function sortEvents(events: Event[], order: "asc" | "desc") {
-  return events.sort((a, b) =>
-    a.startDate && b.startDate
-      ? order === "asc"
-        ? compareAsc(a.startDate, b.startDate)
-        : compareDesc(a.startDate, b.startDate)
-      : 0
-  );
+  return events.sort((a, b) => {
+    if (!a.endDate) {
+      return 1;
+    }
+
+    if (!b.endDate) {
+      return -1;
+    }
+
+    if (a.startDate && b.startDate) {
+      if (order === "asc") {
+        return compareAsc(a.startDate, b.startDate);
+      }
+      return compareDesc(a.startDate, b.startDate);
+    }
+
+    return 0;
+  });
 }
