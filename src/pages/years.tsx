@@ -73,10 +73,10 @@ export async function getStaticProps() {
   const events = await xata.db.event
     .select([
       "name",
-      "address",
+      // "address",
       "city",
-      "coverUrl",
-      "posterUrl",
+      // "coverUrl",
+      // "posterUrl",
       "startDate",
       "endDate",
       "slug",
@@ -102,7 +102,7 @@ export async function getStaticProps() {
               "@type": "ListItem",
               position: 1,
               name: "年度时间轴",
-              item: "https://www.furryeventchina.com/years/",
+              item: "https://www.furryeventchina.com/years",
             },
           ],
         },

@@ -1,8 +1,6 @@
-import { getEventCoverUrl } from "@/utils/imageLoader";
 import { sendTrack } from "@/utils/track";
 import { Event } from "@/xata/xata";
 import Link from "next/link";
-import Image from "@/components/image";
 import { format } from "date-fns";
 
 function SimpleEventCard({ event }: { event: Event }) {
@@ -31,7 +29,8 @@ function SimpleEventCard({ event }: { event: Event }) {
         />
       </div> */}
       <div className="z-10 relative pointer-events-none p-2">
-        <h4 className="tracking-wide text-slate-700 font-bold text-base text-center group-hover:text-red-400 transition">{`${event.organization?.name} · ${event.name}`}</h4>
+        <h4 className="tracking-wide text-slate-700 font-bold text-base text-center group-hover:text-red-400 transition">{`${event.city} · ${event.name}`}</h4>
+        <p className="text-center text-slate-600">{event.organization?.name}</p>
         {event.startDate && event.endDate && (
           <p className="text-center text-slate-600 text-sm">
             {event.startDate && (
