@@ -152,7 +152,7 @@ export default function EventDetail({ event }: { event: Event }) {
             {event.status === EventStatus.EventCancelled && (
               <p className="inline-flex items-center bg-red-400 mb-2 px-4 py-2 text-white rounded-md">
                 <RiErrorWarningLine className="mr-2 text-lg" />
-                活动已被主办方取消
+                活动已被主办方取消，无法举行。
               </p>
             )}
 
