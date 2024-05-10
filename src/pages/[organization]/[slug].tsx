@@ -125,7 +125,7 @@ export default function EventDetail({ event }: { event: Event }) {
               height={500}
               src={finalEventCoverImage}
               alt={`${event.name}的活动海报`}
-              className="mx-auto h-full object-contain"
+              className="mx-auto h-full object-contain z-20 relative"
               autoFormat
             />
 
@@ -256,7 +256,7 @@ export default function EventDetail({ event }: { event: Event }) {
           <div id="event-detail__left" className="md:w-8/12">
             <div className="bg-white rounded-xl flex-grow p-6 md:mr-4 mb-4">
               <p
-                className="text-gray-600 whitespace-pre-line"
+                className="text-gray-600 whitespace-pre-line break-words"
                 dangerouslySetInnerHTML={{ __html: event.detail }}
               />
             </div>
