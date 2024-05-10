@@ -399,6 +399,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     .select(["*", "organization"])
     .getFirst();
 
+  if (!event) {
+    return {
+      notFound: true,
+    };
+  }
+
   const metaDes =
     event?.startDate && event.endDate
       ? `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${

@@ -283,6 +283,13 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const dateString = date
     ? `${dateObj?.year}年${dateObj?.month}月${dateObj?.day}日`
     : "未知时间线";
+
+  if (!organization) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       organization,
