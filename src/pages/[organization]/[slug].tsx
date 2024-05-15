@@ -26,6 +26,7 @@ import OrganizationLinkButton, {
 } from "@/components/OrganizationLinkButton";
 import { keywordgenerator } from "@/utils/meta";
 import { FaPeoplePulling } from "react-icons/fa6";
+import EventStatusBar from "@/components/EventStatusBar";
 
 const xata = new XataClient();
 
@@ -163,8 +164,9 @@ export default function EventDetail({ event }: { event: Event }) {
             >
               {event.name}
             </h2>
-            <h2 className="text-gray-600 text-sm">
-              由 {event.organization?.name} 主办
+            <h2 className="text-gray-600 text-sm flex">
+              由 {event.organization?.name} 主办{" "}
+              {/* <EventStatusBar className="ml-2" pageviews="0" fav="2" /> */}
             </h2>
 
             <p
