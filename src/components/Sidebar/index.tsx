@@ -1,3 +1,4 @@
+import { sendTrack } from "@/utils/track";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -22,13 +23,28 @@ function Sidebar() {
     >
       <button
         className={clsx(buttonCls)}
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onClick={() => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          sendTrack({
+            eventName: "click-sidebar",
+            eventValue: { "click-position": "back-top" },
+          });
+        }}
       >
         <FaArrowUp />
       </button>
 
       {router.pathname !== "/" && (
-        <Link className={clsx(buttonCls)} href="/">
+        <Link
+          className={clsx(buttonCls)}
+          href="/"
+          onClick={() => {
+            sendTrack({
+              eventName: "click-sidebar",
+              eventValue: { "click-position": "back-home" },
+            });
+          }}
+        >
           <FaHome />
         </Link>
       )}
