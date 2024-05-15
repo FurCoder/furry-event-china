@@ -6,6 +6,7 @@ import { titleGenerator, universalKeywords } from "@/utils/meta";
 import AnnouncementSlider from "@/components/announcementSlider";
 import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
+import Sidebar from "@/components/Sidebar";
 
 const IS_CN_REGION = process.env.NEXT_PUBLIC_REGION === "CN";
 
@@ -29,7 +30,7 @@ export default function Layout({
   const asPath = router.asPath;
 
   return (
-    <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen">
+    <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen relative">
       <Head>
         <title>{titleGenerator(headMetas?.title)}</title>
         <meta
@@ -127,6 +128,7 @@ export default function Layout({
       <Header />
       <AnnouncementSlider />
       <div className="flex-grow mx-1 lg:mx-0">{children}</div>
+      <Sidebar />
       <Footer isCNRegion={IS_CN_REGION} />
     </div>
   );
