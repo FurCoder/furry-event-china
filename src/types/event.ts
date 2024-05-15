@@ -32,3 +32,11 @@ export const EventScale = {
   /** 没有这种规模 */
   Mega: "mega",
 };
+
+export const EventScaleLabel = {
+  [EventScale.Cosy]: "本地聚会",
+  [EventScale.Small]: "小型规模",
+  [EventScale.Medium]: "中等规模",
+  [EventScale.Large]: "大型规模",
+  [EventScale.Mega]: "巨型规模",
+};
