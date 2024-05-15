@@ -33,7 +33,7 @@ export default function Years({ events }: { events: Event[] }) {
           className="mb-4 border rounded-xl p-6 bg-white"
         >
           <h2 className="font-bold text-red-400 text-2xl mb-4">
-            {yearGroup.year === "no-date" ? "暂未定档" : yearGroup.year}
+            {yearGroup.year === "no-date" ? "暂未定档" : `${yearGroup.year}年`}
           </h2>
           <p className="text-gray-600 mb-4">
             {yearGroup.year === "no-date" ? "" : `这一年`}共有{" "}

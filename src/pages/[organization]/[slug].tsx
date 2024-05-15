@@ -11,7 +11,7 @@ import { IoLocation } from "react-icons/io5";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { TbArrowsRightLeft } from "react-icons/tb";
 import Link from "next/link";
-import { EventStatus, EventStatusSchema } from "@/types/event";
+import { EventScaleLabel, EventStatus, EventStatusSchema } from "@/types/event";
 import { sendTrack } from "@/utils/track";
 import { getEventCoverUrl, imageUrl } from "@/utils/imageLoader";
 import Script from "next/script";
@@ -25,6 +25,8 @@ import OrganizationLinkButton, {
   WikifurButton,
 } from "@/components/OrganizationLinkButton";
 import { keywordgenerator } from "@/utils/meta";
+import { FaPeoplePulling } from "react-icons/fa6";
+import EventStatusBar from "@/components/EventStatusBar";
 
 const xata = new XataClient();
 
@@ -158,12 +160,13 @@ export default function EventDetail({ event }: { event: Event }) {
 
             <h2
               aria-label="活动名称"
-              className="font-bold text-2xl text-gray-700"
+              className="font-bold text-3xl text-gray-700"
             >
               {event.name}
             </h2>
-            <h2 className="text-gray-600 text-sm">
-              由 {event.organization?.name} 主办
+            <h2 className="text-gray-600 text-sm flex">
+              由 {event.organization?.name} 主办{" "}
+              {/* <EventStatusBar className="ml-2" pageviews="0" fav="2" /> */}
             </h2>
 
             <p
@@ -190,6 +193,22 @@ export default function EventDetail({ event }: { event: Event }) {
                   : "暂未公布"}
               </time>
             </p>
+
+            <p
+              aria-label="活动规模"
+              className="flex items-center text-gray-500"
+            >
+              <FaPeoplePulling className="text-gray-500 inline-block mr-2" />
+              这是一个 {EventScaleLabel[event.scale]} 的兽展
+            </p>
+
+            {/* <p
+              aria-label="活动规模"
+              className="flex items-center text-gray-500"
+            >
+              <FaPeoplePulling className="text-gray-500 inline-block mr-2" />
+              页面更新次数：{event.xata.version}
+            </p> */}
           </div>
 
           {event.website && (
