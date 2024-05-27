@@ -100,6 +100,8 @@ export default function EventDetail({ event }: { event: Event }) {
     }
   };
 
+  const showDescriptionContainer = !!(event.detail || event.posterUrl?.length);
+
   return (
     <>
       {mapLoadingStatus !== MapLoadingStatus.Idle && (
@@ -271,14 +273,16 @@ export default function EventDetail({ event }: { event: Event }) {
       )}
 
       <div className="flex my-4 lg:items-start flex-col-reverse md:flex-row">
-        {event.detail && (
+        {showDescriptionContainer && (
           <div id="event-detail__left" className="md:w-8/12">
-            <div className="bg-white rounded-xl flex-grow p-6 md:mr-4 mb-4">
-              <p
-                className="text-gray-600 whitespace-pre-line break-words"
-                dangerouslySetInnerHTML={{ __html: event.detail }}
-              />
-            </div>
+            {event.detail && (
+              <div className="bg-white rounded-xl flex-grow p-6 md:mr-4 mb-4">
+                <p
+                  className="text-gray-600 whitespace-pre-line break-words"
+                  dangerouslySetInnerHTML={{ __html: event.detail }}
+                />
+              </div>
+            )}
 
             {!!event.posterUrl?.length && (
               <div className="bg-white rounded-xl flex-grow p-6 md:mr-4">
@@ -304,8 +308,8 @@ export default function EventDetail({ event }: { event: Event }) {
           id="event-detail__right"
           className={clsx(
             "bg-white rounded-xl mb-4 lg:mb-0",
-            !event.detail && "w-full",
-            event.detail && "md:w-4/12"
+            !showDescriptionContainer && "w-full",
+            showDescriptionContainer && "md:w-4/12"
           )}
         >
           <div className="p-4">
@@ -361,7 +365,7 @@ export default function EventDetail({ event }: { event: Event }) {
             <div
               className={clsx(
                 "flex items-center text-gray-500 grid gap-4 mt-4",
-                !event.detail && "lg:grid-cols-2"
+                !showDescriptionContainer && "lg:grid-cols-2"
               )}
             >
               {event.organization?.website && (
