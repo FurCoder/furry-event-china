@@ -117,7 +117,7 @@ export default function EventCard({
           <div
             className={clsx(
               styles["event-card__desc-container"],
-              "p-2 md:p-4 bg-red-100/20 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10 w-full",
+              "p-2 md:p-4 bg-black/20 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10 w-full",
               "text-white",
               !isDefaultCover && "backdrop-blur-md"
             )}
