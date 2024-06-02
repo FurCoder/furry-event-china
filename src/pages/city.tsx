@@ -4,7 +4,7 @@ import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { getEventCoverUrl } from "@/utils/imageLoader";
+import { getEventCoverImgPath } from "@/utils/imageLoader";
 import { format } from "date-fns";
 import Image from "@/components/image";
 import { titleGenerator } from "@/utils/meta";
@@ -140,7 +140,7 @@ function CityYearSelection({ events }: { events: Event[] }) {
           <div className="rounded-xl duration-500 transition group-hover:border-gray-400 w-full h-full absolute brightness-75 hover:brightness-100">
             <Image
               alt="活动背景"
-              src={getEventCoverUrl(event)}
+              src={getEventCoverImgPath(event)}
               width={350}
               className="h-full w-full object-cover rounded-xl overflow-hidden"
               autoFormat

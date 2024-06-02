@@ -7,7 +7,7 @@ import { BsCalendar2DateFill } from "react-icons/bs";
 import Image from "@/components/image";
 import clsx from "clsx";
 import { sendTrack } from "@/utils/track";
-import { getEventCoverUrl } from "@/utils/imageLoader";
+import { getEventCoverImgPath } from "@/utils/imageLoader";
 import { format } from "date-fns";
 import { zhCN } from "date-fns/locale";
 
@@ -20,7 +20,7 @@ export default function EventCard({
   event: Event;
   sizes?: string;
 }) {
-  const finalEventCoverImage = getEventCoverUrl(event);
+  const finalEventCoverImage = getEventCoverImgPath(event);
   const isDefaultCover = finalEventCoverImage.includes(
     "fec-event-default-cover"
   );
@@ -117,7 +117,7 @@ export default function EventCard({
           <div
             className={clsx(
               styles["event-card__desc-container"],
-              "p-2 md:p-4 bg-red-100/20 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10 w-full",
+              "p-2 md:p-4 bg-black/20 group-hover:bg-red-400/90 transition duration-300 rounded-b-xl z-10 w-full",
               "text-white",
               !isDefaultCover && "backdrop-blur-md"
             )}

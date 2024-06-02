@@ -13,7 +13,7 @@ import { TbArrowsRightLeft } from "react-icons/tb";
 import Link from "next/link";
 import { EventScaleLabel, EventStatus, EventStatusSchema } from "@/types/event";
 import { sendTrack } from "@/utils/track";
-import { getEventCoverUrl, imageUrl } from "@/utils/imageLoader";
+import { getEventCoverImgPath, imageUrl } from "@/utils/imageLoader";
 import Script from "next/script";
 import OrganizationLinkButton, {
   BiliButton,
@@ -45,7 +45,7 @@ export default function EventDetail({ event }: { event: Event }) {
     return MapLoadingStatus.Idle;
   });
 
-  const finalEventCoverImage = getEventCoverUrl(event);
+  const finalEventCoverImage = getEventCoverImgPath(event);
 
   const initMap = () => {
     if (!window.TMap) throw new Error("TMap is not loaded");
@@ -457,11 +457,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         }),
         des: metaDes,
         url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}/`,
-        cover: imageUrl(
-          event?.coverUrl ||
-            event?.posterUrl?.[0] ||
-            "https://images.furrycons.cn/fec-event-default-cover.png"
-        ),
+        cover: imageUrl(getEventCoverImgPath(event)),
       },
       structuredData: {
         breadcrumb: {
@@ -508,13 +504,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
               addressCountry: "CN",
             },
           },
-          image: [
-            imageUrl(
-              event?.coverUrl ||
-                event?.posterUrl?.[0] ||
-                "https://images.furrycons.cn/fec-event-default-cover.png"
-            ),
-          ],
+          image: [imageUrl(getEventCoverImgPath(event))],
           description: event?.detail,
           // offers: {
           //   "@type": "Offer",
