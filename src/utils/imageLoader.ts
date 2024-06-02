@@ -2,28 +2,20 @@ import { ImageLoaderProps } from "next/image";
 import { EventRecord } from "@/xata/xata";
 
 const GLOBAL_AUTO_CDN_IMAGE_URL = "images.furrycons.cn";
-const GLOBAL_MANUAL_CDN_IMAGE_URL = "images.furryeventchina.com";
+const NO_CDN_IMAGE_URL = "cos-proxy.furrycons.cn";
 
-export const getEventCoverUrl = (event: Partial<EventRecord>) => {
-  return imageUrl(
-    event.coverUrl ||
-      event.posterUrl?.[0] ||
-      `https://images.furrycons.cn/fec-event-default-cover.png`
+export const getEventCoverImgPath = (event: Partial<EventRecord>) => {
+  return (
+    event.coverUrl || event.posterUrl?.[0] || `fec-event-default-cover.png`
   );
 };
 
 export const imageUrl = (src: string) => {
-  const withoutDefaultHostSrc = src
-    .replace("https://cdn.furryeventchina.com/", "")
-    .replace("https://images.furryeventchina.com/", "")
-    .replace("https://images.furrycons.cn/", "")
-    .trim();
-
   if (process.env.NODE_ENV === "development") {
-    return `https://${GLOBAL_MANUAL_CDN_IMAGE_URL}/${withoutDefaultHostSrc}`;
+    return `https://${NO_CDN_IMAGE_URL}/${src}`;
   }
 
-  return `https://${GLOBAL_AUTO_CDN_IMAGE_URL}/${withoutDefaultHostSrc}`;
+  return `https://${GLOBAL_AUTO_CDN_IMAGE_URL}/${src}`;
 };
 
 const imageLoader = ({
@@ -39,17 +31,11 @@ const imageLoader = ({
   width?: number;
   height?: number;
 }) => {
-  const withoutDefaultHostSrc = src
-    .replace("https://cdn.furryeventchina.com/", "")
-    .replace("https://images.furryeventchina.com/", "")
-    .replace("https://images.furrycons.cn/", "")
-    .trim();
-
   const imageURLHost =
     process.env.NODE_ENV === "development"
-      ? `https://${GLOBAL_MANUAL_CDN_IMAGE_URL}`
+      ? `https://${NO_CDN_IMAGE_URL}`
       : `https://${GLOBAL_AUTO_CDN_IMAGE_URL}`;
-  const imageURL = new URL(`${imageURLHost}/${withoutDefaultHostSrc}`);
+  const imageURL = new URL(`${imageURLHost}/${src}`);
 
   width !== undefined && imageURL.searchParams.set("w", width.toString());
   height !== undefined && imageURL.searchParams.set("h", height.toString());
