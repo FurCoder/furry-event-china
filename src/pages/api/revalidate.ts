@@ -13,7 +13,7 @@ export default async function handler(
   }
   const payload = req.body;
 
-  const { pathname } = payload;
+  const { pathname } = JSON.parse(payload);
 
   if (typeof pathname !== "string") {
     return res.status(401).json({ message: "Invalid path." });
