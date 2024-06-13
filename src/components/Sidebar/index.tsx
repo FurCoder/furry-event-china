@@ -11,7 +11,7 @@ const buttonCls = clsx(
 );
 function Sidebar() {
   const router = useRouter();
-  console.log(router.pathname);
+
   return (
     <aside
       className={clsx(

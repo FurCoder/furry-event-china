@@ -1,8 +1,7 @@
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 
-const isEnableTrack = process.env.NEXT_PUBLIC_ENABLE_TRACK === "true";
+export const isEnableTrack = process.env.NEXT_PUBLIC_ENABLE_TRACK === "true";
 
 export default function Document() {
   return (
@@ -58,7 +57,6 @@ export default function Document() {
               `}
           </Script>
         )}
-        {isEnableTrack && <GoogleAnalytics gaId="G-RBND7XQ43D" />}
       </body>
     </Html>
   );
