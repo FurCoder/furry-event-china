@@ -2,7 +2,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 
-const isEnableTrack = process.env.ENABLE_TRACK === "true";
+const isEnableTrack = process.env.NEXT_PUBLIC_ENABLE_TRACK === "true";
 
 export default function Document() {
   return (
