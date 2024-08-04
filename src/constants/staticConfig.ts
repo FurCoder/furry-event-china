@@ -18,6 +18,12 @@ export const FriendSiteLinks = [
       "Linpx 是一个包含多种常用功能的 Pixiv 小说阅读器。Linpx 旨在帮助读者快速、方便地阅读 Pixiv 小说，有效地找到喜欢的作者和作品并帮助作者将作品带给更多读者。",
   },
   {
+    link: "https://fursuit.cool/?utm_source=fec&utm_campaign=friend_link",
+    label: "FurSuit 绒兽志",
+    description:
+      "「绒兽志」致力于为您提供最新最全的毛毛图鉴资讯整合，快来这里看看吧！",
+  },
+  {
     link: "https://furcoder.org/?utm_source=fec",
     label: "FurCoder.org",
     description: "FurryEventChina.COM 是 FurCoder 组织下的托管项目。",
