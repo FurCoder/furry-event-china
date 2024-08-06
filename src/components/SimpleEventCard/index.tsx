@@ -37,8 +37,8 @@ function SimpleEventCard({ event }: { event: Event }) {
               <span>{format(event.startDate, "MM月dd日")}</span>
             )}
             -
-            {event.startDate && (
-              <span>{format(event.startDate, "MM月dd日")}</span>
+            {event.endDate && (
+              <span>{format(event.endDate, "MM月dd日")}</span>
             )}
           </p>
         )}
