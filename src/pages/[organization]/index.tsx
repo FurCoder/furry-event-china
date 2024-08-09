@@ -249,7 +249,7 @@ export async function getStaticPaths() {
     paths: organizations.map((organization) => ({
       params: { organization: organization.slug },
     })),
-    fallback: false, // can also be true or 'blocking'
+    fallback: 'blocking', // can also be true or 'blocking'
   };
 }
 

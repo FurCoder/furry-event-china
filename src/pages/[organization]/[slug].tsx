@@ -409,7 +409,7 @@ export async function getStaticPaths() {
     paths: events.map((event) => ({
       params: { organization: event.organization?.slug, slug: event.slug },
     })),
-    fallback: false, // can also be true or 'blocking'
+    fallback: 'blocking', // can also be true or 'blocking'
   };
 }
 
