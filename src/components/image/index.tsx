@@ -14,6 +14,8 @@ function Image({
   height,
   priority,
   autoFormat,
+  fallbackWidth,
+  fallbackHeight,
 }: {
   id?: string;
   src: string;
@@ -25,10 +27,17 @@ function Image({
   quality?: number;
   width?: number;
   height?: number;
+  fallbackWidth?: number;
+  fallbackHeight?: number;
   priority?: boolean;
   autoFormat?: boolean;
 }) {
-  const srcString = imageLoader({ src, quality, width, height });
+  const srcString = imageLoader({
+    src,
+    quality,
+    width: width || fallbackWidth,
+    height: height || fallbackHeight,
+  });
 
   return (
     <picture className={containerClassName}>
