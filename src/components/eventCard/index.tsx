@@ -16,9 +16,13 @@ let instancesCount = 0;
 export default function EventCard({
   event,
   sizes,
+  fallbackWidth,
+  fallbackHeight,
 }: {
   event: Event;
   sizes?: string;
+  fallbackWidth?: number;
+  fallbackHeight?: number;
 }) {
   const finalEventCoverImage = getEventCoverImgPath(event);
   const isDefaultCover = finalEventCoverImage.includes(
@@ -75,6 +79,8 @@ export default function EventCard({
               sizes={sizes}
               autoFormat
               priority={instancesCount <= 3}
+              fallbackHeight={fallbackHeight}
+              fallbackWidth={fallbackWidth}
             />
           )}
           <div className="z-10 top-0 relative">

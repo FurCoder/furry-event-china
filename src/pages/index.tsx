@@ -108,6 +108,7 @@ function DurationSection({
                 key={event.name}
                 event={event}
                 sizes="(max-width: 750px) 650px, (max-width: 1080px) 552px, 552px"
+                fallbackWidth={650}
               />
             ))}
           </div>

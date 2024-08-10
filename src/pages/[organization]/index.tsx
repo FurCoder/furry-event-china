@@ -234,6 +234,7 @@ export default function OrganizationDetail(props: {
                 key={e.id}
                 event={e}
                 sizes="(max-width: 750px)750px, (max-width: 1080px) 1080px, (min-width: 1200px) 1200px, 1200px"
+                fallbackWidth={1200}
               />
             ))}
           </div>
