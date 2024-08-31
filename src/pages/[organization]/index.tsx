@@ -201,7 +201,7 @@ export default function OrganizationDetail(props: {
               {organization.contactMail && (
                 <div className="flex items-center bg-green-600 hover:bg-green-700 transition rounded-xl px-4 py-1 text-white">
                   <a href={`mailto:${organization.contactMail}`}>
-                    {t("organization.mailCopySuccess", {
+                    {t("organization.mail", {
                       email: organization.contactMail,
                     })}
                   </a>
