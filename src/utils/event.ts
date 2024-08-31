@@ -87,7 +87,7 @@ export function filteringEvents(
     }
 
     if (
-      selectedFilter.eventScale[0] !== "All" &&
+      selectedFilter.eventScale[0] !== "all" &&
       !selectedFilter.eventScale.includes(event.scale)
     ) {
       return false;

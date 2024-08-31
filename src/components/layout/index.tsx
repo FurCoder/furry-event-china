@@ -10,7 +10,6 @@ import Sidebar from "@/components/Sidebar";
 
 const IS_CN_REGION = process.env.NEXT_PUBLIC_REGION === "CN";
 
-const defaultKeywords = "兽聚, 兽展, 兽展日历, 兽聚日历, fec 兽展, fcc 兽展";
 export default function Layout({
   children,
   headMetas,
@@ -30,7 +29,7 @@ export default function Layout({
   const asPath = router.asPath;
 
   return (
-    <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen relative">
+    <div className="sm:max-w-screen-xl mx-auto flex flex-col min-h-screen relative">
       <Head>
         <title>{titleGenerator(headMetas?.title)}</title>
         <meta

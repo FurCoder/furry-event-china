@@ -12,6 +12,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { SiBilibili } from "react-icons/si";
 import { formatDistanceToNowStrict } from "date-fns";
 import { zhCN } from "date-fns/locale";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 // import {
 //   WebsiteButton,
 //   QQGroupButton,
@@ -250,7 +251,7 @@ export async function getStaticPaths() {
     paths: organizations.map((organization) => ({
       params: { organization: organization.slug },
     })),
-    fallback: 'blocking', // can also be true or 'blocking'
+    fallback: "blocking", // can also be true or 'blocking'
   };
 }
 
@@ -329,6 +330,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           ],
         },
       },
+      ...(context.locale
+        ? await serverSideTranslations(context.locale, ["common"])
+        : {}),
     },
     revalidate: 86400,
   };

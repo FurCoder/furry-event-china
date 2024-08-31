@@ -27,6 +27,7 @@ import OrganizationLinkButton, {
 import { keywordgenerator } from "@/utils/meta";
 import { FaPeoplePulling } from "react-icons/fa6";
 import EventStatusBar from "@/components/EventStatusBar";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const xata = new XataClient();
 
@@ -409,7 +410,7 @@ export async function getStaticPaths() {
     paths: events.map((event) => ({
       params: { organization: event.organization?.slug, slug: event.slug },
     })),
-    fallback: 'blocking', // can also be true or 'blocking'
+    fallback: "blocking", // can also be true or 'blocking'
   };
 }
 
@@ -541,6 +542,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           acquireLicensePage: "https://docs.furryeventchina.com/blog/about",
         })),
       },
+      ...(context.locale
+        ? await serverSideTranslations(context.locale, ["common"])
+        : {}),
     },
     revalidate: 86400,
   };

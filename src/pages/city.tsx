@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Button } from "@headlessui/react";
 import { FaAngleDown, FaLink } from "react-icons/fa6";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function City(props: { events: Event[] }) {
   const { events } = props;
@@ -198,7 +199,7 @@ function CollapsibleCityYearSelection({
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }: { locale: string }) {
   const xata = new XataClient();
 
   const events = await xata.db.event
@@ -238,6 +239,7 @@ export async function getStaticProps() {
           ],
         },
       },
+      ...(await serverSideTranslations(locale, ["common"])),
     },
     revalidate: 86400,
   };
