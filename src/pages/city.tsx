@@ -167,38 +167,6 @@ function CityYearSelection({ events }: { events: Event[] }) {
   );
 }
 
-function CollapsibleCityYearSelection({
-  events,
-  year,
-}: {
-  events: Event[];
-  year: string;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="flex items-center justify-between space-x-4 px-4">
-        <CollapsibleTrigger asChild>
-          <div className="flex cursor-pointer">
-            <h3 className="text-gray-500">
-              {year === "no-date" ? "暂未定档" : year}
-            </h3>
-            <Button>
-              <FaAngleDown className="h-4 w-4" />
-              <span className="sr-only">Toggle</span>
-            </Button>
-          </div>
-        </CollapsibleTrigger>
-      </div>
-
-      <CollapsibleContent className="space-y-2">
-        <CityYearSelection events={events} />
-      </CollapsibleContent>
-    </Collapsible>
-  );
-}
-
 export async function getStaticProps({ locale }: { locale: string }) {
   const xata = new XataClient();
 

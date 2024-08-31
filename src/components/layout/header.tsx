@@ -91,7 +91,6 @@ export default function Header() {
                 src="/svgs/tiger-face.svg"
                 width={32}
                 height={32}
-                //@ts-ignore
                 fetchPriority="low"
               />
               <img
@@ -99,7 +98,6 @@ export default function Header() {
                 src="/svgs/wolf.svg"
                 width={32}
                 height={32}
-                //@ts-ignore
                 fetchPriority="low"
               />
               <img
@@ -107,7 +105,6 @@ export default function Header() {
                 src="/svgs/lion.svg"
                 width={32}
                 height={32}
-                //@ts-ignore
                 fetchPriority="low"
               />
               {/* <span key={"wolf"} className={`icon-[fluent-emoji--wolf]`} /> */}

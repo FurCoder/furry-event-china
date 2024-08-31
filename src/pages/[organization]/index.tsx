@@ -13,6 +13,7 @@ import { SiBilibili } from "react-icons/si";
 import { formatDistanceToNowStrict } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 // import {
 //   WebsiteButton,
 //   QQGroupButton,
@@ -28,9 +29,10 @@ export default function OrganizationDetail(props: {
   events: Event[];
   organization: Organization;
 }) {
+  const { t } = useTranslation();
   const { organization, events } = props;
 
-  const foramtedFirstEventTime = useMemo(() => {
+  const formattedFirstEventTime = useMemo(() => {
     const theBeginningEvent = events[events.length - 1];
     if (theBeginningEvent && theBeginningEvent.startDate) {
       const date = new Date(theBeginningEvent.startDate);
@@ -45,7 +47,7 @@ export default function OrganizationDetail(props: {
     return null;
   }, [events]);
 
-  const formatedCreationTime = useMemo(() => {
+  const formattedCreationTime = useMemo(() => {
     if (organization.creationTime) {
       const date = new Date(organization.creationTime);
 
@@ -85,17 +87,34 @@ export default function OrganizationDetail(props: {
             </div>
 
             <div className={clsx("mb-2 text-gray-500", styles["intro-bar"])}>
-              {formatedCreationTime && (
-                <span>已创立 {formatedCreationTime.createDistance}</span>
-              )}
-              <span>已累计收录 {events.length} 场展会</span>
-              {foramtedFirstEventTime && (
+              {formattedCreationTime && (
                 <span>
-                  {`首次举办于 ${foramtedFirstEventTime?.year}年${foramtedFirstEventTime?.month}月${foramtedFirstEventTime?.day}日`}
+                  {t("organization.createdAt", {
+                    distance: formattedCreationTime.createDistance,
+                  })}
                 </span>
               )}
-              {formatedCreationTime && (
-                <span>{`首次出现于 ${formatedCreationTime?.year}年${formatedCreationTime?.month}月${formatedCreationTime?.day}日`}</span>
+              <span>
+                {t("organization.totalEvent", { amount: events.length })}
+              </span>
+              {formattedFirstEventTime && (
+                <span>
+                  {t("organization.firstTimeEvent", {
+                    year: formattedFirstEventTime?.year,
+                    month: formattedFirstEventTime?.month,
+                    day: formattedFirstEventTime?.day,
+                  })}
+                </span>
+              )}
+
+              {formattedCreationTime && (
+                <span>
+                  {t("organization.firstTimeShow", {
+                    year: formattedCreationTime?.year,
+                    month: formattedCreationTime?.month,
+                    day: formattedCreationTime?.day,
+                  })}
+                </span>
               )}
             </div>
 
@@ -112,7 +131,7 @@ export default function OrganizationDetail(props: {
                   rel="noreferrer"
                   className="bg-blue-300 hover:bg-blue-400 transition rounded-xl px-4 py-1 text-white"
                 >
-                  去官网
+                  {t("organization.website")}
                 </a>
               )}
 
@@ -124,7 +143,7 @@ export default function OrganizationDetail(props: {
                   className="flex items-center justify-center bg-sky-400 hover:bg-sky-500 transition rounded-xl px-4 py-1 text-white text-center"
                 >
                   <SiBilibili className="mr-2" />
-                  去Bilibili
+                  {t("organization.bilibili")}
                 </a>
               )}
               {organization?.weibo && (
@@ -135,7 +154,7 @@ export default function OrganizationDetail(props: {
                   className="flex items-center justify-center bg-red-500 hover:bg-red-600 transition rounded-xl px-4 py-1 text-white text-center"
                 >
                   <FaWeibo className="mr-2" />
-                  去微博
+                  {t("organization.weibo")}
                 </a>
               )}
 
@@ -147,7 +166,7 @@ export default function OrganizationDetail(props: {
                   className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 transition rounded-xl px-4 py-1 text-white text-center"
                 >
                   <FaTwitter className="mr-2" />
-                  去Twitter
+                  {t("organization.twitter")}
                 </a>
               )}
 
@@ -158,7 +177,8 @@ export default function OrganizationDetail(props: {
                   rel="noreferrer"
                   className="flex items-center justify-center bg-blue-800 hover:bg-blue-900 transition rounded-xl px-4 py-1 text-white text-center"
                 >
-                  <FaPaw className="mr-2" />去 Wikifur 了解更多
+                  <FaPaw className="mr-2" />
+                  {t("organization.wikifur")}
                 </a>
               )}
 
@@ -167,25 +187,31 @@ export default function OrganizationDetail(props: {
                   onClick={() => {
                     navigator.clipboard
                       .writeText(organization?.qqGroup || "")
-                      .then(() => toast.success("🥳 复制成功，快去QQ加群吧"));
+                      .then(() =>
+                        toast.success(t("organization.qqCopySuccess"))
+                      );
                   }}
                   className="flex items-center justify-center bg-red-300 hover:bg-red-400 transition rounded-xl px-4 py-1 text-white text-center"
                 >
-                  <FaQq className="mr-2" /> 复制QQ群号:
-                  {organization?.qqGroup}
+                  <FaQq className="mr-2" />
+                  {t("organization.qq", { qq: organization?.qqGroup })}
                 </button>
               )}
 
               {organization.contactMail && (
                 <div className="flex items-center bg-green-600 hover:bg-green-700 transition rounded-xl px-4 py-1 text-white">
                   <a href={`mailto:${organization.contactMail}`}>
-                    发邮件给 {organization.contactMail}
+                    {t("organization.mailCopySuccess", {
+                      email: organization.contactMail,
+                    })}
                   </a>
                   <div
                     onClick={() => {
                       navigator.clipboard
                         .writeText(organization.contactMail!)
-                        .then(() => toast.success("🥳 复制成功，快去发邮件吧"));
+                        .then(() =>
+                          toast.success(t("organization.mailCopySuccess"))
+                        );
                     }}
                     className="border-l ml-2 pl-2 cursor-pointer"
                   >
@@ -198,9 +224,9 @@ export default function OrganizationDetail(props: {
         </div>
 
         <div className="border-t my-8" />
-        <h2 className="text-xl text-slate-600 mb-4">展会简介</h2>
+        <h2 className="text-xl text-slate-600 mb-4">{t("organization.des")}</h2>
         <p className="text-slate-700 whitespace-pre-line">
-          {organization.description || "这个主办方很懒，什么介绍也没写过。"}
+          {organization.description || t("organization.defaultDes")}
         </p>
       </div>
 
@@ -228,7 +254,9 @@ export default function OrganizationDetail(props: {
 
       {!!events.length && (
         <section className="mt-8 p-6 bg-white rounded-xl border">
-          <h2 className="text-xl text-slate-600 mb-4">历届展会</h2>
+          <h2 className="text-xl text-slate-600 mb-4">
+            {t("organization.passedEvent")}
+          </h2>
           <div className="grid gird-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((e) => (
               <EventCard
