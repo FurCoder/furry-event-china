@@ -4,7 +4,7 @@ import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import { useMemo, useState } from "react";
 import { EventScale, EventStatus } from "@/types/event";
-import { Label, Switch, SwitchGroup } from "@headlessui/react";
+import { Field, Label, Switch } from "@headlessui/react";
 import { sendTrack } from "@/utils/track";
 import { DurationType } from "@/types/list";
 import {
@@ -16,6 +16,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 export default function Home(props: { events: Event[] }) {
+  const { t } = useTranslation();
   const [selectedFilter, setFilter] = useState({
     onlyAvailable: false,
     eventScale: ["all"],
@@ -36,11 +37,12 @@ export default function Home(props: { events: Event[] }) {
         {filteredEvents.length === 0 && (
           <div className="bg-white border rounded-xl p-6 mt-6 text-center h-96 flex justify-center flex-col">
             <h1 className="text-xl text-red-400 font-bold">
-              似乎没有满足查询需求的展会...<br></br>
-              换个查询条件，或者...再等等？
+              {t("homepage.noResult")}
+              <br></br>
+              {t("homepage.noResultTip")}
             </h1>
             <p className="text-base text-gray-400 mt-2">
-              你也可以向我们反馈一个已经官宣的展会！页脚有我们的联系方式！
+              {t("homepage.noResultContact")}
             </p>
           </div>
         )}
@@ -100,8 +102,8 @@ function DurationSection({
           <h3 className="text-lg md:text-xl text-red-400 font-bold mb-2 md:mb-6">
             {month !== "unknown"
               ? durationType === DurationType.NextYear
-                ? t('homepage.nextYearMonth',{month})
-                : t('homepage.month',{month})
+                ? t("homepage.nextYearMonth", { month })
+                : t("homepage.month", { month })
               : null}
             <span className="text-sm text-gray-500 font-bold ml-1">
               {t("homepage.total", { total: groupByDateEvent[month].length })}
@@ -162,7 +164,7 @@ function Filter({
   );
   return (
     <div className="bg-white border rounded-xl p-6 flex sm:items-center flex-col sm:flex-row relative">
-      <SwitchGroup>
+      <Field>
         <div className="flex items-center max-sm:mb-4 max-sm:justify-between">
           <Label className="mr-4 text-gray-600">
             {t("event.filter.onlyAvailable")}
@@ -182,7 +184,7 @@ function Filter({
             />
           </Switch>
         </div>
-      </SwitchGroup>
+      </Field>
 
       <div className="bg-gray-100 w-[2px] h-4 mx-4 hidden sm:block" />
 
