@@ -230,28 +230,6 @@ export default function OrganizationDetail(props: {
         </p>
       </div>
 
-      {/* <div
-        className={clsx(
-          "mt-8 p-6 bg-white rounded-xl border",
-          "grid gird-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-8",
-          styles.links
-        )}
-      >
-        {organization?.website && <WebsiteButton href={organization.website} />}
-        {organization?.qqGroup && <QQGroupButton text={organization.qqGroup} />}
-        {organization?.bilibili && <BiliButton href={organization.bilibili} />}
-
-        {organization?.weibo && <WeiboButton href={organization.weibo} />}
-
-        {organization?.twitter && <TwitterButton href={organization.twitter} />}
-
-        {organization?.contactMail && (
-          <EmailButton mail={organization.contactMail} />
-        )}
-
-        {organization?.wikifur && <WikifurButton href={organization.wikifur} />}
-      </div> */}
-
       {!!events.length && (
         <section className="mt-8 p-6 bg-white rounded-xl border">
           <h2 className="text-xl text-slate-600 mb-4">
@@ -336,7 +314,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
             : "不过他们没怎么介绍自己。"
         }`,
         keywords: `${organization?.name}, ${organization?.name} 兽展, ${organization?.name} 兽聚`,
-        url: `https://www.furryeventchina.com/${organization?.slug}/`,
+        url: `https://www.furryeventchina.com/${organization?.slug}`,
         cover: organization?.logoUrl,
       },
       structuredData: {

@@ -1,97 +1,99 @@
 {
   "header": {
-    "title": "FEC·兽展日历",
-    "slogan": "展后综合征治疗中🤤",
+    "title": "Furry Event China",
+    "slogan": "Wait for vacation 🤤",
     "nav": {
-      "homepage": "首页",
-      "city": "城市",
-      "organization": "展商",
-      "years": "年份表"
+      "homepage": "Home",
+      "city": "City",
+      "organization": "Organizer",
+      "years": "Year Overview"
     }
   },
   "footer": {
-    "friendsLink": "友情链接",
-    "aboutUs": "关于我们",
-    "disclaimer": "本页所示信息仅供参考，准确信息请以活动官网为准",
-    "use": "由",
-    "and": "和",
-    "made": "制作而成"
+    "friendsLink": "Friend Links",
+    "aboutUs": "About Us",
+    "disclaimer": "The information shown on this page is for reference only. Please refer to the official event website for accurate information.",
+    "use": "Made by",
+    "and": "and",
+    "made": "produced"
   },
   "homepage": {
-    "total": "共有 {{total}} 个展会",
-    "month": "{{month}}月",
-    "nextYearMonth": "明年{{month}}月",
+    "total": "A total of {{total}} conventions",
+    "month": "{{month}} Month",
+    "nextYearMonth": "Next year {{month}} Month",
     "group": {
       "status": {
-        "passed": "已经结束",
-        "now": "就是现在",
-        "soon": "马上就来",
-        "next": "今年还有",
-        "nextYear": "看看来年"
+        "passed": "Already ended",
+        "now": "Right now",
+        "soon": "Coming soon",
+        "next": "There are still",
+        "nextYear": "Look at next year"
       }
     },
-    "noResult": "似乎没有满足查询需求的展会...",
-    "noResultTip": "换个查询条件，或者...再等等？",
-    "noResultContact": "你也可以向我们反馈一个已经官宣的展会！页脚有我们的联系方式！"
+    "noResult": "It seems there are no conventions that meet the query requirements...",
+    "noResultTip": "Try different search criteria, or... wait a bit longer?",
+    "noResultContact": "You can also report a convention that has been officially announced! Our contact information is in the footer!"
   },
   "event": {
     "filter": {
-      "onlyAvailable": "只看还未开始的展会",
-      "all": "我全都要（全部）",
-      "cosy": "三两小聚（小型展）",
-      "small": "有点厉害（中型展）",
-      "medium": "好多人啊（大型展）",
-      "large": "开始迷路（巨型展）",
-      "mega": "无法呼吸（博览会展）"
+      "onlyAvailable": "Only view upcoming conventions",
+      "all": "I want them all (all)",
+      "cosy": "A small gathering (small convention)",
+      "small": "A bit impressive (medium convention)",
+      "medium": "So many people (large convention)",
+      "large": "Starting to get lost (giant convention)",
+      "mega": "Can't breathe (expo)"
     },
     "status": {
-      "cancel": "活动已被主办方取消，无法举行。"
+      "cancel": "The event has been canceled by the organizer and cannot be held."
     },
-    "hostBy": "由{{hostName}}主办",
-    "unknown": "暂未公布",
-    "scaleDes": "这是一个 {{scale}} 的兽展",
+    "hostBy": "Hosted by {{hostName}}",
+    "unknown": "Not yet announced",
+    "scaleDes": "This is a {{scale}} furry convention",
     "scale": {
-      "cosy": "小型规模",
-      "small": "中型规模",
-      "medium": "大型规模",
-      "large": "超大型规模",
-      "mega": "巨型规模"
+      "cosy": "Small scale",
+      "small": "Medium scale",
+      "medium": "Large scale",
+      "large": "Extra large scale",
+      "mega": "Giant scale"
     },
-    "goToSource": "前往信源",
-    "map": "展会地图",
-    "mapLoading": "正在加载地图",
-    "gotoGaoDe": "去高德地图查看",
-    "gotoOrganization": "看看展商详情",
+    "goToSource": "Go to source",
+    "map": "Convention map",
+    "mapLoading": "Loading map",
+    "gotoGaoDe": "View on Gaode Map",
+    "gotoOrganization": "View Organizer details",
     "dateFormat": "yyyy年MM月dd日"
   },
   "organization": {
-    "active": "活跃展商",
-    "deactive": "停止活动展商",
-    "createdAt": "已创立 {{distance}}",
-    "firstTimeEvent": "首次举办于 {{year}}年{{month}}月{{day}}日",
-    "firstTimeShow": "首次出现于 {{year}}年{{month}}月{{day}}日",
-    "totalEvent": "已累计收录{{amount}}场兽展/兽聚",
-    "website": "去官网",
-    "bilibili": "去Bilibili",
-    "twitter": "去Twitter",
-    "weibo": "去微博",
-    "wikifur": "去 Wikifur 了解更多",
-    "qq": "复制QQ群号: {{qq}}",
-    "qqCopySuccess": "🥳 复制成功，快去QQ加群吧",
-    "mail": "发邮件给 {{email}}",
-    "mailCopySuccess": "🥳 复制成功，快去发邮件吧",
-    "des": "展方简介",
-    "defaultDes": "这个主办方很懒，什么介绍也没写过。",
-    "passedEvent": "历届展会"
+    "active": "Active Organizers",
+    "deactive": "Inactive Organizers",
+    "createdAt": "Established {{distance}} ago",
+    "firstTimeEvent": "First held on {{year}}/{{month}}/{{day}}",
+    "firstTimeShow": "First appeared on {{year}}/{{month}}/{{day}}",
+    "totalEvent": "A total of {{amount}} furry conventions/gatherings recorded",
+    "website": "Visit official website",
+    "bilibili": "Visit Bilibili",
+    "twitter": "Visit Twitter",
+    "weibo": "Visit Weibo",
+    "wikifur": "Visit Wikifur for more information",
+    "qq": "Copy QQ group number: {{qq}}",
+    "copyQq": "Copy QQ group number",
+    "qqCopySuccess": "🥳 Copied successfully, go join the QQ group now",
+    "mail": "Email {{email}}",
+    "copyMail": "Copy Email",
+    "mailCopySuccess": "🥳 Copied successfully, go send an email now",
+    "des": "Organizer introduction",
+    "defaultDes": "This organizer is lazy and hasn't written any introduction.",
+    "passedEvent": "Past conventions"
   },
   "years": {
-    "title": "总结",
-    "des": "FEC·兽展日历共在 {{totalYear}} 年里收录到 {{totalAmount}} 场兽展/兽聚。 其中：",
-    "eachYear": "{{year}}年共有 {{amount}} 场兽展/兽聚",
-    "unknown": "暂未定档",
-    "known": "{{year}}年",
-    "thisYear": "这一年",
-    "total": "共有 {{total}} 场兽展/兽聚",
-    "month": "{{month}}月"
+    "title": "Summary",
+    "des": "The FEC·Furry Convention Calendar has recorded {{totalAmount}} furry conventions/gatherings over {{totalYear}} years. Among them:",
+    "eachYear": "{{year}} had a total of {{amount}} furry conventions/gatherings",
+    "unknown": "Not yet scheduled",
+    "known": "{{year}}",
+    "thisYear": "This year",
+    "total": "A total of {{total}} furry conventions/gatherings",
+    "month": "{{month}} Month"
   }
 }

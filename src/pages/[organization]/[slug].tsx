@@ -374,29 +374,29 @@ export default function EventDetail({ event }: { event: Event }) {
               )}
             >
               {event.organization?.website && (
-                <WebsiteButton href={event.organization.website} />
+                <WebsiteButton t={t} href={event.organization.website} />
               )}
               {event.organization?.qqGroup && (
-                <QQGroupButton text={event.organization.qqGroup} />
+                <QQGroupButton t={t} text={event.organization.qqGroup} />
               )}
               {event.organization?.bilibili && (
-                <BiliButton href={event.organization.bilibili} />
+                <BiliButton t={t} href={event.organization.bilibili} />
               )}
 
               {event.organization?.weibo && (
-                <WeiboButton href={event.organization.weibo} />
+                <WeiboButton t={t} href={event.organization.weibo} />
               )}
 
               {event.organization?.twitter && (
-                <TwitterButton href={event.organization.twitter} />
+                <TwitterButton t={t} href={event.organization.twitter} />
               )}
 
               {event.organization?.contactMail && (
-                <EmailButton mail={event.organization.contactMail} />
+                <EmailButton t={t} mail={event.organization.contactMail} />
               )}
 
               {event.organization?.wikifur && (
-                <WikifurButton href={event.organization.wikifur} />
+                <WikifurButton t={t} href={event.organization.wikifur} />
               )}
             </div>
           </div>
@@ -461,7 +461,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           },
         }),
         des: metaDes,
-        url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}/`,
+        url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
         cover: imageUrl(getEventCoverImgPath(event)),
       },
       structuredData: {
