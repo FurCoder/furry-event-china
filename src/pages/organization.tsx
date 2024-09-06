@@ -4,6 +4,8 @@ import groupBy from "lodash-es/groupBy";
 import Image from "@/components/image";
 import Link from "next/link";
 import { sendTrack } from "@/utils/track";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 export default function OrganizationPage({
   organizations,
@@ -11,11 +13,14 @@ export default function OrganizationPage({
   organizations: Organization[];
 }) {
   const groupByStatusOrganizations = groupBy(organizations, (o) => o.status);
+  const { t } = useTranslation();
 
   return (
     <div className="bg-white p-6 rounded-xl">
       <section>
-        <h1 className="font-bold text-gray-600 text-2xl">活跃展商</h1>
+        <h1 className="font-bold text-gray-600 text-2xl">
+          {t("organization.active")}
+        </h1>
         <div className="mt-4 grid md:grid-cols-3 gap-10">
           {groupByStatusOrganizations["active"].map((o) => (
             <OrganizationItem key={o.id} organization={o} />
@@ -23,7 +28,9 @@ export default function OrganizationPage({
         </div>
       </section>
       <section className="mt-6">
-        <h1 className="font-bold text-gray-600 text-2xl">停止活动展商</h1>
+        <h1 className="font-bold text-gray-600 text-2xl">
+          {t("organization.deactive")}
+        </h1>
         <div className="mt-4 grid md:grid-cols-3 gap-10">
           {groupByStatusOrganizations["deactive"].map((o) => (
             <OrganizationItem key={o.id} organization={o} />
@@ -75,7 +82,7 @@ function OrganizationItem({ organization }: { organization: Organization }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }: { locale: string }) {
   const xata = new XataClient();
 
   const organizations = await xata.db.organization
@@ -103,6 +110,7 @@ export async function getStaticProps() {
           ],
         },
       },
+      ...(await serverSideTranslations(locale, ["common"])),
     },
     revalidate: 86400,
   };

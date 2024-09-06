@@ -12,6 +12,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.NODE_ENV === "production",
 });
 
+const { i18n } = require("./next-i18next.config");
+
 const isProd = process.env.NODE_ENV === "production";
 const IS_CN_REGION = process.env.NEXT_PUBLIC_REGION === "CN";
 const STATIC_CDN_URL = process.env.NEXT_PUBLIC_STATIC_CDN_URL;
@@ -62,6 +64,7 @@ const nextConfig = {
     );
     return config;
   },
+  i18n,
 };
 
 const sentryWebpackPluginOptions = {

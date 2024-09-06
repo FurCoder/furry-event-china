@@ -10,7 +10,6 @@ import Sidebar from "@/components/Sidebar";
 
 const IS_CN_REGION = process.env.NEXT_PUBLIC_REGION === "CN";
 
-const defaultKeywords = "兽聚, 兽展, 兽展日历, 兽聚日历, fec 兽展, fcc 兽展";
 export default function Layout({
   children,
   headMetas,
@@ -30,7 +29,7 @@ export default function Layout({
   const asPath = router.asPath;
 
   return (
-    <div className="sm:max-w-screen-lg mx-auto flex flex-col min-h-screen relative">
+    <div className="sm:max-w-screen-xl mx-auto flex flex-col min-h-screen relative">
       <Head>
         <title>{titleGenerator(headMetas?.title)}</title>
         <meta
@@ -99,6 +98,28 @@ export default function Layout({
           rel="canonical"
           href={`https://www.furryeventchina.com${asPath}`}
         /> */}
+        {/* disabled due to en translate not finish. */}
+        {/* <link
+          rel="alternate"
+          hrefLang="zh-Hans-CN"
+          href={`https://www.furrycons.cn${asPath}`}
+        />
+        <link
+          rel="alternate"
+          hrefLang="zh-Hans"
+          href={`https://www.furryeventchina.com${asPath}`}
+        />
+        <link
+          rel="alternate"
+          hrefLang="en-CN"
+          href={`https://www.furrycons.cn/en${asPath}`}
+        />
+        <link
+          rel="alternate"
+          hrefLang="en"
+          href={`https://www.furryeventchina.com/en${asPath}`}
+        /> */}
+
         {structuredData?.event && (
           <script
             type="application/ld+json"

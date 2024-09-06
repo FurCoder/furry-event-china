@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { HiMenu } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
+import { useTranslation } from "next-i18next";
 
 // const AnimeEmojis = [
 //   "tiger-face",
@@ -51,6 +52,7 @@ import { IoMdClose } from "react-icons/io";
 // ));
 
 export default function Header() {
+  const { t } = useTranslation();
   const { pathname } = useRouter();
 
   const bodyRef = useRef<HTMLBodyElement | null>(null);
@@ -89,7 +91,6 @@ export default function Header() {
                 src="/svgs/tiger-face.svg"
                 width={32}
                 height={32}
-                //@ts-ignore
                 fetchPriority="low"
               />
               <img
@@ -97,7 +98,6 @@ export default function Header() {
                 src="/svgs/wolf.svg"
                 width={32}
                 height={32}
-                //@ts-ignore
                 fetchPriority="low"
               />
               <img
@@ -105,7 +105,6 @@ export default function Header() {
                 src="/svgs/lion.svg"
                 width={32}
                 height={32}
-                //@ts-ignore
                 fetchPriority="low"
               />
               {/* <span key={"wolf"} className={`icon-[fluent-emoji--wolf]`} /> */}
@@ -113,10 +112,9 @@ export default function Header() {
             </span>
           </div>
           <div className="flex">
-            <h1 className="text-base mt-0">FEC·兽展日历</h1>
+            <h1 className="text-base mt-0">{t("header.title")}</h1>
             <span className="text-base mx-1">/</span>
-            {/* <span className="text-base">五一五一🥳</span> */}
-            <span className="text-base">展后综合征治疗中🤤</span>
+            <span className="text-base">{t("header.slogan")}</span>
           </div>
         </div>
       </Link>
@@ -141,10 +139,10 @@ export default function Header() {
         </div>
         <ol className="flex h-full max-sm:flex-col max-sm:gap-5">
           {[
-            { name: "首页", link: "/" },
-            { name: "城市", link: "/city" },
-            { name: "展商", link: "/organization" },
-            { name: "年份表", link: "/years" },
+            { name: t('header.nav.homepage'), link: "/" },
+            { name: t('header.nav.city'), link: "/city" },
+            { name: t('header.nav.organization'), link: "/organization" },
+            { name: t('header.nav.years'), link: "/years" },
           ].map((nav) => (
             <li
               key={nav.name}

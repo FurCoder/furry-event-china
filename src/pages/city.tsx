@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Button } from "@headlessui/react";
 import { FaAngleDown, FaLink } from "react-icons/fa6";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function City(props: { events: Event[] }) {
   const { events } = props;
@@ -166,39 +167,7 @@ function CityYearSelection({ events }: { events: Event[] }) {
   );
 }
 
-function CollapsibleCityYearSelection({
-  events,
-  year,
-}: {
-  events: Event[];
-  year: string;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="flex items-center justify-between space-x-4 px-4">
-        <CollapsibleTrigger asChild>
-          <div className="flex cursor-pointer">
-            <h3 className="text-gray-500">
-              {year === "no-date" ? "暂未定档" : year}
-            </h3>
-            <Button>
-              <FaAngleDown className="h-4 w-4" />
-              <span className="sr-only">Toggle</span>
-            </Button>
-          </div>
-        </CollapsibleTrigger>
-      </div>
-
-      <CollapsibleContent className="space-y-2">
-        <CityYearSelection events={events} />
-      </CollapsibleContent>
-    </Collapsible>
-  );
-}
-
-export async function getStaticProps() {
+export async function getStaticProps({ locale }: { locale: string }) {
   const xata = new XataClient();
 
   const events = await xata.db.event
@@ -222,7 +191,7 @@ export async function getStaticProps() {
       headMetas: {
         title: "兽展城市列表",
         des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆共 ${cities} 个城市举办过的 ${events.length} 场 兽展(兽聚)活动信息！快来看看这些城市有没有你所在的地方吧！`,
-        link: "https://www.furryeventchina.com/city/",
+        link: "https://www.furryeventchina.com/city",
       },
       structuredData: {
         breadcrumb: {
@@ -238,6 +207,7 @@ export async function getStaticProps() {
           ],
         },
       },
+      ...(await serverSideTranslations(locale, ["common"])),
     },
     revalidate: 86400,
   };

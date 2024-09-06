@@ -27,6 +27,8 @@ import OrganizationLinkButton, {
 import { keywordgenerator } from "@/utils/meta";
 import { FaPeoplePulling } from "react-icons/fa6";
 import EventStatusBar from "@/components/EventStatusBar";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const xata = new XataClient();
 
@@ -38,6 +40,7 @@ const MapLoadingStatus = {
 };
 
 export default function EventDetail({ event }: { event: Event }) {
+  const { t } = useTranslation();
   const [mapLoadingStatus, setMapLoadingStatus] = useState(() => {
     if (event.addressLat && event.addressLon) {
       return MapLoadingStatus.Loading;
@@ -156,7 +159,7 @@ export default function EventDetail({ event }: { event: Event }) {
             {event.status === EventStatus.EventCancelled && (
               <p className="inline-flex items-center bg-red-400 mb-2 px-4 py-2 text-white rounded-md">
                 <RiErrorWarningLine className="mr-2 text-lg" />
-                活动已被主办方取消，无法举行。
+                {t("event.status.cancel")}
               </p>
             )}
 
@@ -167,7 +170,7 @@ export default function EventDetail({ event }: { event: Event }) {
               {event.name}
             </h2>
             <h2 className="text-gray-600 text-sm flex">
-              由 {event.organization?.name} 主办{" "}
+              {t("event.hostBy", { hostName: event.organization?.name })}
               {/* <EventStatusBar className="ml-2" pageviews="0" fav="2" /> */}
             </h2>
 
@@ -176,7 +179,9 @@ export default function EventDetail({ event }: { event: Event }) {
               className="flex items-center text-gray-500 mt-4"
             >
               <IoLocation className="text-gray-500 inline-block mr-2" />
-              {`${event.city} · ${event.address ? event.address : "暂未公布"}`}
+              {`${event.city} · ${
+                event.address ? event.address : t("event.unknown")
+              }`}
             </p>
             <p
               aria-label="活动时间"
@@ -185,14 +190,14 @@ export default function EventDetail({ event }: { event: Event }) {
               <BsCalendar2DateFill className="text-gray-500 inline-block mr-2" />
               <time aria-label="活动开始时间" suppressHydrationWarning>
                 {event.startDate
-                  ? format(event.startDate, "yyyy年MM月dd日")
-                  : "暂未公布"}
+                  ? format(event.startDate, t("event.dateFormat"))
+                  : t("event.unknown")}
               </time>
               <TbArrowsRightLeft className="mx-2  text-sm" />
               <time aria-label="活动结束时间" suppressHydrationWarning>
                 {event.endDate
-                  ? format(event.endDate, "yyyy年MM月dd日")
-                  : "暂未公布"}
+                  ? format(event.endDate, t("event.dateFormat"))
+                  : t("event.unknown")}
               </time>
             </p>
 
@@ -201,7 +206,7 @@ export default function EventDetail({ event }: { event: Event }) {
               className="flex items-center text-gray-500"
             >
               <FaPeoplePulling className="text-gray-500 inline-block mr-2" />
-              这是一个 {EventScaleLabel[event.scale]} 的兽展
+              {t("event.scaleDes", { scale: t(`event.scale.${event.scale}`) })}
             </p>
 
             {/* <p
@@ -229,7 +234,7 @@ export default function EventDetail({ event }: { event: Event }) {
               }
               className="block mt-8 px-16 py-4 bg-red-400 text-white font-bold rounded-md text-center transition duration-300 border border-2 border-red-100 hover:border-red-400 shadow-lg"
             >
-              前往信源
+              {t("event.goToSource")}
             </a>
           )}
         </div>
@@ -237,7 +242,7 @@ export default function EventDetail({ event }: { event: Event }) {
 
       {mapLoadingStatus !== MapLoadingStatus.Idle && (
         <div className="my-4 bg-white rounded-xl overflow-hidden elative">
-          <h3 className="text-xl text-gray-600 m-4">展会地图</h3>
+          <h3 className="text-xl text-gray-600 m-4">{t("event.map")}</h3>
 
           <div
             id="event-map-container"
@@ -250,11 +255,11 @@ export default function EventDetail({ event }: { event: Event }) {
                 mapLoadingStatus !== MapLoadingStatus.Loading && "h-0"
               )}
             >
-              <div className="flex items-center z-10 abosolute">
+              <div className="flex items-center z-10">
                 <span className="animate-spin mr-2">
                   <VscLoading className="text-base" />
                 </span>
-                <label className="text-gray-600">正在加载地图</label>
+                <label className="text-gray-600">{t("event.mapLoading")}</label>
               </div>
             </div>
           </div>
@@ -266,7 +271,7 @@ export default function EventDetail({ event }: { event: Event }) {
               href={`https://uri.amap.com/marker?position=${event.addressLon},${event.addressLat}`}
               className="px-2 py-2 border border-gray-300 text-sm rounded text-gray-700 hover:text-gray-900 hover:border-gray-400 transition duration-300"
             >
-              去高德地图查看
+              {t("event.gotoGaoDe")}
             </a>
           </div>
         </div>
@@ -356,7 +361,7 @@ export default function EventDetail({ event }: { event: Event }) {
                     }
                     className="border rounded px-2 py-1 text-sm text-gray-500 hover:border-slate-400 hover:drop-shadow transition duration-200"
                   >
-                    看看展商详情
+                    {t("event.gotoOrganization")}
                   </button>
                 </Link>
               </div>
@@ -369,29 +374,29 @@ export default function EventDetail({ event }: { event: Event }) {
               )}
             >
               {event.organization?.website && (
-                <WebsiteButton href={event.organization.website} />
+                <WebsiteButton t={t} href={event.organization.website} />
               )}
               {event.organization?.qqGroup && (
-                <QQGroupButton text={event.organization.qqGroup} />
+                <QQGroupButton t={t} text={event.organization.qqGroup} />
               )}
               {event.organization?.bilibili && (
-                <BiliButton href={event.organization.bilibili} />
+                <BiliButton t={t} href={event.organization.bilibili} />
               )}
 
               {event.organization?.weibo && (
-                <WeiboButton href={event.organization.weibo} />
+                <WeiboButton t={t} href={event.organization.weibo} />
               )}
 
               {event.organization?.twitter && (
-                <TwitterButton href={event.organization.twitter} />
+                <TwitterButton t={t} href={event.organization.twitter} />
               )}
 
               {event.organization?.contactMail && (
-                <EmailButton mail={event.organization.contactMail} />
+                <EmailButton t={t} mail={event.organization.contactMail} />
               )}
 
               {event.organization?.wikifur && (
-                <WikifurButton href={event.organization.wikifur} />
+                <WikifurButton t={t} href={event.organization.wikifur} />
               )}
             </div>
           </div>
@@ -409,7 +414,7 @@ export async function getStaticPaths() {
     paths: events.map((event) => ({
       params: { organization: event.organization?.slug, slug: event.slug },
     })),
-    fallback: 'blocking', // can also be true or 'blocking'
+    fallback: "blocking", // can also be true or 'blocking'
   };
 }
 
@@ -456,7 +461,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           },
         }),
         des: metaDes,
-        url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}/`,
+        url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
         cover: imageUrl(getEventCoverImgPath(event)),
       },
       structuredData: {
@@ -541,6 +546,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           acquireLicensePage: "https://docs.furryeventchina.com/blog/about",
         })),
       },
+      ...(context.locale
+        ? await serverSideTranslations(context.locale, ["common"])
+        : {}),
     },
     revalidate: 86400,
   };

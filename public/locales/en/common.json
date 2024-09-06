@@ -1,0 +1,99 @@
+{
+  "header": {
+    "title": "Furry Event China",
+    "slogan": "Wait for vacation 🤤",
+    "nav": {
+      "homepage": "Home",
+      "city": "City",
+      "organization": "Organizer",
+      "years": "Year Overview"
+    }
+  },
+  "footer": {
+    "friendsLink": "Friend Links",
+    "aboutUs": "About Us",
+    "disclaimer": "The information shown on this page is for reference only. Please refer to the official event website for accurate information.",
+    "use": "Made by",
+    "and": "and",
+    "made": "produced"
+  },
+  "homepage": {
+    "total": "A total of {{total}} conventions",
+    "month": "{{month}} Month",
+    "nextYearMonth": "Next year {{month}} Month",
+    "group": {
+      "status": {
+        "passed": "Already ended",
+        "now": "Right now",
+        "soon": "Coming soon",
+        "next": "There are still",
+        "nextYear": "Look at next year"
+      }
+    },
+    "noResult": "It seems there are no conventions that meet the query requirements...",
+    "noResultTip": "Try different search criteria, or... wait a bit longer?",
+    "noResultContact": "You can also report a convention that has been officially announced! Our contact information is in the footer!"
+  },
+  "event": {
+    "filter": {
+      "onlyAvailable": "Only view upcoming conventions",
+      "all": "I want them all (all)",
+      "cosy": "A small gathering (small convention)",
+      "small": "A bit impressive (medium convention)",
+      "medium": "So many people (large convention)",
+      "large": "Starting to get lost (giant convention)",
+      "mega": "Can't breathe (expo)"
+    },
+    "status": {
+      "cancel": "The event has been canceled by the organizer and cannot be held."
+    },
+    "hostBy": "Hosted by {{hostName}}",
+    "unknown": "Not yet announced",
+    "scaleDes": "This is a {{scale}} furry convention",
+    "scale": {
+      "cosy": "Small scale",
+      "small": "Medium scale",
+      "medium": "Large scale",
+      "large": "Extra large scale",
+      "mega": "Giant scale"
+    },
+    "goToSource": "Go to source",
+    "map": "Convention map",
+    "mapLoading": "Loading map",
+    "gotoGaoDe": "View on Gaode Map",
+    "gotoOrganization": "View Organizer details",
+    "dateFormat": "yyyy年MM月dd日"
+  },
+  "organization": {
+    "active": "Active Organizers",
+    "deactive": "Inactive Organizers",
+    "createdAt": "Established {{distance}} ago",
+    "firstTimeEvent": "First held on {{year}}/{{month}}/{{day}}",
+    "firstTimeShow": "First appeared on {{year}}/{{month}}/{{day}}",
+    "totalEvent": "A total of {{amount}} furry conventions/gatherings recorded",
+    "website": "Visit official website",
+    "bilibili": "Visit Bilibili",
+    "twitter": "Visit Twitter",
+    "weibo": "Visit Weibo",
+    "wikifur": "Visit Wikifur for more information",
+    "qq": "Copy QQ group number: {{qq}}",
+    "copyQq": "Copy QQ group number",
+    "qqCopySuccess": "🥳 Copied successfully, go join the QQ group now",
+    "mail": "Email {{email}}",
+    "copyMail": "Copy Email",
+    "mailCopySuccess": "🥳 Copied successfully, go send an email now",
+    "des": "Organizer introduction",
+    "defaultDes": "This organizer is lazy and hasn't written any introduction.",
+    "passedEvent": "Past conventions"
+  },
+  "years": {
+    "title": "Summary",
+    "des": "The FEC·Furry Convention Calendar has recorded {{totalAmount}} furry conventions/gatherings over {{totalYear}} years. Among them:",
+    "eachYear": "{{year}} had a total of {{amount}} furry conventions/gatherings",
+    "unknown": "Not yet scheduled",
+    "known": "{{year}}",
+    "thisYear": "This year",
+    "total": "A total of {{total}} furry conventions/gatherings",
+    "month": "{{month}} Month"
+  }
+}

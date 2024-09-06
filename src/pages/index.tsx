@@ -4,7 +4,7 @@ import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import { useMemo, useState } from "react";
 import { EventScale, EventStatus } from "@/types/event";
-import { Switch } from "@headlessui/react";
+import { Field, Label, Switch } from "@headlessui/react";
 import { sendTrack } from "@/utils/track";
 import { DurationType } from "@/types/list";
 import {
@@ -12,11 +12,14 @@ import {
   groupByCustomDurationEvent,
   sortEvents,
 } from "@/utils/event";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 export default function Home(props: { events: Event[] }) {
+  const { t } = useTranslation();
   const [selectedFilter, setFilter] = useState({
     onlyAvailable: false,
-    eventScale: ["All"],
+    eventScale: ["all"],
   });
 
   const filteredEvents = filteringEvents(props.events, selectedFilter);
@@ -34,11 +37,12 @@ export default function Home(props: { events: Event[] }) {
         {filteredEvents.length === 0 && (
           <div className="bg-white border rounded-xl p-6 mt-6 text-center h-96 flex justify-center flex-col">
             <h1 className="text-xl text-red-400 font-bold">
-              似乎没有满足查询需求的展会...<br></br>
-              换个查询条件，或者...再等等？
+              {t("homepage.noResult")}
+              <br></br>
+              {t("homepage.noResultTip")}
             </h1>
             <p className="text-base text-gray-400 mt-2">
-              你也可以向我们反馈一个已经官宣的展会！页脚有我们的联系方式！
+              {t("homepage.noResultContact")}
             </p>
           </div>
         )}
@@ -66,6 +70,7 @@ function DurationSection({
   durationType: string;
   events: Event[];
 }) {
+  const { t } = useTranslation();
   const groupByDateEvent = useMemo(() => {
     return groupBy(events, (event) =>
       // Some event open in the last day of start month, but it should be count in next month.
@@ -81,11 +86,13 @@ function DurationSection({
   return (
     <section className="my-8 border rounded-xl p-3 md:p-6 bg-white">
       <h2 className="text-xl md:text-2xl text-red-400 font-bold md:mb-6">
-        {durationType === DurationType.Passed && "已经结束"}
-        {durationType === DurationType.Now && "就是现在"}
-        {durationType === DurationType.Soon && "马上就来"}
-        {durationType === DurationType.Next && "今年还有"}
-        {durationType === DurationType.NextYear && "看看来年"}
+        {durationType === DurationType.Passed &&
+          t("homepage.group.status.passed")}
+        {durationType === DurationType.Now && t("homepage.group.status.now")}
+        {durationType === DurationType.Soon && t("homepage.group.status.soon")}
+        {durationType === DurationType.Next && t("homepage.group.status.next")}
+        {durationType === DurationType.NextYear &&
+          t("homepage.group.status.nextYear")}
       </h2>
       {months.map((month) => (
         <div
@@ -95,14 +102,14 @@ function DurationSection({
           <h3 className="text-lg md:text-xl text-red-400 font-bold mb-2 md:mb-6">
             {month !== "unknown"
               ? durationType === DurationType.NextYear
-                ? `明年${month}月 `
-                : `${month}月 `
+                ? t("homepage.nextYearMonth", { month })
+                : t("homepage.month", { month })
               : null}
-            <span className="text-sm text-gray-500 font-bold">
-              共有 {groupByDateEvent[month].length} 个展会
+            <span className="text-sm text-gray-500 font-bold ml-1">
+              {t("homepage.total", { total: groupByDateEvent[month].length })}
             </span>
           </h3>
-          <div className="grid gap-4 md:gap-10 grid-cols-1 xs:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 md:gap-10 grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {sortEvents(groupByDateEvent[month], "asc").map((event) => (
               <EventCard
                 key={event.name}
@@ -119,7 +126,7 @@ function DurationSection({
 }
 
 const EventScaleScaleOptions = [
-  { key: "All", name: "我全都要（全部）" },
+  { key: "all", name: "我全都要（全部）" },
   { key: EventScale.Cosy, name: "三两小聚（小型展）" },
   { key: EventScale.Small, name: "有点厉害（中型展）" },
   { key: EventScale.Medium, name: "好多人啊（大型展）" },
@@ -137,6 +144,7 @@ function Filter({
     eventScale: (typeof EventScale)[keyof typeof EventScale][];
   };
 }) {
+  const { t } = useTranslation();
   const handleFilter = (key: string, value: unknown) => {
     sendTrack({
       eventName: "click-filter",
@@ -156,11 +164,11 @@ function Filter({
   );
   return (
     <div className="bg-white border rounded-xl p-6 flex sm:items-center flex-col sm:flex-row relative">
-      <Switch.Group>
+      <Field>
         <div className="flex items-center max-sm:mb-4 max-sm:justify-between">
-          <Switch.Label className="mr-4 text-gray-600">
-            只看还未开始的展会
-          </Switch.Label>
+          <Label className="mr-4 text-gray-600">
+            {t("event.filter.onlyAvailable")}
+          </Label>
           <Switch
             checked={selectedFilter.onlyAvailable}
             onChange={(v) => handleFilter("onlyAvailable", v)}
@@ -168,7 +176,7 @@ function Filter({
               selectedFilter.onlyAvailable ? "bg-red-400" : "bg-gray-200"
             } relative inline-flex h-6 w-11 items-center rounded-full`}
           >
-            <span className="sr-only">只看还未开始的展会</span>
+            <span className="sr-only">{t("event.filter.onlyAvailable")}</span>
             <span
               className={`${
                 selectedFilter.onlyAvailable ? "translate-x-6" : "translate-x-1"
@@ -176,7 +184,7 @@ function Filter({
             />
           </Switch>
         </div>
-      </Switch.Group>
+      </Field>
 
       <div className="bg-gray-100 w-[2px] h-4 mx-4 hidden sm:block" />
 
@@ -188,7 +196,7 @@ function Filter({
       >
         {EventScaleScaleOptions.map((option) => (
           <option className="text-gray-600" key={option.key} value={option.key}>
-            {option.name}
+            {t(`event.filter.${option.key}`)}
           </option>
         ))}
       </select>
@@ -196,7 +204,7 @@ function Filter({
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }: { locale: string }) {
   const xata = new XataClient();
   const events = await xata.db.event
     .filter({
@@ -227,6 +235,7 @@ export async function getStaticProps() {
   return {
     props: {
       events,
+      ...(await serverSideTranslations(locale, ["common"])),
     },
     revalidate: 86400,
   };

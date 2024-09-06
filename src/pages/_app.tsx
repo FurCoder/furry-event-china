@@ -1,3 +1,5 @@
+import { appWithTranslation } from "next-i18next";
+
 import { Noto_Sans_SC, Rubik } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
@@ -21,7 +23,7 @@ const rubik = Rubik({
   preload: true,
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <style jsx global>{`
@@ -40,3 +42,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+export default appWithTranslation(App);

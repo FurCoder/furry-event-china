@@ -3,14 +3,16 @@ import { sendTrack } from "@/utils/track";
 import Link from "next/link";
 import { format } from "date-fns";
 import { zhCN } from "date-fns/locale";
+import { useTranslation } from "next-i18next";
 
 export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
   const dateString = format(LASTCOMMITDATETIME, "yyyy/MM/dd", { locale: zhCN });
+  const { t } = useTranslation();
 
   return (
     <footer className="mt-8 bg-white rounded-t-xl p-6 text-sm text-center md:text-left">
-      <h5 className="block text-gray-600 mb-4 text-sm flex flex-col md:flex-row">
-        <span className="font-bold mr-2">FEC·兽展日历</span>
+      <h5 className="text-gray-600 mb-4 text-sm flex flex-col md:flex-row">
+        <span className="font-bold mr-2">{t("header.title")}</span>
         <span className="">
           {isCNRegion ? "FURRYCONS.CN" : "FURRYEVENTCHINA.COM"} ©️
           {new Date().getFullYear()}
@@ -21,7 +23,7 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
         <div>
           <div className="flex flex-col md:flex-row items-center md:items-start">
             <div className="mt-4 md:mt-0 text-center md:text-left md:mr-4">
-              <h3>友情链接</h3>
+              <h3 className="text-gray-700">{t("footer.friendsLink")}</h3>
               <div className="flex flex-col">
                 {FriendSiteLinks.map((link) => (
                   <FriendLink
@@ -34,7 +36,7 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
             </div>
 
             <div className="mt-4 md:mt-0 text-center md:text-left">
-              <h3>关于我们</h3>
+              <h3 className="text-gray-700">{t("footer.aboutUs")}</h3>
               <ul className="flex flex-col">
                 {AboutUsLinks.map((link) => (
                   <li key={link.link}>
@@ -50,35 +52,31 @@ export default function Footer({ isCNRegion }: { isCNRegion: boolean }) {
           </div>
         </div>
 
-        <div className="flex flex-col text-sm text-gray-700 text-center md:text-right text-xs mt-4 md:mt-0">
-          <span className="block">
-            本页所示信息仅供参考，准确信息请以活动官网为准
-          </span>
+        <div className="flex flex-col text-gray-700 text-center md:text-right text-xs mt-4 md:mt-0">
+          <span className="block">{t("footer.disclaimer")}</span>
           <div className="mt-1 flex flex-col md:flex-row1 justify-center md:justify-end items-center md:items-end">
             <span className="flex items-center">
-              由
+              {t("footer.use")}
               <img
                 alt="smiling-face-with-hearts"
                 src="/svgs/smiling-face-with-hearts.svg"
                 className="w-6 mx-1"
-                //@ts-ignore
                 fetchPriority="low"
                 loading="lazy"
                 width={32}
                 height={32}
               />
-              和
+              {t("footer.and")}
               <img
                 alt="steaming-bowl"
                 src="/svgs/steaming-bowl.svg"
                 className="w-6 mx-1"
-                //@ts-ignore
                 fetchPriority="low"
                 loading="lazy"
                 width={32}
                 height={32}
               />
-              制作而成
+              {t("footer.made")}
             </span>
             {isCNRegion && (
               <span className="mt-2">
@@ -118,9 +116,12 @@ function FriendLink({ label, link }: { label: string; link: string }) {
 }
 
 export function FriendSiteBlock() {
+  const { t } = useTranslation();
   return (
     <section className="bg-white p-3 md:p-6 rounded-xl mt-8">
-      <h3 className="font-bold text-gray-600 text-xl md:text-2xl">友情链接</h3>
+      <h3 className="font-bold text-gray-600 text-xl md:text-2xl">
+        {t("footer.friendsLink")}
+      </h3>
       <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
         {FriendSiteLinks.map((link) => (
           <Link
