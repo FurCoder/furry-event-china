@@ -1,4 +1,3 @@
-import { Organization, XataClient } from "@/xata/xata";
 import clsx from "clsx";
 import groupBy from "lodash-es/groupBy";
 import Image from "@/components/image";
@@ -8,11 +7,12 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import wfetch from "@/api";
 import { z } from "zod";
+import { OrganizationType } from "@/types/organization";
 
 export default function OrganizationPage({
   organizations,
 }: {
-  organizations: Organization[];
+  organizations: OrganizationType[];
 }) {
   const groupByStatusOrganizations = groupBy(organizations, (o) => o.status);
   const { t } = useTranslation();
@@ -43,7 +43,11 @@ export default function OrganizationPage({
   );
 }
 
-function OrganizationItem({ organization }: { organization: Organization }) {
+function OrganizationItem({
+  organization,
+}: {
+  organization: OrganizationType;
+}) {
   return (
     <Link
       href={organization.slug || ""}
@@ -99,15 +103,17 @@ export async function getStaticProps({ locale }: { locale: string }) {
     .safeParse(organizations);
   const validOrganizations = parseResult.data;
 
-  if (parseResult.error) {
-    throw new Error("Organization API valid failed");
+  if (!validOrganizations) {
+    return {
+      notFound: true,
+    };
   }
   return {
     props: {
       organizations: validOrganizations,
       headMetas: {
         title: "展商列表",
-        des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆的 ${validOrganizations?.length} 个和“furry”，“兽展”，“兽人控”等主题相关的展商，我们真挚感谢这些为兽人文化发展做出贡献的团体，今天的繁荣离不开你们的支持！`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆的 ${validOrganizations.length} 个和“furry”，“兽展”，“兽人控”等主题相关的展商，我们真挚感谢这些为兽人文化发展做出贡献的团体，今天的繁荣离不开你们的支持！`,
         link: "https://www.furryeventchina.com/organization",
       },
       structuredData: {

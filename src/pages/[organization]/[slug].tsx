@@ -456,7 +456,11 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const validResult = EventSchema.safeParse(response);
   const event = validResult.data;
 
-  console.log(validResult.error);
+  if (validResult.error) {
+    console.log(`Error in render ${context?.params?.slug}`);
+  }
+
+  validResult.error && console.log(JSON.stringify(validResult.error));
 
   if (!event) {
     return {

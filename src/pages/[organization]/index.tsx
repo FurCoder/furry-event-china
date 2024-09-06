@@ -1,7 +1,6 @@
 import EventCard from "@/components/eventCard";
 import OrganizationStatus from "@/components/organizationStatus";
 import styles from "@/styles/Organization.module.css";
-import { Organization } from "@/xata/xata";
 import clsx from "clsx";
 import Image from "@/components/image";
 import { GetStaticPropsContext } from "next/types";
@@ -18,6 +17,7 @@ import wfetch from "@/api";
 import { z } from "zod";
 import { format } from "date-fns";
 import { EventType } from "@/types/event";
+import { OrganizationType } from "@/types/organization";
 // import {
 //   WebsiteButton,
 //   QQGroupButton,
@@ -30,7 +30,7 @@ import { EventType } from "@/types/event";
 
 export default function OrganizationDetail(props: {
   events: EventType[];
-  organization: Organization;
+  organization: OrganizationType;
 }) {
   const { t } = useTranslation();
   const { organization, events } = props;
@@ -336,8 +336,16 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       }
       return 0;
     });
+  const slug = context?.params?.organization;
+  if (validResult.error) {
+    console.log(
+      `Error in render ${slug},reason:${JSON.stringify(
+        validResult.error
+      )}`
+    );
+  }
 
-  const dateString = validEvents?.[0].startAt
+  const dateString = validEvents?.[0]?.startAt
     ? format(validEvents?.[0].startAt, "yyyy年MM月dd日")
     : "未知时间线";
 
