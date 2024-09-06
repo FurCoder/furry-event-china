@@ -98,7 +98,8 @@ export default function Layout({
           rel="canonical"
           href={`https://www.furryeventchina.com${asPath}`}
         /> */}
-        <link
+        {/* disabled due to en translate not finish. */}
+        {/* <link
           rel="alternate"
           hrefLang="zh-Hans-CN"
           href={`https://www.furrycons.cn${asPath}`}
@@ -117,7 +118,7 @@ export default function Layout({
           rel="alternate"
           hrefLang="en"
           href={`https://www.furryeventchina.com/en${asPath}`}
-        />
+        /> */}
 
         {structuredData?.event && (
           <script
