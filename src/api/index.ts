@@ -8,7 +8,7 @@ const HOST =
     ? "https://api.furrycons.cn"
     : "https://api.furryeventchina.com";
 
-const wfetch = wretch("http://localhost:8787", { cache: "default" })
-  .auth(`Bearer readread`)
+const wfetch = wretch(HOST, { cache: "default" })
+  .auth(`Bearer ${process.env.FEC_API_TOKEN}`)
   .addon(QueryStringAddon);
 export default wfetch;

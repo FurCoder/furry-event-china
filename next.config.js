@@ -33,16 +33,6 @@ const nextConfig = {
     loaderFile: "./src/utils/imageLoader.ts",
   },
   assetPrefix: isProd && STATIC_CDN_URL ? STATIC_CDN_URL : undefined,
-  experimental: {
-    swcPlugins: [
-      [
-        "next-superjson-plugin",
-        {
-          excluded: [],
-        },
-      ],
-    ],
-  },
   sentry: {
     // disableClientWebpackPlugin: true,
     // disableServerWebpackPlugin: true,
