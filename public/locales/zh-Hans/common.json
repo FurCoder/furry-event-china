@@ -66,7 +66,7 @@
   },
   "organization": {
     "active": "活跃展商",
-    "deactive": "停止活动展商",
+    "inactive": "停止活动展商",
     "createdAt": "已创立 {{distance}}",
     "firstTimeEvent": "首次举办于 {{year}}年{{month}}月{{day}}日",
     "firstTimeShow": "首次出现于 {{year}}年{{month}}月{{day}}日",

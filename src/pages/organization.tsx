@@ -1,4 +1,3 @@
-import { Organization, XataClient } from "@/xata/xata";
 import clsx from "clsx";
 import groupBy from "lodash-es/groupBy";
 import Image from "@/components/image";
@@ -6,11 +5,14 @@ import Link from "next/link";
 import { sendTrack } from "@/utils/track";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import wfetch from "@/api";
+import { z } from "zod";
+import { OrganizationType } from "@/types/organization";
 
 export default function OrganizationPage({
   organizations,
 }: {
-  organizations: Organization[];
+  organizations: OrganizationType[];
 }) {
   const groupByStatusOrganizations = groupBy(organizations, (o) => o.status);
   const { t } = useTranslation();
@@ -29,10 +31,10 @@ export default function OrganizationPage({
       </section>
       <section className="mt-6">
         <h1 className="font-bold text-gray-600 text-2xl">
-          {t("organization.deactive")}
+          {t("organization.inactive")}
         </h1>
         <div className="mt-4 grid md:grid-cols-3 gap-10">
-          {groupByStatusOrganizations["deactive"].map((o) => (
+          {groupByStatusOrganizations["inactive"].map((o) => (
             <OrganizationItem key={o.id} organization={o} />
           ))}
         </div>
@@ -41,7 +43,11 @@ export default function OrganizationPage({
   );
 }
 
-function OrganizationItem({ organization }: { organization: Organization }) {
+function OrganizationItem({
+  organization,
+}: {
+  organization: OrganizationType;
+}) {
   return (
     <Link
       href={organization.slug || ""}
@@ -83,17 +89,31 @@ function OrganizationItem({ organization }: { organization: Organization }) {
 }
 
 export async function getStaticProps({ locale }: { locale: string }) {
-  const xata = new XataClient();
+  const organizations = await wfetch.get("/organization/all").json();
+  const parseResult = z
+    .array(
+      z.object({
+        name: z.string(),
+        logoUrl: z.string().nullable(),
+        slug: z.string(),
+        status: z.string(),
+        id: z.string(),
+      })
+    )
+    .safeParse(organizations);
+  const validOrganizations = parseResult.data;
 
-  const organizations = await xata.db.organization
-    .select(["name", "logoUrl", "slug", "status", "id"])
-    .getAll();
+  if (!validOrganizations) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
-      organizations,
+      organizations: validOrganizations,
       headMetas: {
         title: "展商列表",
-        des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆的 ${organizations.length} 个和“furry”，“兽展”，“兽人控”等主题相关的展商，我们真挚感谢这些为兽人文化发展做出贡献的团体，今天的繁荣离不开你们的支持！`,
+        des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆的 ${validOrganizations.length} 个和“furry”，“兽展”，“兽人控”等主题相关的展商，我们真挚感谢这些为兽人文化发展做出贡献的团体，今天的繁荣离不开你们的支持！`,
         link: "https://www.furryeventchina.com/organization",
       },
       structuredData: {

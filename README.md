@@ -5,7 +5,7 @@
 ![](https://img.shields.io/badge/Sentry-purple.svg?style=flat-square&logo=sentry)
 ![](https://img.shields.io/badge/Umami-orange.svg?style=flat-square&logo=umami)
 ![](https://img.shields.io/badge/Google%20Analytics%205-blue.svg?style=flat-square&logo=google-analytics)
-![](https://img.shields.io/badge/Xata-blue.svg?style=flat-square&logo=xata)
+![](https://img.shields.io/badge/Hono.js-blue.svg?style=flat-square&logo=hono)
 ![](https://img.shields.io/badge/Cloudflare%20R2-blue.svg?style=flat-square&logo=cloudflare)
 ![](https://img.shields.io/badge/Cloudflare%20Worker-blue.svg?style=flat-square&logo=cloudflare)
 ![](https://img.shields.io/badge/CloudFront-orange.svg?style=flat-square&logo=amazon-aws)
@@ -16,7 +16,15 @@
 
 ## Start Developing
 
+### Env config
+
+Copy `.env.example` and paste it, `FEC_API_TOKEN` needs to be obtained by registering in our console, the rest like Sentry do not need configuration.
+
 ```bash
+nvm use
+
+corepack enable
+
 yarn install
 yarn dev
 ```

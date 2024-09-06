@@ -1,9 +1,8 @@
 import EventCard from "@/components/eventCard";
 import { FriendSiteBlock } from "@/components/layout/footer";
-import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import { useMemo, useState } from "react";
-import { EventScale, EventStatus } from "@/types/event";
+import { EventScale, EventStatus, EventType } from "@/types/event";
 import { Field, Label, Switch } from "@headlessui/react";
 import { sendTrack } from "@/utils/track";
 import { DurationType } from "@/types/list";
@@ -14,8 +13,10 @@ import {
 } from "@/utils/event";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import wfetch from "@/api";
+import { z } from "zod";
 
-export default function Home(props: { events: Event[] }) {
+export default function Home(props: { events: EventType[] }) {
   const { t } = useTranslation();
   const [selectedFilter, setFilter] = useState({
     onlyAvailable: false,
@@ -68,13 +69,13 @@ function DurationSection({
   events,
 }: {
   durationType: string;
-  events: Event[];
+  events: EventType[];
 }) {
   const { t } = useTranslation();
   const groupByDateEvent = useMemo(() => {
     return groupBy(events, (event) =>
       // Some event open in the last day of start month, but it should be count in next month.
-      event.endDate ? new Date(event.endDate).getUTCMonth() + 1 : "unknown"
+      event.endAt ? new Date(event.endAt).getUTCMonth() + 1 : "unknown"
     );
   }, [events]);
 
@@ -205,36 +206,34 @@ function Filter({
 }
 
 export async function getStaticProps({ locale }: { locale: string }) {
-  const xata = new XataClient();
-  const events = await xata.db.event
-    .filter({
-      $any: [
-        { endDate: { $ge: new Date(new Date().getUTCFullYear(), 0, 1) } },
-        { $notExists: "endDate" },
-      ],
-      $not: {
-        status: EventStatus.EventCancelled,
-      },
+  const events = await wfetch.get("/event/home").json();
+
+  const homeSchema = z.array(
+    z.object({
+      name: z.string(),
+      address: z.string().nullable(),
+      addressExtra: z.object({ city: z.string().nullable() }).nullable(),
+      thumbnail: z.string().nullable(),
+      poster: z.object({}).nullable(),
+      startAt: z.string().datetime().nullable(),
+      endAt: z.string().datetime().nullable(),
+      slug: z.string(),
+      // status: z.string(),
+      scale: z.string(),
+      organization: z.object({
+        slug: z.string(),
+        name: z.string(),
+        logoUrl: z.string().nullable(),
+      }),
     })
-    .select([
-      "name",
-      "address",
-      "city",
-      "coverUrl",
-      "posterUrl",
-      "startDate",
-      "endDate",
-      "slug",
-      "status",
-      "scale",
-      "organization.name",
-      "organization.logoUrl",
-      "organization.slug",
-    ])
-    .getAll();
+  );
+
+  const validEvents = homeSchema.safeParse(events);
+  const finalEvents = validEvents.data;
+
   return {
     props: {
-      events,
+      events: finalEvents,
       ...(await serverSideTranslations(locale, ["common"])),
     },
     revalidate: 86400,

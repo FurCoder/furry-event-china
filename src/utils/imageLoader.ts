@@ -1,13 +1,13 @@
+import { EventType } from "@/types/event";
 import { ImageLoaderProps } from "next/image";
-import { EventRecord } from "@/xata/xata";
 
 const GLOBAL_AUTO_CDN_IMAGE_URL = "images.furrycons.cn";
 const GLOBAL_MANUAL_CDN_IMAGE_URL = "images.furryeventchina.com";
 const NO_CDN_IMAGE_URL = "cos-proxy.furrycons.cn";
 
-export const getEventCoverImgPath = (event: Partial<EventRecord>) => {
+export const getEventCoverImgPath = (event: Partial<EventType>) => {
   return (
-    event.coverUrl || event.posterUrl?.[0] || `fec-event-default-cover.png`
+    event.thumbnail || event.poster?.all?.[0] || `fec-event-default-cover.png`
   );
 };
 

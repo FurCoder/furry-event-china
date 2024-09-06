@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 /** Sync with https://schema.org/EventStatusType */
 export const EventStatus = {
   /** 活动已取消。 */
@@ -40,3 +42,52 @@ export const EventScaleLabel = {
   [EventScale.Large]: "超大型规模",
   [EventScale.Mega]: "巨型规模",
 };
+
+export const EventSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+  startAt: z.string().datetime().nullable(),
+  endAt: z.string().datetime().nullable(),
+  status: z.string(),
+  scale: z.string(),
+  source: z.string().nullable(),
+  address: z.string().nullable(),
+  addressLat: z.string().nullable(),
+  addressLon: z.string().nullable(),
+  addressExtra: z.object({ city: z.string().nullable() }).nullable(),
+  thumbnail: z.string().nullable(),
+  poster: z
+    .object({
+      all: z.array(z.string()).nullable(),
+    })
+    .nullable(),
+  detail: z.string().nullable(),
+  features: z.object({}).nullable(),
+
+  organization: z.object({
+    id: z.string().uuid(), // 假设 id 是一个 UUID
+    slug: z.string().min(1), // slug 至少有一个字符
+    name: z.string().min(1), // name 至少有一个字符
+    description: z.string().nullable(), // description 至少有一个字符
+    status: z.enum(["active", "inactive"]), // 假设 status 只能是 'active' 或 'inactive'
+    type: z.string().nullable(), // type 可以是字符串或 null
+    logoUrl: z.string().nullable(), // logoUrl 应该是一个有效的 URL
+    richMediaConfig: z.any().nullable(), // richMediaConfig 可以是任意类型或 null
+    contactMail: z.string().email().nullable(), // contactMail 应该是一个有效的邮箱地址
+    website: z.string().url().nullable(), // website 应该是一个有效的 URL
+    twitter: z.string().url().nullable(), // twitter 可以是有效的 URL 或 null
+    weibo: z.string().url().nullable(), // weibo 可以是有效的 URL 或 null
+    qqGroup: z.string().nullable(), // qqGroup 可以是字符串或 null
+    bilibili: z.string().url().nullable(), // bilibili 可以是有效的 URL 或 null
+    wikifur: z.string().url().nullable(), // wikifur 可以是有效的 URL 或 null
+    creationTime: z
+      .string()
+      .refine((date) => !isNaN(Date.parse(date)), {
+        message: "Invalid date format",
+      })
+      .nullable(), // creationTime 应该是一个有效的日期字符串
+  }),
+});
+
+export type EventType = z.infer<typeof EventSchema>;

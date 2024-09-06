@@ -66,7 +66,7 @@
   },
   "organization": {
     "active": "Active Organizers",
-    "deactive": "Inactive Organizers",
+    "inactive": "Inactive Organizers",
     "createdAt": "Established {{distance}} ago",
     "firstTimeEvent": "First held on {{year}}/{{month}}/{{day}}",
     "firstTimeShow": "First appeared on {{year}}/{{month}}/{{day}}",
