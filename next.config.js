@@ -9,7 +9,9 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const { GitRevisionPlugin } = require("git-revision-webpack-plugin");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.NODE_ENV === "production",
+  enabled:
+    process.env.NODE_ENV === "production" &&
+    process.env.NEXT_PUBLIC_ENABLE_TRACK === "true",
 });
 
 const { i18n } = require("./next-i18next.config");

@@ -79,6 +79,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
   const parseEventResult = z
     .array(
       z.object({
+        id: z.string(),
         name: z.string(),
         slug: z.string(),
         addressExtra: z.object({ city: z.string().nullable() }).nullable(),
@@ -92,14 +93,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
     )
     .safeParse(events);
 
-  const validEvents = parseEventResult.data?.map(
-    ({ startAt, endAt, addressExtra, ...rest }) => ({
-      ...rest,
-      startDate: startAt,
-      endDate: endAt,
-      city: addressExtra?.city,
-    })
-  );
+  const validEvents = parseEventResult.data;
   return {
     props: {
       events: validEvents,

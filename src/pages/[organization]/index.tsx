@@ -286,9 +286,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     description: z.string().nullable(), // description 至少有一个字符
     status: z.enum(["active", "inactive"]), // 假设 status 只能是 'active' 或 'inactive'
     type: z.string().nullable(), // type 可以是字符串或 null
-    logoUrl: z.string(), // logoUrl 应该是一个有效的 URL
+    logoUrl: z.string().nullable(), // logoUrl 应该是一个有效的 URL
     richMediaConfig: z.any().nullable(), // richMediaConfig 可以是任意类型或 null
-    contactMail: z.string().email(), // contactMail 应该是一个有效的邮箱地址
+    contactMail: z.string().email().nullable(), // contactMail 应该是一个有效的邮箱地址
     website: z.string().url().nullable(), // website 应该是一个有效的 URL
     twitter: z.string().url().nullable(), // twitter 可以是有效的 URL 或 null
     weibo: z.string().url().nullable(), // weibo 可以是有效的 URL 或 null
