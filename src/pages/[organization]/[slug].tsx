@@ -1,5 +1,5 @@
 import OrganizationStatus from "@/components/organizationStatus";
-import { Event, XataClient } from "@/xata/xata";
+
 import clsx from "clsx";
 import { format } from "date-fns";
 import { GetStaticPropsContext } from "next";
@@ -11,7 +11,13 @@ import { IoLocation } from "react-icons/io5";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { TbArrowsRightLeft } from "react-icons/tb";
 import Link from "next/link";
-import { EventScaleLabel, EventStatus, EventStatusSchema } from "@/types/event";
+import {
+  EventScaleLabel,
+  EventSchema,
+  EventStatus,
+  EventStatusSchema,
+  EventType,
+} from "@/types/event";
 import { sendTrack } from "@/utils/track";
 import { getEventCoverImgPath, imageUrl } from "@/utils/imageLoader";
 import Script from "next/script";
@@ -29,8 +35,8 @@ import { FaPeoplePulling } from "react-icons/fa6";
 import EventStatusBar from "@/components/EventStatusBar";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-
-const xata = new XataClient();
+import wfetch from "@/api";
+import { z } from "zod";
 
 const MapLoadingStatus = {
   Idle: "idle",
@@ -39,7 +45,7 @@ const MapLoadingStatus = {
   Error: "error",
 };
 
-export default function EventDetail({ event }: { event: Event }) {
+export default function EventDetail({ event }: { event: EventType }) {
   const { t } = useTranslation();
   const [mapLoadingStatus, setMapLoadingStatus] = useState(() => {
     if (event.addressLat && event.addressLon) {
@@ -103,7 +109,9 @@ export default function EventDetail({ event }: { event: Event }) {
     }
   };
 
-  const showDescriptionContainer = !!(event.detail || event.posterUrl?.length);
+  const showDescriptionContainer = !!(
+    event.detail || event.poster?.all?.length
+  );
 
   return (
     <>
@@ -179,7 +187,7 @@ export default function EventDetail({ event }: { event: Event }) {
               className="flex items-center text-gray-500 mt-4"
             >
               <IoLocation className="text-gray-500 inline-block mr-2" />
-              {`${event.city} · ${
+              {`${event.addressExtra?.city} · ${
                 event.address ? event.address : t("event.unknown")
               }`}
             </p>
@@ -189,14 +197,14 @@ export default function EventDetail({ event }: { event: Event }) {
             >
               <BsCalendar2DateFill className="text-gray-500 inline-block mr-2" />
               <time aria-label="活动开始时间" suppressHydrationWarning>
-                {event.startDate
-                  ? format(event.startDate, t("event.dateFormat"))
+                {event.startAt
+                  ? format(event.startAt, t("event.dateFormat"))
                   : t("event.unknown")}
               </time>
               <TbArrowsRightLeft className="mx-2  text-sm" />
               <time aria-label="活动结束时间" suppressHydrationWarning>
-                {event.endDate
-                  ? format(event.endDate, t("event.dateFormat"))
+                {event.endAt
+                  ? format(event.endAt, t("event.dateFormat"))
                   : t("event.unknown")}
               </time>
             </p>
@@ -218,9 +226,9 @@ export default function EventDetail({ event }: { event: Event }) {
             </p> */}
           </div>
 
-          {event.website && (
+          {event.source && (
             <a
-              href={event.website}
+              href={event.source}
               target="_blank"
               rel="noreferrer"
               onClick={() =>
@@ -228,7 +236,7 @@ export default function EventDetail({ event }: { event: Event }) {
                   eventName: "click-event-website",
                   eventValue: {
                     eventName: event.name,
-                    link: event.website,
+                    link: event.source,
                   },
                 })
               }
@@ -289,9 +297,9 @@ export default function EventDetail({ event }: { event: Event }) {
               </div>
             )}
 
-            {!!event.posterUrl?.length && (
+            {!!event.poster?.all?.length && (
               <div className="bg-white rounded-xl flex-grow p-6 md:mr-4">
-                {event.posterUrl.map((cover, index) => (
+                {event.poster?.all?.map((cover, index) => (
                   <div className="relative" key={cover}>
                     <NextImage
                       alt={`${event.name}的详情图片-${index + 1}`}
@@ -407,11 +415,21 @@ export default function EventDetail({ event }: { event: Event }) {
 }
 
 export async function getStaticPaths() {
-  const events = await xata.db.event
-    .select(["*", "organization.slug"])
-    .getAll();
+  const events = await wfetch.get("/event/all").json();
+
+  const eventSchema = z.array(
+    z.object({
+      slug: z.string().min(1),
+      organization: z.object({
+        slug: z.string(),
+      }),
+    })
+  );
+
+  const validResult = eventSchema.safeParse(events);
+
   return {
-    paths: events.map((event) => ({
+    paths: validResult.data?.map((event) => ({
       params: { organization: event.organization?.slug, slug: event.slug },
     })),
     fallback: "blocking", // can also be true or 'blocking'
@@ -419,13 +437,26 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const event = await xata.db.event
-    .filter({
-      slug: context.params?.slug as string,
-      "organization.slug": context.params?.organization as string,
+  // const event = await xata.db.event
+  //   .filter({
+  //     slug: context.params?.slug as string,
+  //     "organization.slug": context.params?.organization as string,
+  //   })
+  //   .select(["*", "organization"])
+  //   .getFirst();
+
+  const response = await wfetch
+    .query({
+      slug: context.params?.slug,
+      organization: context.params?.organization,
     })
-    .select(["*", "organization"])
-    .getFirst();
+    .get("/event/detail")
+    .json();
+
+  const validResult = EventSchema.safeParse(response);
+  const event = validResult.data;
+
+  console.log(validResult.error);
 
   if (!event) {
     return {
@@ -434,30 +465,30 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   }
 
   const metaDes =
-    event?.startDate && event.endDate
+    event.startAt && event.endAt
       ? `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${
           event?.name
         }”的详细信息：这是由“${
           event?.organization?.name
         }”举办的兽展，将于${format(
-          event?.startDate!,
+          event?.startAt!,
           "yyyy年MM月dd日"
-        )}至${format(event?.endDate!, "yyyy年MM月dd日")}在“${event?.city}${
-          event?.address
-        }”举办，喜欢的朋友记得关注开始售票时间～`
-      : `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${event?.name}”的详细信息：这是由“${event?.organization?.name}”举办的兽展，将在“${event?.city}${event?.address}”举办，喜欢的朋友记得关注开始售票时间～`;
+        )}至${format(event?.endAt!, "yyyy年MM月dd日")}在“${
+          event?.addressExtra?.city
+        }${event?.address}”举办，喜欢的朋友记得关注开始售票时间～`
+      : `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${event?.name}”的详细信息：这是由“${event?.organization?.name}”举办的兽展，将在“${event?.addressExtra?.city}${event?.address}”举办，喜欢的朋友记得关注开始售票时间～`;
 
   return {
     props: {
-      event,
+      event: validResult.data,
       headMetas: {
         title: `${event?.name}-${event?.organization?.name}`,
         keywords: keywordgenerator({
           page: "event",
           event: {
             name: event?.name,
-            startDate: event?.startDate,
-            city: event?.city,
+            startDate: event?.startAt,
+            city: event?.addressExtra?.city || undefined,
           },
         }),
         des: metaDes,
@@ -492,8 +523,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           "@context": "https://schema.org",
           "@type": "Event",
           name: event?.name,
-          startDate: event?.startDate,
-          endDate: event?.endDate,
+          startDate: event?.startAt,
+          endDate: event?.endAt,
           eventStatus:
             EventStatusSchema[event?.status || EventStatus.EventScheduled],
           eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -503,7 +534,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
             address: {
               "@type": "PostalAddress",
               streetAddress: event?.address,
-              addressLocality: event?.city,
+              addressLocality: event?.addressExtra?.city,
               // postalCode: "19019",
               // addressRegion: event?.city,
               addressCountry: "CN",
@@ -530,8 +561,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           },
         },
         imageObject: [
-          ...(event?.coverUrl ? [event.coverUrl] : []),
-          ...(event?.posterUrl || []),
+          ...(event?.thumbnail ? [event.thumbnail] : []),
+          ...(event?.poster?.all || []),
         ].map((image) => ({
           "@context": "https://schema.org/",
           "@type": "ImageObject",

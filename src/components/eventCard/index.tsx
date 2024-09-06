@@ -1,4 +1,3 @@
-import { Event } from "@/xata/xata";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import styles from "@/components/eventCard/index.module.css";
@@ -10,6 +9,7 @@ import { sendTrack } from "@/utils/track";
 import { getEventCoverImgPath } from "@/utils/imageLoader";
 import { format } from "date-fns";
 import { zhCN } from "date-fns/locale";
+import { EventType } from "@/types/event";
 
 let instancesCount = 0;
 
@@ -19,7 +19,7 @@ export default function EventCard({
   fallbackWidth,
   fallbackHeight,
 }: {
-  event: Event;
+  event: EventType;
   sizes?: string;
   fallbackWidth?: number;
   fallbackHeight?: number;
@@ -115,7 +115,7 @@ export default function EventCard({
                   event.organization?.logoUrl ? "pl-1" : "pl-2"
                 )}
               >
-                {event.city}市
+                {event.addressExtra?.city}市
               </span>
             </div>
           </div>
@@ -131,14 +131,14 @@ export default function EventCard({
             <h4 className=" font-bold text-base md:text-2xl">{event.name}</h4>
             <h5 className="text-sm md:text-lg">{event.organization?.name}</h5>
             <div className="text-xs md:text-base">
-              {event.startDate && event.endDate && (
+              {event.startAt && event.endAt && (
                 <div className="flex items-center" suppressHydrationWarning>
                   <BsCalendar2DateFill className="mr-1 flex-shrink-0 text-sm" />
-                  {event.startDate && event.endDate
-                    ? `${format(event.startDate, "yyyy/MM/dd", {
+                  {event.startAt && event.endAt
+                    ? `${format(event.startAt, "yyyy/MM/dd", {
                         locale: zhCN,
                       })} -
-                ${format(event.endDate, "yyyy/MM/dd", { locale: zhCN })}`
+                ${format(event.endAt, "yyyy/MM/dd", { locale: zhCN })}`
                     : null}
                 </div>
               )}

@@ -1,27 +1,23 @@
 import { eventGroupByYear } from "@/utils/event";
 import { sendTrack } from "@/utils/track";
-import { Event, XataClient } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { getEventCoverImgPath } from "@/utils/imageLoader";
 import { format } from "date-fns";
 import Image from "@/components/image";
 import { titleGenerator } from "@/utils/meta";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Button } from "@headlessui/react";
-import { FaAngleDown, FaLink } from "react-icons/fa6";
+import { FaLink } from "react-icons/fa6";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { EventSchema, EventType } from "@/types/event";
+import wfetch from "@/api";
+import { z } from "zod";
 
-export default function City(props: { events: Event[] }) {
+export default function City(props: { events: EventType[] }) {
   const { events } = props;
 
   const groupByCityEvents = useMemo(() => {
-    return groupBy(events, (event) => event.city);
+    return groupBy(events, (event) => event.addressExtra?.city);
   }, [events]);
 
   const cities = useMemo(() => {
@@ -106,10 +102,6 @@ export default function City(props: { events: Event[] }) {
                     {yearGroup.year === "no-date" ? "暂未定档" : yearGroup.year}
                   </h3>
                   <CityYearSelection events={yearGroup.events} />
-                  {/* <CollapsibleCityYearSelection
-                    year={yearGroup.year}
-                    events={yearGroup.events}
-                  /> */}
                 </div>
               ))}
             </div>
@@ -120,7 +112,7 @@ export default function City(props: { events: Event[] }) {
   );
 }
 
-function CityYearSelection({ events }: { events: Event[] }) {
+function CityYearSelection({ events }: { events: EventType[] }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
       {events.map((event) => (
@@ -149,15 +141,12 @@ function CityYearSelection({ events }: { events: Event[] }) {
           </div>
           <div className="z-10 relative pointer-events-none">
             <h4 className="tracking-wide text-white font-bold text-lg text-center">{`${event.organization?.name} · ${event.name}`}</h4>
-            {event.startDate && event.endDate && (
+            {event.startAt && event.endAt && (
               <p className="text-center text-white">
-                {event.startDate && (
-                  <span>{format(event.startDate, "MM月dd日")}</span>
+                {event.startAt && (
+                  <span>{format(event.startAt, "MM月dd日")}</span>
                 )}
-                -
-                {event.startDate && (
-                  <span>{format(event.startDate, "MM月dd日")}</span>
-                )}
+                -{event.endAt && <span>{format(event.endAt, "MM月dd日")}</span>}
               </p>
             )}
           </div>
@@ -167,27 +156,40 @@ function CityYearSelection({ events }: { events: Event[] }) {
   );
 }
 
+const PartialOrganizationSchema = z.object({
+  organization: EventSchema.shape.organization.pick({
+    name: true,
+    slug: true,
+  }),
+});
+
+const CityResponseSchema = EventSchema.pick({
+  name: true,
+  slug: true,
+  thumbnail: true,
+  poster: true,
+  startAt: true,
+  endAt: true,
+  addressExtra: true,
+}).merge(PartialOrganizationSchema);
+
 export async function getStaticProps({ locale }: { locale: string }) {
-  const xata = new XataClient();
+  const response = await wfetch.get("/event/all").json();
+  const events = z.array(CityResponseSchema).safeParse(response).data;
 
-  const events = await xata.db.event
-    .select([
-      "name",
-      "city",
-      "slug",
-      "posterUrl",
-      "coverUrl",
-      "startDate",
-      "endDate",
-      "organization.slug",
-      "organization.name",
-    ])
-    .getAll();
+  if (!events) {
+    return {
+      notFound: true,
+    };
+  }
 
-  const cities = Object.keys(groupBy(events, (event) => event.city));
+  const cities = Object.keys(
+    groupBy(events, (item) => item.addressExtra?.city)
+  );
+
   return {
     props: {
-      events,
+      events: events,
       headMetas: {
         title: "兽展城市列表",
         des: `欢迎来到FEC·兽展日历！FEC·兽展日历共收录来自中国大陆共 ${cities} 个城市举办过的 ${events.length} 场 兽展(兽聚)活动信息！快来看看这些城市有没有你所在的地方吧！`,

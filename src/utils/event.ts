@@ -1,5 +1,4 @@
 import { DurationType, SelectedFilterType } from "@/types/list";
-import { Event } from "@/xata/xata";
 import groupBy from "lodash-es/groupBy";
 import {
   isBefore,
@@ -11,12 +10,13 @@ import {
   compareDesc,
 } from "date-fns";
 import { zhCN } from "date-fns/locale";
+import { EventType } from "@/types/event";
 
 setDefaultOptions({ locale: zhCN });
 
-export function eventGroupByYear(data: Event[], order: "asc" | "desc") {
+export function eventGroupByYear(data: EventType[], order: "asc" | "desc") {
   const groupByStartDate = groupBy(data, (e) =>
-    e.startDate ? new Date(e.startDate).getFullYear() : "no-date"
+    e.startAt ? new Date(e.startAt).getFullYear() : "no-date"
   );
 
   const years = Object.keys(groupByStartDate).sort((a, b) => {
@@ -38,9 +38,9 @@ export function eventGroupByYear(data: Event[], order: "asc" | "desc") {
   }));
 }
 
-export function eventGroupByMonth(data: Event[], monthOrder: "asc" | "desc") {
+export function eventGroupByMonth(data: EventType[], monthOrder: "asc" | "desc") {
   const groupByStartDate = groupBy(data, (e) =>
-    e.startDate ? new Date(e.startDate).getMonth() + 1 : "no-date"
+    e.startAt ? new Date(e.startAt).getMonth() + 1 : "no-date"
   );
 
   const months = Object.keys(groupByStartDate).sort((a, b) => {
@@ -68,13 +68,13 @@ export function eventGroupByMonth(data: Event[], monthOrder: "asc" | "desc") {
 }
 
 export function filteringEvents(
-  events: Event[],
+  events: EventType[],
   selectedFilter: SelectedFilterType
 ) {
   return events.filter((event) => {
     const now = Date.now();
-    const endTime = event.endDate
-      ? new Date(new Date(event.endDate).setHours(23, 59, 59, 999)).getTime()
+    const endTime = event.endAt
+      ? new Date(new Date(event.endAt).setHours(23, 59, 59, 999)).getTime()
       : null;
     if (selectedFilter.onlyAvailable) {
       // for now, if event is cancelled, the data willn't include it at all.
@@ -106,11 +106,11 @@ function getDateMonth(testDate: string) {
   return isNextYear ? dateBelongMonth + 12 : dateBelongMonth;
 }
 
-export function groupByCustomDurationEvent(events: Event[]) {
+export function groupByCustomDurationEvent(events: EventType[]) {
   const currentMonth = getMonth(new Date()) + 1;
   const now = Date.now();
 
-  const durationObject: { [x in DurationType]: Event[] } = {
+  const durationObject: { [x in DurationType]: EventType[] } = {
     now: [],
     soon: [],
     next: [],
@@ -119,18 +119,18 @@ export function groupByCustomDurationEvent(events: Event[]) {
   };
 
   events.forEach((event) => {
-    const startTime = event.startDate
-      ? new Date(new Date(event.startDate).setHours(0, 0, 0, 0)).getTime()
+    const startTime = event.startAt
+      ? new Date(new Date(event.startAt).setHours(0, 0, 0, 0)).getTime()
       : null;
-    const endTime = event.endDate
-      ? new Date(new Date(event.endDate).setHours(23, 59, 59, 999)).getTime()
+    const endTime = event.endAt
+      ? new Date(new Date(event.endAt).setHours(23, 59, 59, 999)).getTime()
       : null;
 
-    const startMonth = event.startDate
-      ? getDateMonth(event.startDate.toString())
+    const startMonth = event.startAt
+      ? getDateMonth(event.startAt.toString())
       : null;
-    const endMonth = event.endDate
-      ? getDateMonth(event.endDate.toString())
+    const endMonth = event.endAt
+      ? getDateMonth(event.endAt.toString())
       : null;
 
     //next events
@@ -173,21 +173,21 @@ export function groupByCustomDurationEvent(events: Event[]) {
   return durationObject;
 }
 
-export function sortEvents(events: Event[], order: "asc" | "desc") {
+export function sortEvents(events: EventType[], order: "asc" | "desc") {
   return events.sort((a, b) => {
-    if (!a.endDate) {
+    if (!a.endAt) {
       return 1;
     }
 
-    if (!b.endDate) {
+    if (!b.endAt) {
       return -1;
     }
 
-    if (a.startDate && b.startDate) {
+    if (a.startAt && b.startAt) {
       if (order === "asc") {
-        return compareAsc(a.startDate, b.startDate);
+        return compareAsc(a.startAt, b.startAt);
       }
-      return compareDesc(a.startDate, b.startDate);
+      return compareDesc(a.startAt, b.startAt);
     }
 
     return 0;

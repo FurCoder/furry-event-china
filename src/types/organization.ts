@@ -1,4 +1,4 @@
 export const OrganizationStatus = {
   Active: "active",
-  Deactive: "deactive",
+  Inactive: "inactive",
 };

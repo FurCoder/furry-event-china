@@ -1,7 +1,7 @@
 import EventCard from "@/components/eventCard";
 import OrganizationStatus from "@/components/organizationStatus";
 import styles from "@/styles/Organization.module.css";
-import { Event, Organization, XataClient } from "@/xata/xata";
+import { Organization } from "@/xata/xata";
 import clsx from "clsx";
 import Image from "@/components/image";
 import { GetStaticPropsContext } from "next/types";
@@ -10,10 +10,14 @@ import toast from "react-hot-toast";
 import { FaPaw, FaQq, FaTwitter, FaWeibo } from "react-icons/fa";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { SiBilibili } from "react-icons/si";
-import { formatDistanceToNowStrict } from "date-fns";
+import { formatDistanceToNowStrict, isBefore } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import wfetch from "@/api";
+import { z } from "zod";
+import { format } from "date-fns";
+import { EventType } from "@/types/event";
 // import {
 //   WebsiteButton,
 //   QQGroupButton,
@@ -24,9 +28,8 @@ import { useTranslation } from "next-i18next";
 //   WikifurButton,
 // } from "@/components/OrganizationLinkButton";
 
-const xata = new XataClient();
 export default function OrganizationDetail(props: {
-  events: Event[];
+  events: EventType[];
   organization: Organization;
 }) {
   const { t } = useTranslation();
@@ -34,8 +37,8 @@ export default function OrganizationDetail(props: {
 
   const formattedFirstEventTime = useMemo(() => {
     const theBeginningEvent = events[events.length - 1];
-    if (theBeginningEvent && theBeginningEvent.startDate) {
-      const date = new Date(theBeginningEvent.startDate);
+    if (theBeginningEvent && theBeginningEvent.startAt) {
+      const date = new Date(theBeginningEvent.startAt);
 
       return {
         year: date.getUTCFullYear(),
@@ -252,47 +255,93 @@ export default function OrganizationDetail(props: {
 }
 
 export async function getStaticPaths() {
-  const organizations = await xata.db.organization.select(["*"]).getAll();
+  const organizations = await wfetch.get("/organization/all").json();
+
+  const organizationSchema = z.array(
+    z.object({
+      slug: z.string().min(1),
+    })
+  );
+
+  const validOrganizations = organizationSchema.safeParse(organizations);
+
   return {
-    paths: organizations.map((organization) => ({
+    paths: validOrganizations?.data?.map((organization) => ({
       params: { organization: organization.slug },
     })),
-    fallback: "blocking", // can also be true or 'blocking'
+    fallback: "blocking",
   };
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const organizationPromise = xata.db.organization
-    .filter({
-      slug: context.params?.organization as string,
+  const response = await wfetch
+    .query({ slug: context.params?.organization })
+    .get("/organization/detail")
+    .json();
+
+  const organizationSchema = z.object({
+    id: z.string().uuid(), // 假设 id 是一个 UUID
+    slug: z.string().min(1), // slug 至少有一个字符
+    name: z.string().min(1), // name 至少有一个字符
+    description: z.string().nullable(), // description 至少有一个字符
+    status: z.enum(["active", "inactive"]), // 假设 status 只能是 'active' 或 'inactive'
+    type: z.string().nullable(), // type 可以是字符串或 null
+    logoUrl: z.string(), // logoUrl 应该是一个有效的 URL
+    richMediaConfig: z.any().nullable(), // richMediaConfig 可以是任意类型或 null
+    contactMail: z.string().email(), // contactMail 应该是一个有效的邮箱地址
+    website: z.string().url().nullable(), // website 应该是一个有效的 URL
+    twitter: z.string().url().nullable(), // twitter 可以是有效的 URL 或 null
+    weibo: z.string().url().nullable(), // weibo 可以是有效的 URL 或 null
+    qqGroup: z.string().nullable(), // qqGroup 可以是字符串或 null
+    bilibili: z.string().url().nullable(), // bilibili 可以是有效的 URL 或 null
+    wikifur: z.string().url().nullable(), // wikifur 可以是有效的 URL 或 null
+    creationTime: z
+      .string()
+      .refine((date) => !isNaN(Date.parse(date)), {
+        message: "Invalid date format",
+      })
+      .nullable(), // creationTime 应该是一个有效的日期字符串
+  });
+
+  const eventSchema = z.object({
+    name: z.string(),
+    address: z.string().nullable(),
+    addressExtra: z.object({ city: z.string().nullable() }).nullable(),
+    thumbnail: z.string().nullable(),
+    startAt: z.string().datetime().nullable(),
+    endAt: z.string().datetime().nullable(),
+    slug: z.string(),
+  });
+
+  const validResult = z
+    .object({
+      organization: organizationSchema,
+      events: z.array(eventSchema),
     })
-    .select(["*"])
-    .getFirst();
+    .safeParse(response);
 
-  const eventPromise = xata.db.event
-    .filter({
-      "organization.slug": context.params?.organization as string,
-    })
-    .select(["*", "organization.name", "organization.slug"])
-    .sort("startDate", "desc")
-    .getAll();
+  const validOrganization = validResult.data?.organization;
+  const validEvents = validResult.data?.events
+    ?.map((e) => ({
+      ...e,
+      organization: {
+        name: validOrganization?.name,
+        slug: validOrganization?.slug,
+        logoUrl: validOrganization?.logoUrl,
+      },
+    }))
+    .sort((a, b) => {
+      if (a.startAt && b.startAt) {
+        return isBefore(a.startAt, b.startAt) ? 1 : -1;
+      }
+      return 0;
+    });
 
-  const [organization, events] = await Promise.all([
-    organizationPromise,
-    eventPromise,
-  ]);
-
-  const date = events?.[0]?.startDate && new Date(events[0].startDate);
-  const dateObj = date && {
-    year: date.getFullYear(),
-    month: date.getUTCMonth() + 1,
-    day: date.getUTCDate(),
-  };
-  const dateString = date
-    ? `${dateObj?.year}年${dateObj?.month}月${dateObj?.day}日`
+  const dateString = validEvents?.[0].startAt
+    ? format(validEvents?.[0].startAt, "yyyy年MM月dd日")
     : "未知时间线";
 
-  if (!organization) {
+  if (!response) {
     return {
       notFound: true,
     };
@@ -300,22 +349,22 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   return {
     props: {
-      organization,
-      events,
+      organization: validOrganization,
+      events: validEvents,
       headMetas: {
-        title: `${organization?.name}`,
+        title: `${validOrganization?.name}`,
         des: `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于 ${
-          organization?.name
+          validOrganization?.name
         } 的有关信息，这家展商已累计举办 ${
-          events.length
+          validEvents?.length
         } 场兽展，最近的一场在${dateString}，${
-          organization?.description
-            ? `他们是这样介绍自己的：“${organization?.description}”。`
+          validOrganization?.description
+            ? `他们是这样介绍自己的：“${validOrganization?.description}”。`
             : "不过他们没怎么介绍自己。"
         }`,
-        keywords: `${organization?.name}, ${organization?.name} 兽展, ${organization?.name} 兽聚`,
-        url: `https://www.furryeventchina.com/${organization?.slug}`,
-        cover: organization?.logoUrl,
+        keywords: `${validOrganization?.name}, ${validOrganization?.name} 兽展, ${validOrganization?.name} 兽聚`,
+        url: `https://www.furryeventchina.com/${validOrganization?.slug}`,
+        cover: validOrganization?.logoUrl,
       },
       structuredData: {
         breadcrumb: {
@@ -331,7 +380,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
             {
               "@type": "ListItem",
               position: 2,
-              name: organization?.name,
+              name: validOrganization?.name,
             },
           ],
         },
