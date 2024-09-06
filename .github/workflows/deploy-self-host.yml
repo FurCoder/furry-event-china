@@ -20,6 +20,7 @@ jobs:
       NEXT_PUBLIC_REGION: ${{ vars.NEXT_PUBLIC_REGION }}
       NEXT_PUBLIC_STATIC_CDN_URL: ${{vars.NEXT_PUBLIC_STATIC_CDN_URL}}
       NEXT_PUBLIC_WEBSITE_URL: ${{vars.NEXT_PUBLIC_WEBSITE_URL}}
+      FEC_API_TOKEN: ${{vars.FEC_API_TOKEN}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,6 +35,7 @@ jobs:
           echo NEXT_PUBLIC_ENABLE_TRACK="$ENABLE_TRACK" >> .env
           echo NEXT_PUBLIC_STATIC_CDN_URL="$NEXT_PUBLIC_STATIC_CDN_URL" >>.env
           echo NEXT_PUBLIC_WEBSITE_URL="$NEXT_PUBLIC_WEBSITE_URL" >>.env
+          echo FEC_API_TOKEN="$FEC_API_TOKEN" >>.env
 
       - name: Login to ACR
         uses: aliyun/acr-login@v1
@@ -62,6 +64,7 @@ jobs:
       NEXT_PUBLIC_REGION: ${{ vars.NEXT_PUBLIC_REGION }}
       NEXT_PUBLIC_SENTRY_DSN: ${{vars.NEXT_PUBLIC_SENTRY_DSN}}
       NEXT_PUBLIC_WEBSITE_URL: ${{vars.NEXT_PUBLIC_WEBSITE_URL}}
+      FEC_API_TOKEN: ${{vars.FEC_API_TOKEN}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -76,6 +79,7 @@ jobs:
           echo NEXT_PUBLIC_REGION="$NEXT_PUBLIC_REGION" >>.env
           echo NEXT_PUBLIC_SENTRY_DSN="$NEXT_PUBLIC_SENTRY_DSN" >>.env
           echo NEXT_PUBLIC_WEBSITE_URL="$NEXT_PUBLIC_WEBSITE_URL" >>.env
+          echo FEC_API_TOKEN="$FEC_API_TOKEN" >>.env
 
       - name: Login to ACR
         uses: aliyun/acr-login@v1
