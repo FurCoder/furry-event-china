@@ -61,6 +61,25 @@ function AnnouncementSlider() {
           </span>
           复制群号。
         </div>
+
+        <div
+          className={clsx(
+            SliderStyle.embla__slide,
+            defaultSliderClass,
+            "ml-4",
+            !IS_CN_REGION && "mr-4"
+          )}
+        >
+          由于不可抗力，兽人控游戏库的网址变更为
+          <a
+            target="_blank"
+            href="https://srk.games/?utm_source=fec"
+            className="underline cursor-pointer font-bold mx-1"
+          >
+            srk.games
+          </a>
+          。
+        </div>
       </div>
     </div>
   );

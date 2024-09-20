@@ -6,8 +6,8 @@ export const FriendSiteLinks = [
       "WildDream 创作站（野梦）是一个以原创作品分享为主的中文兽、兽人、动物、奇幻生物主题创作与交流站点，自 2015 年 8 月以来，为兽主题作品提供托管与展示服务。",
   },
   {
-    link: "https://kemono.games/?utm_source=fec",
-    label: "兽人控游戏库 Kemono.Games",
+    link: "https://srk.games/?utm_source=fec",
+    label: "兽人控游戏库 SRK.Games",
     description:
       "地表最强兽人控游戏索引！从传统角色扮演兽游到恋爱模拟，或是战略类兽人游戏，甚至更小众的选择，你都能在这里找到。",
   },
@@ -22,6 +22,12 @@ export const FriendSiteLinks = [
     label: "FurSuit 绒兽志",
     description:
       "「绒兽志」致力于为您提供最新最全的毛毛图鉴资讯整合，快来这里看看吧！",
+  },
+  {
+    link: "https://www.furwall.net/?utm_source=fec&utm_campaign=friend_link",
+    label: "绒毛墙 - 兽迷交流新天地",
+    description:
+      "让社群交流更亲密友善，还能精彩重温兽圈中每一个温馨与欢乐的瞬间，让这段旅程充满毛绒绒的爱与共鸣。",
   },
   {
     link: "https://furcoder.org/?utm_source=fec",
