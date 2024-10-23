@@ -451,7 +451,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       organization: context.params?.organization,
     })
     .get("/event/detail")
-    .json();
+    .json()
+    .catch((e) => console.log(e));
 
   const validResult = EventSchema.safeParse(response);
   const event = validResult.data;
