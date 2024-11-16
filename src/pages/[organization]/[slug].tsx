@@ -437,155 +437,153 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  // const event = await xata.db.event
-  //   .filter({
-  //     slug: context.params?.slug as string,
-  //     "organization.slug": context.params?.organization as string,
-  //   })
-  //   .select(["*", "organization"])
-  //   .getFirst();
+  try {
+    const response = await wfetch
+      .query({
+        slug: context.params?.slug,
+        organization: context.params?.organization,
+      })
+      .get("/event/detail")
+      .json()
+      .catch((e) => console.log(e));
 
-  const response = await wfetch
-    .query({
-      slug: context.params?.slug,
-      organization: context.params?.organization,
-    })
-    .get("/event/detail")
-    .json()
-    .catch((e) => console.log(e));
+    const validResult = EventSchema.safeParse(response);
+    const event = validResult.data;
 
-  const validResult = EventSchema.safeParse(response);
-  const event = validResult.data;
+    if (validResult.error) {
+      console.log(`Error in render ${context?.params?.slug}`);
+    }
 
-  if (validResult.error) {
-    console.log(`Error in render ${context?.params?.slug}`);
-  }
+    if (!event) {
+      return {
+        notFound: true,
+      };
+    }
 
-  validResult.error && console.log(JSON.stringify(validResult.error));
+    const metaDes =
+      event.startAt && event.endAt
+        ? `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${
+            event?.name
+          }”的详细信息：这是由“${
+            event?.organization?.name
+          }”举办的兽展，将于${format(
+            event?.startAt!,
+            "yyyy年MM月dd日"
+          )}至${format(event?.endAt!, "yyyy年MM月dd日")}在“${
+            event?.addressExtra?.city
+          }${event?.address}”举办，喜欢的朋友记得关注开始售票时间～`
+        : `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${event?.name}”的详细信息：这是由“${event?.organization?.name}”举办的兽展，将在“${event?.addressExtra?.city}${event?.address}”举办，喜欢的朋友记得关注开始售票时间～`;
 
-  if (!event) {
     return {
-      notFound: true,
-    };
-  }
-
-  const metaDes =
-    event.startAt && event.endAt
-      ? `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${
-          event?.name
-        }”的详细信息：这是由“${
-          event?.organization?.name
-        }”举办的兽展，将于${format(
-          event?.startAt!,
-          "yyyy年MM月dd日"
-        )}至${format(event?.endAt!, "yyyy年MM月dd日")}在“${
-          event?.addressExtra?.city
-        }${event?.address}”举办，喜欢的朋友记得关注开始售票时间～`
-      : `欢迎来到FEC·兽展日历！FEC·兽展日历提供关于“${event?.name}”的详细信息：这是由“${event?.organization?.name}”举办的兽展，将在“${event?.addressExtra?.city}${event?.address}”举办，喜欢的朋友记得关注开始售票时间～`;
-
-  return {
-    props: {
-      event: validResult.data,
-      headMetas: {
-        title: `${event?.name}-${event?.organization?.name}`,
-        keywords: keywordgenerator({
-          page: "event",
+      props: {
+        event: validResult.data,
+        headMetas: {
+          title: `${event?.name}-${event?.organization?.name}`,
+          keywords: keywordgenerator({
+            page: "event",
+            event: {
+              name: event?.name,
+              startDate: event?.startAt,
+              city: event?.addressExtra?.city || undefined,
+            },
+          }),
+          des: metaDes,
+          url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
+          cover: imageUrl(getEventCoverImgPath(event)),
+        },
+        structuredData: {
+          breadcrumb: {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "展商",
+                item: "https://www.furryeventchina.com/organization/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: event?.organization?.name,
+                item: `https://www.furryeventchina.com/${context.params?.organization}/`,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: event?.name,
+              },
+            ],
+          },
           event: {
+            "@context": "https://schema.org",
+            "@type": "Event",
             name: event?.name,
             startDate: event?.startAt,
-            city: event?.addressExtra?.city || undefined,
-          },
-        }),
-        des: metaDes,
-        url: `https://www.furryeventchina.com/${context.params?.organization}/${event?.slug}`,
-        cover: imageUrl(getEventCoverImgPath(event)),
-      },
-      structuredData: {
-        breadcrumb: {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: "展商",
-              item: "https://www.furryeventchina.com/organization/",
+            endDate: event?.endAt,
+            eventStatus:
+              EventStatusSchema[event?.status || EventStatus.EventScheduled],
+            eventAttendanceMode:
+              "https://schema.org/OfflineEventAttendanceMode",
+            location: {
+              "@type": "Place",
+              name: event?.address,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: event?.address,
+                addressLocality: event?.addressExtra?.city,
+                // postalCode: "19019",
+                // addressRegion: event?.city,
+                addressCountry: "CN",
+              },
             },
-            {
-              "@type": "ListItem",
-              position: 2,
+            image: [imageUrl(getEventCoverImgPath(event))],
+            description: event?.detail,
+            // offers: {
+            //   "@type": "Offer",
+            //   url: "https://www.example.com/event_offer/12345_201803180430",
+            //   price: "30",
+            //   priceCurrency: "USD",
+            //   availability: "https://schema.org/InStock",
+            //   validFrom: "2024-05-21T12:00",
+            // },
+            // performer: {
+            //   "@type": "PerformingGroup",
+            //   name: "Kira and Morrison",
+            // },
+            organizer: {
+              "@type": "Organization",
               name: event?.organization?.name,
-              item: `https://www.furryeventchina.com/${context.params?.organization}/`,
+              url: `https://www.furryeventchina.com/${context.params?.organization}/`,
             },
-            {
-              "@type": "ListItem",
-              position: 3,
-              name: event?.name,
+          },
+          imageObject: [
+            ...(event?.thumbnail ? [event.thumbnail] : []),
+            ...(event?.poster?.all || []),
+          ].map((image) => ({
+            "@context": "https://schema.org/",
+            "@type": "ImageObject",
+            contentUrl: imageUrl(image),
+            creditText: event?.organization?.name,
+            creator: {
+              "@type": "Organization",
+              name: event?.organization?.name,
             },
-          ],
+            copyrightNotice: event?.organization?.name,
+            license: "https://creativecommons.org/licenses/by-nc/4.0/",
+            acquireLicensePage: "https://docs.furryeventchina.com/blog/about",
+          })),
         },
-        event: {
-          "@context": "https://schema.org",
-          "@type": "Event",
-          name: event?.name,
-          startDate: event?.startAt,
-          endDate: event?.endAt,
-          eventStatus:
-            EventStatusSchema[event?.status || EventStatus.EventScheduled],
-          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-          location: {
-            "@type": "Place",
-            name: event?.address,
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: event?.address,
-              addressLocality: event?.addressExtra?.city,
-              // postalCode: "19019",
-              // addressRegion: event?.city,
-              addressCountry: "CN",
-            },
-          },
-          image: [imageUrl(getEventCoverImgPath(event))],
-          description: event?.detail,
-          // offers: {
-          //   "@type": "Offer",
-          //   url: "https://www.example.com/event_offer/12345_201803180430",
-          //   price: "30",
-          //   priceCurrency: "USD",
-          //   availability: "https://schema.org/InStock",
-          //   validFrom: "2024-05-21T12:00",
-          // },
-          // performer: {
-          //   "@type": "PerformingGroup",
-          //   name: "Kira and Morrison",
-          // },
-          organizer: {
-            "@type": "Organization",
-            name: event?.organization?.name,
-            url: `https://www.furryeventchina.com/${context.params?.organization}/`,
-          },
-        },
-        imageObject: [
-          ...(event?.thumbnail ? [event.thumbnail] : []),
-          ...(event?.poster?.all || []),
-        ].map((image) => ({
-          "@context": "https://schema.org/",
-          "@type": "ImageObject",
-          contentUrl: imageUrl(image),
-          creditText: event?.organization?.name,
-          creator: {
-            "@type": "Organization",
-            name: event?.organization?.name,
-          },
-          copyrightNotice: event?.organization?.name,
-          license: "https://creativecommons.org/licenses/by-nc/4.0/",
-          acquireLicensePage: "https://docs.furryeventchina.com/blog/about",
-        })),
+        ...(context.locale
+          ? await serverSideTranslations(context.locale, ["common"])
+          : {}),
       },
-      ...(context.locale
-        ? await serverSideTranslations(context.locale, ["common"])
-        : {}),
-    },
-    revalidate: 86400,
-  };
+      revalidate: 86400,
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    };
+  }
 }
