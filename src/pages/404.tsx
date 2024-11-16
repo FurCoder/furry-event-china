@@ -1,4 +1,6 @@
 import { sendTrack } from "@/utils/track";
+import { GetStaticPropsContext } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -36,4 +38,13 @@ export default function NotFoundPage() {
       </div>
     </main>
   );
+}
+export async function getStaticProps(context: GetStaticPropsContext) {
+  return {
+    props: {
+      ...(context.locale
+        ? await serverSideTranslations(context.locale, ["common"])
+        : {}),
+    },
+  };
 }
