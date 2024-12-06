@@ -73,8 +73,7 @@ function Image({
         sizes={sizes}
         srcSet={getSrcset({ src, quality, sizes, width, height })}
         loading={priority ? "eager" : "lazy"}
-        //@ts-ignore
-        fetchpriority={priority ? "high" : "auto"}
+        fetchPriority={priority ? "high" : "auto"}
       />
     </picture>
   );
