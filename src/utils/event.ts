@@ -38,7 +38,10 @@ export function eventGroupByYear(data: EventType[], order: "asc" | "desc") {
   }));
 }
 
-export function eventGroupByMonth(data: EventType[], monthOrder: "asc" | "desc") {
+export function eventGroupByMonth(
+  data: EventType[],
+  monthOrder: "asc" | "desc"
+) {
   const groupByStartDate = groupBy(data, (e) =>
     e.startAt ? new Date(e.startAt).getMonth() + 1 : "no-date"
   );
@@ -129,9 +132,7 @@ export function groupByCustomDurationEvent(events: EventType[]) {
     const startMonth = event.startAt
       ? getDateMonth(event.startAt.toString())
       : null;
-    const endMonth = event.endAt
-      ? getDateMonth(event.endAt.toString())
-      : null;
+    const endMonth = event.endAt ? getDateMonth(event.endAt.toString()) : null;
 
     //next events
     if (
@@ -155,7 +156,8 @@ export function groupByCustomDurationEvent(events: EventType[]) {
 
     //Soon events
     if (
-      (startMonth === currentMonth || currentMonth + 1 === startMonth) &&
+      (startMonth === currentMonth ||
+        (currentMonth + 1 === startMonth && startMonth <= 12)) &&
       isBefore(now, startTime)
     ) {
       return durationObject.soon.push(event);
