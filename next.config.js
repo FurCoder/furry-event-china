@@ -33,12 +33,6 @@ const nextConfig = {
     loaderFile: "./src/utils/imageLoader.ts",
   },
   assetPrefix: isProd && STATIC_CDN_URL ? STATIC_CDN_URL : undefined,
-  sentry: {
-    // disableClientWebpackPlugin: true,
-    // disableServerWebpackPlugin: true,
-    hideSourceMaps: true,
-    disableLogger: true,
-  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.plugins.push(
       new webpack.DefinePlugin({
@@ -70,6 +64,8 @@ const sentryWebpackPluginOptions = {
   project: IS_CN_REGION ? "fec-web" : "furryeventchina",
 
   silent: true, // Suppresses all logs
+  disableLogger: true,
+  hideSourceMaps: true,
 
   errorHandler: (err, invokeErr, compilation) => {
     compilation.warnings.push("Sentry CLI Plugin: " + err.message);
