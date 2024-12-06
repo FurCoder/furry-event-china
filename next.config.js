@@ -66,6 +66,7 @@ const sentryWebpackPluginOptions = {
   silent: true, // Suppresses all logs
   disableLogger: true,
   hideSourceMaps: true,
+  deleteSourceMapsAfterUpload: true,
 
   errorHandler: (err, invokeErr, compilation) => {
     compilation.warnings.push("Sentry CLI Plugin: " + err.message);
