@@ -1,7 +1,7 @@
 version: "3"
 services:
   global-web:
-    image: registry-vpc.cn-hongkong.aliyuncs.com/fec/web:latest
+    image: registry.cn-hongkong.aliyuncs.com/fec/web:latest
     restart: always
     environment:
       - NODE_ENV=production
@@ -15,7 +15,7 @@ services:
       static-network:
         ipv4_address: 10.0.0.9
   cn-web:
-      image: registry-vpc.cn-hongkong.aliyuncs.com/fec/cn-web:latest
+      image: registry.cn-hongkong.aliyuncs.com/fec/cn-web:latest
       restart: always
       environment:
         - NODE_ENV=production
