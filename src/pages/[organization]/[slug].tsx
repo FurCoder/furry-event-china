@@ -328,7 +328,7 @@ export default function EventDetail({ event }: { event: EventType }) {
           <div className="p-4">
             <div className="flex">
               {event.organization?.logoUrl && (
-                <div className="border rounded flex justify-center p-2 w-[100px] h-[100px]">
+                <div className="border rounded flex justify-center items-center p-2 w-[100px] h-[100px]">
                   <NextImage
                     className="object-contain"
                     alt={`${event.organization?.name}'s logo`}
