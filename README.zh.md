@@ -5,14 +5,13 @@
 ![](https://img.shields.io/badge/Sentry-purple.svg?style=flat-square&logo=sentry)
 ![](https://img.shields.io/badge/Umami-orange.svg?style=flat-square&logo=umami)
 ![](https://img.shields.io/badge/Google%20Analytics%205-blue.svg?style=flat-square&logo=google-analytics)
-![](https://img.shields.io/badge/Hono.js-blue.svg?style=flat-square&logo=hono)
 ![](https://img.shields.io/badge/Cloudflare%20R2-blue.svg?style=flat-square&logo=cloudflare)
 ![](https://img.shields.io/badge/Cloudflare%20Worker-blue.svg?style=flat-square&logo=cloudflare)
 ![](https://img.shields.io/badge/CloudFront-orange.svg?style=flat-square&logo=amazon-aws)
 
 [English](./README.md)
 
-[FEC 兽展日历](https://www.furryeventchina.com) 是一个收集并展示中国大陆与兽迷相关的展览活动的网站。这是它的源代码仓库。
+[兽展日历](https://www.furryeventchina.com) 是一个收集并展示中国大陆与兽迷相关的展览活动的网站。这是它的源代码仓库。
 
 ## 开始开发
 
@@ -58,3 +57,7 @@ yarn dev
 ## 联系方式
 
 如果您有任何问题或建议，请直接打开一个 issue。
+
+## 分析
+
+![Alt](https://repobeats.axiom.co/api/embed/74dada94f2baca768cdc3fac988db14a5c941997.svg "Repobeats analytics image")
