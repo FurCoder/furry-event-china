@@ -30,11 +30,6 @@ export const FriendSiteLinks = [
       "让社群交流更亲密友善，还能精彩重温兽圈中每一个温馨与欢乐的瞬间，让这段旅程充满毛绒绒的爱与共鸣。",
   },
   {
-    link: "https://furcoder.org/?utm_source=fec",
-    label: "FurCoder.org",
-    description: "FurryEventChina.COM 是 FurCoder 组织下的托管项目。",
-  },
-  {
     link: "https://m.nyanket.com/?utm_source=fec",
     label: "Nyanket 喵通贩",
     description:
@@ -44,7 +39,7 @@ export const FriendSiteLinks = [
 
 export const AboutUsLinks = [
   {
-    link: "https://github.com/FurCoder/furry-event-china",
+    link: "https://github.com/FurryConsChina/website",
     label: "GitHub",
   },
   {
@@ -52,11 +47,11 @@ export const AboutUsLinks = [
     label: "Status 监控",
   },
   {
-    link: "https://docs.furryeventchina.com",
+    link: "https://docs.furrycons.cn",
     label: "帮助文档",
   },
   {
-    link: "mailto:contact@furryeventchina.com",
+    link: "mailto:contact@furrycons.cn",
     label: "邮件联系我们",
   },
 ];

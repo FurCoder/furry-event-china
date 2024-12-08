@@ -5,14 +5,13 @@
 ![](https://img.shields.io/badge/Sentry-purple.svg?style=flat-square&logo=sentry)
 ![](https://img.shields.io/badge/Umami-orange.svg?style=flat-square&logo=umami)
 ![](https://img.shields.io/badge/Google%20Analytics%205-blue.svg?style=flat-square&logo=google-analytics)
-![](https://img.shields.io/badge/Hono.js-blue.svg?style=flat-square&logo=hono)
 ![](https://img.shields.io/badge/Cloudflare%20R2-blue.svg?style=flat-square&logo=cloudflare)
 ![](https://img.shields.io/badge/Cloudflare%20Worker-blue.svg?style=flat-square&logo=cloudflare)
 ![](https://img.shields.io/badge/CloudFront-orange.svg?style=flat-square&logo=amazon-aws)
 
 [中文版本](./README.zh.md)
 
-[FEC 兽展日历](https://www.furryeventchina.com) is a website that collects and displays furry conventions hosting within mainland China. This is the source code repository of this site.
+[兽展日历](https://www.furrycons.com) is a website that collects and displays furry conventions hosting within mainland China. This is the source code repository of this site.
 
 ## Start Developing
 
@@ -55,3 +54,7 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 ## Contact
 
 If you have any questions or suggestions, please directly open a issue.
+
+
+## Analytics
+![Alt](https://repobeats.axiom.co/api/embed/74dada94f2baca768cdc3fac988db14a5c941997.svg "Repobeats analytics image")
