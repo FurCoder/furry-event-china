@@ -1,7 +1,0 @@
-{
-  "databaseURL": "https://JiPai-s-workspace-srsnmc.us-east-1.xata.sh/db/FEC",
-  "codegen": {
-    "output": "src/xata/xata.ts",
-    "moduleType": "esm"
-  }
-}
