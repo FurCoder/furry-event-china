@@ -125,7 +125,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
               "@type": "ListItem",
               position: 1,
               name: "展商",
-              item: "https://www.furryeventchina.com/organization/",
+              item: "https://www.furryeventchina.com/organization",
             },
           ],
         },

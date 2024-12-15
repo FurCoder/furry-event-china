@@ -500,13 +500,13 @@ export async function getStaticProps(context: GetStaticPropsContext) {
                 "@type": "ListItem",
                 position: 1,
                 name: "展商",
-                item: "https://www.furryeventchina.com/organization/",
+                item: "https://www.furryeventchina.com/organization",
               },
               {
                 "@type": "ListItem",
                 position: 2,
                 name: event?.organization?.name,
-                item: `https://www.furryeventchina.com/${context.params?.organization}/`,
+                item: `https://www.furryeventchina.com/${context.params?.organization}`,
               },
               {
                 "@type": "ListItem",
@@ -554,7 +554,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
             organizer: {
               "@type": "Organization",
               name: event?.organization?.name,
-              url: `https://www.furryeventchina.com/${context.params?.organization}/`,
+              url: `https://www.furryeventchina.com/${context.params?.organization}`,
             },
           },
           imageObject: [

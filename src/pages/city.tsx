@@ -204,7 +204,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
               "@type": "ListItem",
               position: 1,
               name: "城市",
-              item: "https://www.furryeventchina.com/city/",
+              item: "https://www.furryeventchina.com/city",
             },
           ],
         },
