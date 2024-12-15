@@ -382,7 +382,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
                 "@type": "ListItem",
                 position: 1,
                 name: "展商",
-                item: "https://www.furryeventchina.com/organization/",
+                item: "https://www.furryeventchina.com/organization",
               },
               {
                 "@type": "ListItem",
